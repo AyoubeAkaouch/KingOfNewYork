@@ -25,3 +25,4 @@ string SubRegion::getOwner()
 {
 	return owner;
 }
+

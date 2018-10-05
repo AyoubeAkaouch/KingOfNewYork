@@ -15,24 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Assignment1\Assignment1\GraphGeneric.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Assignment1\Assignment1\Region.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Assignment1\Assignment1\SubRegion.h">
+    <ClInclude Include="GraphGeneric.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubRegion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Assignment1\Assignment1\GraphGeneric.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Assignment1\Assignment1\Region.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Assignment1\Assignment1\SubRegion.cpp">
+    <ClCompile Include="GraphGeneric.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SubRegion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

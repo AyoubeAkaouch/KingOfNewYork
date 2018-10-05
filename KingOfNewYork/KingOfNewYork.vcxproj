@@ -19,14 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Assignment1\Assignment1\GraphGeneric.h" />
     <ClInclude Include="..\..\Assignment1\Assignment1\Region.h" />
-    <ClInclude Include="..\..\Assignment1\Assignment1\SubRegion.h" />
+    <ClInclude Include="GraphGeneric.h" />
+    <ClInclude Include="SubRegion.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Assignment1\Assignment1\GraphGeneric.cpp" />
     <ClCompile Include="..\..\Assignment1\Assignment1\Region.cpp" />
-    <ClCompile Include="..\..\Assignment1\Assignment1\SubRegion.cpp" />
+    <ClCompile Include="GraphGeneric.cpp" />
+    <ClCompile Include="SubRegion.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

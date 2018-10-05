@@ -3,7 +3,7 @@
 using namespace std;
 
 template <typename T>
-class GraphGeneric
+class GraphGeneric //Directed graph implementation
 {
 private:
 	vector<vector<T>> adjacentList;
@@ -14,8 +14,8 @@ public:
 	GraphGeneric();
 	GraphGeneric(T node);
 	~GraphGeneric();
-	void addEdge(T node1, T node2);
-	void displayGraph();
+	int addEdge(T node1, T node2);
+	vector<T> getConnections(T node);
 	template<typename T> friend ostream& operator<<(ostream& os, const GraphGeneric<T>& graph);
 
 };
