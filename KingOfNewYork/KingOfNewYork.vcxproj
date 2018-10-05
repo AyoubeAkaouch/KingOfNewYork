@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Assignment1\Assignment1\Region.h" />
     <ClInclude Include="GraphGeneric.h" />
+    <ClInclude Include="Region.h" />
     <ClInclude Include="SubRegion.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Assignment1\Assignment1\Region.cpp" />
     <ClCompile Include="GraphGeneric.cpp" />
+    <ClCompile Include="Region.cpp" />
     <ClCompile Include="SubRegion.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
