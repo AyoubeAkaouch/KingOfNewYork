@@ -9,6 +9,7 @@ private:
 	vector<vector<T>> adjacentList;
 	int findObjectPosition(T object);
 	int findConnection(int position, T object);
+	vector<T> allNodes;
 
 public:
 	GraphGeneric();
@@ -16,6 +17,7 @@ public:
 	~GraphGeneric();
 	int addEdge(T node1, T node2);
 	vector<T> getConnections(T node);
+	vector<T> getAllNodes();
 	template<typename T> friend ostream& operator<<(ostream& os, const GraphGeneric<T>& graph);
 
 };
