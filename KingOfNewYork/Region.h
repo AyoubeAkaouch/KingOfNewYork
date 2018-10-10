@@ -10,10 +10,17 @@ using namespace std;
 
 class Region
 {
+private:
+	//Change this to vector of subregion instead of strings??
+	vector<GraphGeneric<SubRegion>> subRegions; //Subregion can be empty if it does not have any subregion.
+	vector<string> currentOwners;// Change for player object after
+	string findOwnerOfSubregions(GraphGeneric<SubRegion> graph);
+	int maxPlayers;
+	string name;
 public:
-	Region();
-	Region(GraphGeneric<SubRegion> subRegion);
-	Region(int maxPlayers);//Creates a region with no subregions.
+	Region(string name);//Has a default of 2 players
+	Region(string name, GraphGeneric<SubRegion> subRegion);
+	Region(string name, int maxPlayers);//Creates a region with no subregions.
 	~Region();
 	const Region* pointer = this;
 	vector<string> getOwners();// Change for player object
@@ -21,12 +28,7 @@ public:
 	void removePlayer(string player);// Take player object after
 	void addSubRegion(GraphGeneric<SubRegion> subRegionGraph); //Check if there is an owner and add it to current owners
 	bool operator ==(const Region& object2) const;
-private:
-	//Change this to vector of subregion instead of strings??
-	vector<GraphGeneric<SubRegion>> subRegions; //Subregion can be empty if it does not have any subregion.
-	vector<string> currentOwners;// Change for player object after
-	string findOwnerOfSubregions(GraphGeneric<SubRegion> graph);
-	int maxPlayers;
+	friend ostream& operator<<(ostream& os, const Region& region);
 };
 
 #endif

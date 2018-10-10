@@ -4,8 +4,9 @@ using namespace std;
 
 
 
-SubRegion::SubRegion(GraphGeneric<SubRegion> inGraph)
+SubRegion::SubRegion(string name, GraphGeneric<SubRegion>* inGraph)
 {
+	this->name = name;
 	this->inGraph = inGraph;
 	this->owner = "";
 }
@@ -19,7 +20,7 @@ SubRegion::~SubRegion()
 bool SubRegion::findOwnerOfSubregions()
 {
 	bool exists = false;
-	vector<SubRegion> allNodes = inGraph.getAllNodes();
+	vector<SubRegion> allNodes = inGraph->getAllNodes();
 
 	for (size_t i = 0; i < allNodes.size(); i++) {
 		if (allNodes[i].getOwner() != "") {
@@ -59,3 +60,10 @@ bool SubRegion::operator==(const SubRegion & object2) const
 		return false;
 }
 
+
+ostream & operator<<(ostream & os, const SubRegion & subRegion)
+{
+
+	os <<"\""<< subRegion.name<< "\"" ;
+	return os;
+}

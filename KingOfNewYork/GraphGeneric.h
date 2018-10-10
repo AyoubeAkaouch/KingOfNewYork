@@ -52,7 +52,7 @@ int GraphGeneric<T>::addEdge(T node1, T node2)//Returns 0 if unsuccesful and 1 i
 
 	if (node1 == node2)
 	{
-		cout << "Can't add a connection to itself" << endl;
+		cout << "Can't add a connection to itself {Node: " << node1 << "}" << endl;
 		return 0;
 	}
 	else if (positionNode1 == -1) //If node1 is not first position in any vector object, it doesnt have any connections to a node yet (Might have from a node tho)
@@ -64,7 +64,7 @@ int GraphGeneric<T>::addEdge(T node1, T node2)//Returns 0 if unsuccesful and 1 i
 	}
 	else if (positionNode1 != -1 && findConnection(positionNode1, node2) != -1) //Check that this connection doesn't already exist. If exist do not add it again.
 	{
-		cout << "This connection already exists, can't add it again." << endl;
+		cout << "This connection { "<< node1 << " -> " << node2 << " } already exists, can't add it again." << endl;
 		return 0;
 	}
 	else // Add the connection if everything passes
@@ -124,10 +124,14 @@ template<typename T>
 ostream& operator<<(ostream & os, const GraphGeneric<T>& graph)
 {
 	for (size_t i = 0; i < graph.adjacentList.size(); i++) {
-		for (size_t j = 0; j < graph.adjacentList[i].size(); j++) {
-			os << graph.adjacentList[i][j] << "->";
+		os << graph.adjacentList[i][0] << "Neighbors: "<<endl<<"{";
+		for (size_t j = 1; j < graph.adjacentList[i].size(); j++) {
+			if(j== graph.adjacentList[i].size()-1)
+				os << graph.adjacentList[i][j];
+			else
+				os << graph.adjacentList[i][j];
 		}
-		os << endl;
+		os << "}"<<endl;
 	}
 
 	return os;

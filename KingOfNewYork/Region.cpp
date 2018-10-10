@@ -1,19 +1,19 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
 using namespace std;
-
 #include "Region.h"
 
 
-Region::Region()
+Region::Region(string name )
 {
+	this->name = name;
 	maxPlayers = 2;//Default number of players
 }
 
-Region::Region(GraphGeneric<SubRegion> subRegion)//Creates a region with 1 subregion
+Region::Region(string name,GraphGeneric<SubRegion> subRegion)//Creates a region with 1 subregion
 {
+	this->name = name;
 	string player = findOwnerOfSubregions(subRegion);
 	subRegions.push_back(subRegion);
 	maxPlayers = 1;
@@ -21,8 +21,9 @@ Region::Region(GraphGeneric<SubRegion> subRegion)//Creates a region with 1 subre
 		setOwner(player);
 }
 
-Region::Region(int maxPlayers)//Creates a region with 1 subregion
+Region::Region(string name, int maxPlayers)//Creates a region with no subregions
 {
+	this->name = name;
 	this->maxPlayers = maxPlayers;
 }
 
@@ -94,6 +95,7 @@ void Region::addSubRegion(GraphGeneric<SubRegion> subRegionGraph)
 	}
 	else
 	{
+
 		cout << "Subregions were succesfully added to this region";
 	}
 
@@ -123,4 +125,27 @@ string Region::findOwnerOfSubregions(GraphGeneric<SubRegion> graph)
 		return "";
 	else
 		return player;
+}
+
+
+ostream & operator<<(ostream & os, const Region & region)
+{
+	os << "Region: " << region.name;
+	if (region.subRegions.size() == 0)
+	{
+		os << " *No subregions in this region*" << endl;
+	}
+	else 
+	{
+		os << endl;
+	}
+	/*else
+	{
+		os << endl;
+		for (size_t i = 0; i < region.subRegions.size(); i++) {
+			os << "{"<<endl<<region.subRegions[i]<<" }"<<endl;
+		}
+	}*/
+	
+	return os;
 }
