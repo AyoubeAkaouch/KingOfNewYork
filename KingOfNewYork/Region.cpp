@@ -1,8 +1,10 @@
-#include "Region.h"
-#include "GraphGeneric.h"
 #include <iostream>
 #include <vector>
+#include <string>
 
+using namespace std;
+
+#include "Region.h"
 
 
 Region::Region()
@@ -95,6 +97,14 @@ void Region::addSubRegion(GraphGeneric<SubRegion> subRegionGraph)
 		cout << "Subregions were succesfully added to this region";
 	}
 
+}
+
+bool Region::operator==(const Region & object2) const
+{
+	if (object2.pointer == this->pointer)
+		return true;
+	else
+		return false;
 }
 
 string Region::findOwnerOfSubregions(GraphGeneric<SubRegion> graph)

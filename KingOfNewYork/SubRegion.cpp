@@ -1,7 +1,6 @@
-#include "SubRegion.h"
-#include "Region.h"
 #include <iostream>
 using namespace std;
+#include "SubRegion.h"
 
 
 
@@ -50,5 +49,13 @@ bool SubRegion::setOwner(string owner) //When moving a player in the same subreg
 string SubRegion::getOwner()
 {
 	return owner;
+}
+
+bool SubRegion::operator==(const SubRegion & object2) const
+{
+	if (object2.pointer == this->pointer)
+		return true;
+	else
+		return false;
 }
 

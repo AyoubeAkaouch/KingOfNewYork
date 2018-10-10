@@ -22,11 +22,13 @@
     <ClInclude Include="GraphGeneric.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="SubRegion.h" />
+    <ClInclude Include="TestClass.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GraphGeneric.cpp" />
     <ClCompile Include="Region.cpp" />
+    <ClCompile Include="Driver.cpp" />
     <ClCompile Include="SubRegion.cpp" />
+    <ClCompile Include="TestClass.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
