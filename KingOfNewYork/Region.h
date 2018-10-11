@@ -27,6 +27,7 @@ public:
 	bool setOwner(string player);// Take player object after
 	void removePlayer(string player);// Take player object after
 	void addSubRegion(GraphGeneric<SubRegion> subRegionGraph); //Check if there is an owner and add it to current owners
+	vector<GraphGeneric<SubRegion>>* getSubRegions();
 	bool operator ==(const Region& object2) const;
 	friend ostream& operator<<(ostream& os, const Region& region);
 };

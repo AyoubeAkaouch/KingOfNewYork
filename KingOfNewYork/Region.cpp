@@ -35,7 +35,7 @@ Region::~Region()
 vector<string> Region::getOwners()
 {
 	if (currentOwners.size() == 0) {
-		cout << "There are no players currently in this region. Vector is empty." << endl;
+		cout << "There are no players currently in "<< name<<". Vector is empty." << endl;
 	}
 	
 	return currentOwners;
@@ -45,7 +45,7 @@ bool Region::setOwner(string player)
 {
 	if (currentOwners.size() == maxPlayers)
 	{
-		cout << "Can't add a player to this region it is already full"<< endl;
+		cout << "Can't add "<< player <<" to "<<name<<" it is already full (max "<<maxPlayers<<" players)." <<endl;
 		return false;
 	}
 	this->currentOwners.push_back(player);
@@ -101,6 +101,11 @@ void Region::addSubRegion(GraphGeneric<SubRegion> subRegionGraph)
 
 }
 
+vector<GraphGeneric<SubRegion>>* Region::getSubRegions()
+{
+	return &subRegions;
+}
+
 bool Region::operator==(const Region & object2) const
 {
 	if (object2.pointer == this->pointer)
@@ -127,25 +132,27 @@ string Region::findOwnerOfSubregions(GraphGeneric<SubRegion> graph)
 		return player;
 }
 
-
 ostream & operator<<(ostream & os, const Region & region)
+{
+	os << region.name;
+	return os;
+}
+
+//Prints subregions and its neighbors, this is now handled by GameMap.cpp
+/*ostream & operator<<(ostream & os, const Region & region)
 {
 	os << "Region: " << region.name;
 	if (region.subRegions.size() == 0)
 	{
 		os << " *No subregions in this region*" << endl;
 	}
-	else 
-	{
-		os << endl;
-	}
-	/*else
+	else
 	{
 		os << endl;
 		for (size_t i = 0; i < region.subRegions.size(); i++) {
 			os << "{"<<endl<<region.subRegions[i]<<" }"<<endl;
 		}
-	}*/
+	}
 	
 	return os;
-}
+}*/

@@ -5,10 +5,11 @@ using namespace std;
 #include "GraphGeneric.h"
 #include "SubRegion.h"
 #include "Region.h"
-#include "TestClass.h"
+#include "GameMap.h"
 
 int main() {
 
+	//Create the map of King Of New York
 	GraphGeneric<SubRegion> manhattanSubRegions;
 	GraphGeneric<Region> newYork;
 	SubRegion lowerManhattan = SubRegion("Lower Manhattan",&manhattanSubRegions);
@@ -36,27 +37,23 @@ int main() {
 	newYork.addEdge(queens, brooklyn);
 	newYork.addEdge(queens, manhattan);
 
-	cout << newYork;
+	GameMap map = GameMap(newYork);
+	cout << map;
 
-	/*TestClass x = TestClass("x");
-	TestClass y = TestClass("y");
-	TestClass z = TestClass("z");
-	TestClass w = TestClass("w");
-	TestClass v = TestClass("v");
+	map.setOwnerRegion("Maxime",brooklyn);
+	map.setOwnerRegion("Lisa", brooklyn);
+	//Adding an extra player exceeding Brooklyn's capacity
+	map.setOwnerRegion("Excess Kid", brooklyn);
+	//Manhattan only has one spot since we only added 1 subregion graph
+	map.setOwnerRegion("Antoine", manhattan);
+	map.setOwnerRegion("Joe",manhattan);
 
-	GraphGeneric<TestClass> graph = GraphGeneric<TestClass>(x);
+	vector<string> ownersManhattan = map.getOwners(manhattan);
+	vector<string> ownersBrooklyn = map.getOwners(brooklyn);
+	cout << "Players in brooklyn: " << ownersBrooklyn[0] << ", " << ownersBrooklyn[1] << ".";
 
-	graph.addEdge(x, v);
-	graph.addEdge(y, x);
-	graph.addEdge(x, v);
-	graph.addEdge(w, z);
-	graph.addEdge(x, v);
-	graph.addEdge(z, v);
-	graph.addEdge(v, v);
-	
-	cout << graph;
 
-	//graph.findObjectPosition(x);*/
+	//An invalid map can't be created because of the checks made during all the gamesetup.
 
 
 }

@@ -3,6 +3,7 @@
 #include<vector>
 #include<iostream>
 #include<string>
+#include <algorithm>
 #include "TestClass.h"
 using namespace std;
 
@@ -58,8 +59,12 @@ int GraphGeneric<T>::addEdge(T node1, T node2)//Returns 0 if unsuccesful and 1 i
 	else if (positionNode1 == -1) //If node1 is not first position in any vector object, it doesnt have any connections to a node yet (Might have from a node tho)
 	{
 		adjacentList.push_back({ node1, node2 });
-		allNodes.push_back(node1);
-		allNodes.push_back(node2);
+		if (std::find(allNodes.begin(), allNodes.end(), node1) == allNodes.end()) {
+			allNodes.push_back(node1);
+		}
+		if (std::find(allNodes.begin(), allNodes.end(), node2) == allNodes.end()) {
+			allNodes.push_back(node2);
+		}
 		return 1;
 	}
 	else if (positionNode1 != -1 && findConnection(positionNode1, node2) != -1) //Check that this connection doesn't already exist. If exist do not add it again.
@@ -70,7 +75,9 @@ int GraphGeneric<T>::addEdge(T node1, T node2)//Returns 0 if unsuccesful and 1 i
 	else // Add the connection if everything passes
 	{
 		adjacentList[positionNode1].push_back(node2);
-		allNodes.push_back(node2);
+		if (std::find(allNodes.begin(), allNodes.end(), node2) == allNodes.end()) {
+			allNodes.push_back(node2);
+		}
 		return 1;
 	}
 

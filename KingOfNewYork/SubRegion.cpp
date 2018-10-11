@@ -64,6 +64,6 @@ bool SubRegion::operator==(const SubRegion & object2) const
 ostream & operator<<(ostream & os, const SubRegion & subRegion)
 {
 
-	os <<"\""<< subRegion.name<< "\"" ;
+	os <<subRegion.name ;
 	return os;
 }
