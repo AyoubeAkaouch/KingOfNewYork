@@ -1,12 +1,16 @@
 #include<vector>
 #include<iostream>
 #include<string>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 #include "GraphGeneric.h"
 #include "SubRegion.h"
 #include "Region.h"
 #include "GameMap.h"
 #include "MapLoader.h"
+#include "Dices.h"
+
 
 int main() {
 
@@ -64,7 +68,8 @@ int main() {
 
 	vector<string> ownersManhattan = map.getOwners(manhattan);
 	vector<string> ownersBrooklyn = map.getOwners(brooklyn);
-	cout << "Players in brooklyn: " << ownersBrooklyn[0] << ", " << ownersBrooklyn[1] << ".\n}";
+	cout << "}\n\nPlayers in brooklyn: " << ownersBrooklyn[0] << ", " << ownersBrooklyn[1] << ".\n";
+	cout << "Players in Manhattan: " << ownersManhattan[0] ;
 
 	
 	//An invalid map can't be created because of the checks made during all the gamesetup.
@@ -76,4 +81,69 @@ int main() {
 
 	cout <<"~~~~~~~~~~~~~~~~~~~~~Imported Map~~~~~~~~~~~~~~~~~~~~~\n" <<importedMap;
 	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+
+
+	cout << "--------------------------------PART 3--------------------------------" << endl;
+	srand((int)time(0)); // Setting up the seed here, to have random numbers for all dice objects
+	
+	vector<int> rolls= { 0,1,2,3,4,5};
+	Dices dices;
+	char rollAgain;
+	bool canRoll = true;
+	
+	cout << "Dices created!" << endl;
+	cout << "\nHere is the first roll :\n"<< dices;
+	while (canRoll)
+	{
+		cout << "Would you like to roll again (y/n)?" << endl;
+		cin >> rollAgain;
+		if (rollAgain == 'y')
+		{
+			rolls.clear();
+			cout << "Which dices you which to roll again (Input the dice positions with a space in between)?" << endl;
+			int reroll;
+			string line;
+			getline(cin, line);
+			getline(cin, line);
+
+			rolls = dices.stringToVectorInt(line);
+			
+			canRoll = dices.reroll(&rolls);
+			cout << "\nHere are your current dices:\n" << dices;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	cout << "\n\nStarting a second round of rerolls" << endl;
+	dices.firstRoll();
+	canRoll = true;
+	cout << "\nHere is the first roll :\n" << dices;
+	while (canRoll)
+	{
+		cout << "Would you like to roll again (y/n)?" << endl;
+		cin >> rollAgain;
+		if (rollAgain == 'y')
+		{
+			rolls.clear();
+			cout << "Which dices you which to roll again (Input the dice positions with a space in between)?" << endl;
+			int reroll;
+			string line;
+			getline(cin, line);
+			getline(cin, line);
+
+			rolls = dices.stringToVectorInt(line);
+
+			canRoll = dices.reroll(&rolls);
+			cout << "\nHere are your current dices:\n" << dices;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	dices.showRollHistory();
 }

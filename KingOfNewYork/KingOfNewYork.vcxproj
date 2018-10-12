@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dices.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GraphGeneric.h" />
     <ClInclude Include="MapLoader.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="TestClass.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Dices.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Region.cpp" />
