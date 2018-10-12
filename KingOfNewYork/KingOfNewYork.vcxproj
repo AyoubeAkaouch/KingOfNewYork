@@ -19,18 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BuildingTiles.h" />
+    <ClInclude Include="Card.h" />
+    <ClInclude Include="DeckCards.h" />
     <ClInclude Include="Dices.h" />
+    <ClInclude Include="EffectCard.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GraphGeneric.h" />
     <ClInclude Include="MapLoader.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="SubRegion.h" />
     <ClInclude Include="TestClass.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BuildingTiles.cpp" />
+    <ClCompile Include="Card.cpp" />
+    <ClCompile Include="DeckCards.cpp" />
     <ClCompile Include="Dices.cpp" />
+    <ClCompile Include="EffectCard.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="SubRegion.cpp" />
