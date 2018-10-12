@@ -100,12 +100,12 @@ void Region::addSubRegion(GraphGeneric<SubRegion> subRegionGraph)
 
 	if (alreadyExists)
 	{
-		cout << "These subregions were already in this region and not added again.";
+		cout << "These subregions were already in this region and not added again."<<endl;
 	}
 	else
 	{
-
-		cout << "Subregions were succesfully added to this region";
+		subRegions.push_back(subRegionGraph);
+		cout << "Subregions were succesfully added to this region"<<endl;
 	}
 
 }

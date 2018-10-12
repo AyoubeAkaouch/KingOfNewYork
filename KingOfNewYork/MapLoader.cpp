@@ -79,7 +79,7 @@ void MapLoader::mapToFile(GameMap * map)
 
 GameMap MapLoader::mapLoader(string file)
 {
-	ifstream input("..\\\\KingOfNewYork.txt");
+	ifstream input(file);
 	//ifstream input2("..\\\\KingOfNewYork.txt");
 
 	string nameOfRegion;
@@ -92,33 +92,18 @@ GameMap MapLoader::mapLoader(string file)
 	vector<GraphGeneric<SubRegion>> graphSubRegion;
 	GraphGeneric<Region> graphRegion;
 
-	//set<string> allRegions; //done
-	/*while (!ws(input2).eof()) // Get All region to not create duplicate region objects
-	{
-		input2 >> nameOfRegion >> nameOfRegion;
-		input2 >> regionNeighbors;
-		getline(input2, subregions);
-		getline(input2, subregions);
-
-		regionNeighborsParsed = parseNeighbors(regionNeighbors);
-		allRegions.insert(nameOfRegion);
-	}
-	input2.close();
-
-	for (string const& region : allRegions)
-	{
-		regionObjects.push_back(Region(region));
-	}*/
 	while (!ws(input).eof()) 
 	{
-		input >> nameOfRegion >>nameOfRegion;
+		getline(input, nameOfRegion);
 		input >> regionNeighbors;
 		getline(input, subregions);
 		getline(input, subregions);
-		
-		cout << nameOfRegion << endl;
+		nameOfRegion = nameOfRegion.substr(8,nameOfRegion.size());
+		//Prints the map
+		/*cout << nameOfRegion << endl;
 		cout << regionNeighbors<<endl;
-		cout << subregions << endl;
+		cout << subregions << endl;*/
+
 		vector<string> temp{ regionNeighbors,subregions };
 		hashMapRegionInfo[nameOfRegion] = temp;
 	}
@@ -143,13 +128,13 @@ GameMap MapLoader::mapLoader(string file)
 				}
 				
 			}
-			for (int i = 0; i < graphSubRegion.size(); i++) {
+			for (int i = 0; i < subregionsParsed.size(); i++) {
 				if (i == 0)
 				{	
-					regionsName[it->first] = Region(it->first, graphSubRegion[i]);
+					regionsName[it->first] = Region(it->first, graphSubRegion[(graphSubRegion.size()-subregionsParsed.size())+i]);
 				}
 				else {
-					regionsName[it->first].addSubRegion(graphSubRegion[i]);
+					regionsName[it->first].addSubRegion(graphSubRegion[(graphSubRegion.size() - subregionsParsed.size()) + i]);
 				}
 			}
 		}
@@ -169,7 +154,6 @@ GameMap MapLoader::mapLoader(string file)
 			//cout << "Trying to add this connection: " << regionsName[it->first] << "    " << regionsName[regionNeighborsParsed[i]] << endl;
 		}
 	}
-	cout << graphRegion;
 
 	return GameMap(graphRegion,"ImportedMap");
 }
