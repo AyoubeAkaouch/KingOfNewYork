@@ -17,8 +17,9 @@ private:
 public:
 	SubRegion(string name, GraphGeneric<SubRegion>* inGraph);
 	~SubRegion(); 
-	const SubRegion* pointer = this;
+	const SubRegion* pointer = this;//Testing purposes
 	bool findOwnerOfSubregions();
+	string getName() const;
 	bool setOwner(string owner);//Change this to player when implemented
 	string getOwner();// In region class, findOwnerOfSubRegions was coded under the assumption if no owner we return ""
 	bool operator ==(const SubRegion& object2) const;

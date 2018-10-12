@@ -107,7 +107,7 @@ vector<T> GraphGeneric<T>::getAllNodes()
 }
 
 
-template<typename T>
+template<typename T>	
 int GraphGeneric<T>::findObjectPosition(T node)
 {
 
@@ -131,12 +131,12 @@ template<typename T>
 ostream& operator<<(ostream & os, const GraphGeneric<T>& graph)
 {
 	for (size_t i = 0; i < graph.adjacentList.size(); i++) {
-		os << graph.adjacentList[i][0] << "Neighbors: "<<endl<<"{";
+		os << graph.adjacentList[i][0] << "     Neighbors: {";
 		for (size_t j = 1; j < graph.adjacentList[i].size(); j++) {
 			if(j== graph.adjacentList[i].size()-1)
 				os << graph.adjacentList[i][j];
 			else
-				os << graph.adjacentList[i][j];
+				os << graph.adjacentList[i][j] << ", ";
 		}
 		os << "}"<<endl;
 	}

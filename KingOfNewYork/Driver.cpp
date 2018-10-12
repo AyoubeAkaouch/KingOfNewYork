@@ -6,6 +6,7 @@ using namespace std;
 #include "SubRegion.h"
 #include "Region.h"
 #include "GameMap.h"
+#include "MapLoader.h"
 
 int main() {
 
@@ -37,9 +38,9 @@ int main() {
 	newYork.addEdge(queens, brooklyn);
 	newYork.addEdge(queens, manhattan);
 
-	GameMap map = GameMap(newYork);
-	cout << map;
-
+	GameMap map = GameMap(newYork,"KingOfNewYork");
+	//cout << map;
+	
 	map.setOwnerRegion("Maxime",brooklyn);
 	map.setOwnerRegion("Lisa", brooklyn);
 	//Adding an extra player exceeding Brooklyn's capacity
@@ -52,8 +53,14 @@ int main() {
 	vector<string> ownersBrooklyn = map.getOwners(brooklyn);
 	cout << "Players in brooklyn: " << ownersBrooklyn[0] << ", " << ownersBrooklyn[1] << ".";
 
-
+	
 	//An invalid map can't be created because of the checks made during all the gamesetup.
 
+
+	MapLoader dab = MapLoader();
+	//dab.mapToFile(&map);
+	cout << endl << endl;
+	GameMap importedMap = dab.mapLoader("txtytfr");
+	cout <<"------------------IMPORTED---------------------\n" <<importedMap;
 
 }

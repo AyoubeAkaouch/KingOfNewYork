@@ -7,10 +7,11 @@ GameMap::GameMap()
 }
 
 
-GameMap::GameMap(GraphGeneric<Region> connectRegion)
+GameMap::GameMap(GraphGeneric<Region> connectRegion, string nameOfMap)
 {
 	this->connectRegions = connectRegion;
 	this->allRegions = connectRegion.getAllNodes();
+	this->nameOfMap = nameOfMap;
 }
 
 GameMap::~GameMap()
@@ -22,6 +23,10 @@ GraphGeneric<Region> GameMap::getMapGraph()
 	return connectRegions;
 }
 
+string GameMap::getNameMap()
+{
+	return this->nameOfMap;
+}
 vector<Region> GameMap::getAllRegions()
 {
 	return allRegions;
@@ -81,7 +86,7 @@ ostream & operator<<(ostream & os, GameMap & gameMap)
 				os << "{";
 				subRegionMap = subRegionsOfRegion[j];
 				allNodesSubRegion = subRegionMap.getAllNodes();
-				for (size_t k = 0; k < allNodesSubRegion.size(); k++)//Start at 1 because 0 is the current region
+				for (size_t k = 0; k < allNodesSubRegion.size(); k++)
 				{
 					os << allNodesSubRegion[k];
 					if (k < allNodesSubRegion.size() - 1)

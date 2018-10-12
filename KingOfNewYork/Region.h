@@ -18,12 +18,15 @@ private:
 	int maxPlayers;
 	string name;
 public:
+	Region();
 	Region(string name);//Has a default of 2 players
 	Region(string name, GraphGeneric<SubRegion> subRegion);
 	Region(string name, int maxPlayers);//Creates a region with no subregions.
 	~Region();
-	const Region* pointer = this;
-	vector<string> getOwners();// Change for player object
+	const Region* pointer = this; //Testing purposes
+	vector<string> getOwners();
+	string getName() const;
+	// Change for player object
 	bool setOwner(string player);// Take player object after
 	void removePlayer(string player);// Take player object after
 	void addSubRegion(GraphGeneric<SubRegion> subRegionGraph); //Check if there is an owner and add it to current owners

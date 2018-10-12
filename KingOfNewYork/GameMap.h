@@ -11,11 +11,13 @@ class GameMap
 private: 
 	GraphGeneric<Region> connectRegions;
 	vector<Region> allRegions;
+	string nameOfMap;
 public:
 	GameMap();
-	GameMap(GraphGeneric<Region> connectRegion);
+	GameMap(GraphGeneric<Region> connectRegion, string nameOfMap);
 	~GameMap();
 	GraphGeneric<Region> getMapGraph();
+	string getNameMap();
 	vector<Region> getAllRegions();
 	bool setOwnerRegion(string name,Region region);
 	vector<string> getOwners(Region region);

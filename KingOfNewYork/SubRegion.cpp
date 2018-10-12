@@ -30,6 +30,11 @@ bool SubRegion::findOwnerOfSubregions()
 	return exists;
 }
 
+string SubRegion::getName() const
+{
+	return name;
+}
+
 bool SubRegion::setOwner(string owner) //When moving a player in the same subregion no need to use this and check, bc already setup and we know we are the owner. 
 {
 	if (findOwnerOfSubregions())
@@ -54,7 +59,7 @@ string SubRegion::getOwner()
 
 bool SubRegion::operator==(const SubRegion & object2) const
 {
-	if (object2.pointer == this->pointer)
+	if (object2.getName() == this->name)
 		return true;
 	else
 		return false;

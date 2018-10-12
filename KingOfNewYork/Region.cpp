@@ -5,6 +5,10 @@ using namespace std;
 #include "Region.h"
 
 
+Region::Region()
+{
+}
+
 Region::Region(string name )
 {
 	this->name = name;
@@ -39,6 +43,11 @@ vector<string> Region::getOwners()
 	}
 	
 	return currentOwners;
+}
+
+string Region::getName() const
+{
+	return this->name;
 }
 
 bool Region::setOwner(string player)
@@ -108,7 +117,7 @@ vector<GraphGeneric<SubRegion>>* Region::getSubRegions()
 
 bool Region::operator==(const Region & object2) const
 {
-	if (object2.pointer == this->pointer)
+	if (object2.getName() == this->name)
 		return true;
 	else
 		return false;

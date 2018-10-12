@@ -21,12 +21,14 @@
   <ItemGroup>
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GraphGeneric.h" />
+    <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="SubRegion.h" />
     <ClInclude Include="TestClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="SubRegion.cpp" />
