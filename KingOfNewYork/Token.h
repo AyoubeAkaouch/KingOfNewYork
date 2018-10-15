@@ -1,12 +1,15 @@
 #pragma once
 #include <string>
-
 using namespace std;
-class Card
+
+class Token
 {
+private:
+	string name;
 public:
-	Card();
-	~Card();
+	Token();
+	Token(string name);
 	string getName();
+	~Token();
 };
 

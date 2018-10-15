@@ -1,11 +1,9 @@
 #pragma once
-#include "Card.h"
 #include <string>
 
 using namespace std;
 
-class Monster :
-	public Card
+class Monster 
 {
 private:
 	int hp; //Health Points
@@ -21,5 +19,6 @@ public:
 	void removeHealth(int health);
 	void addPoints(int points);
 	void removePoints(int points);
+	friend ostream & operator<<(ostream & os, const Monster & monster);
 };
 

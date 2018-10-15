@@ -20,10 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BuildingTiles.h" />
-    <ClInclude Include="Card.h" />
-    <ClInclude Include="DeckCards.h" />
+    <ClInclude Include="BuildingTilesDeck.h" />
     <ClInclude Include="Dices.h" />
     <ClInclude Include="EffectCard.h" />
+    <ClInclude Include="EffectCardDeck.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GraphGeneric.h" />
     <ClInclude Include="MapLoader.h" />
@@ -32,13 +32,14 @@
     <ClInclude Include="Region.h" />
     <ClInclude Include="SubRegion.h" />
     <ClInclude Include="TestClass.h" />
+    <ClInclude Include="Token.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BuildingTiles.cpp" />
-    <ClCompile Include="Card.cpp" />
-    <ClCompile Include="DeckCards.cpp" />
+    <ClCompile Include="BuildingTilesDeck.cpp" />
     <ClCompile Include="Dices.cpp" />
     <ClCompile Include="EffectCard.cpp" />
+    <ClCompile Include="EffectCardDeck.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="SubRegion.cpp" />
     <ClCompile Include="TestClass.cpp" />
+    <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

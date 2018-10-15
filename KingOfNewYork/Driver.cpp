@@ -3,13 +3,21 @@
 #include<string>
 #include <cstdlib>
 #include <ctime>
-using namespace std;
+#include <map>
 #include "GraphGeneric.h"
 #include "SubRegion.h"
 #include "Region.h"
 #include "GameMap.h"
 #include "MapLoader.h"
 #include "Dices.h"
+#include "EffectCardDeck.h"
+#include "EffectCard.h"
+#include "BuildingTiles.h"
+#include "BuildingTilesDeck.h"
+#include "Monster.h"
+
+using namespace std;
+
 
 
 int main() {
@@ -101,7 +109,6 @@ int main() {
 		{
 			rolls.clear();
 			cout << "Which dices you which to roll again (Input the dice positions with a space in between)?" << endl;
-			int reroll;
 			string line;
 			getline(cin, line);
 			getline(cin, line);
@@ -145,5 +152,64 @@ int main() {
 		}
 	}
 
+	//Display the roll history
 	dices.showRollHistory();
+
+	cout << "--------------------------------PART 4--------------------------------" << endl;
+
+	
+
+
+	cout << "--------------------------------PART 5--------------------------------" << endl;
+	//Creating cards
+	std::map<string, int> effectPlaceholder;
+	vector<EffectCard> cardObjects;
+	effectPlaceholder["victory"] = 2;
+
+	for (int i= 0; i < 10; i++)
+	{
+		string cardName = "Card" + to_string(i);
+		cardObjects.push_back((EffectCard(i,cardName, "PlaceHolder definition for the moment", effectPlaceholder)));
+	}
+	
+	//Creating a deck object from the cards
+
+	EffectCardDeck cardDeck = EffectCardDeck(cardObjects);
+	cout << cardDeck;
+
+	//Shuffling the cards
+	cardDeck.shuffle();
+	cout << "\nHere are the cards after the shuffle:\n"<<cardDeck;
+
+
+	//Drawing the top card
+	EffectCard pickedCard = cardDeck.draw();
+
+	cout << "The drawn card is: \n" << pickedCard << "\nAnd the rest of the cards in the deck are:\n"<<cardDeck;
+
+
+	//Creating building tiles
+	vector<BuildingTiles> buildingTiles;
+	buildingTiles.push_back(BuildingTiles("Building1"));
+	buildingTiles.push_back(BuildingTiles("Building2"));
+	buildingTiles.push_back(BuildingTiles("Building3"));
+	buildingTiles.push_back(BuildingTiles("Hospital2"));
+	buildingTiles.push_back(BuildingTiles("Hospital3"));
+	buildingTiles.push_back(BuildingTiles("Plant2"));
+	buildingTiles.push_back(BuildingTiles("Plant3"));
+	BuildingTilesDeck tilesDeck = BuildingTilesDeck(buildingTiles);
+
+	cout << "\n\nHere is the building tiles deck content!\n" << tilesDeck;
+	//Shuffling tiles
+	cout << "Shuffling the tiles deck!!\n\n";
+	tilesDeck.shuffle();
+	cout << tilesDeck;
+
+	//Picking top tile
+	cout << "\nPicking the top tile:" << tilesDeck.draw();
+
+
+	//Creating a monster and showing its info
+	Monster monster = Monster("Detective");
+	cout << "\nCreated monster here is its info!" << monster;
 }

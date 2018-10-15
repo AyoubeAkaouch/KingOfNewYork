@@ -84,7 +84,7 @@ void Dices::showRollHistory()
 	cout << "~~~~~~~~~~~~~~~Roll History~~~~~~~~~~~~~~~" << endl;
 	for (int i =0; i<historyOffAllRolls.size(); i++)  
 	{
-		cout << "Roll #"<< i <<": " << historyOffAllRolls.at(i)[0] << ", " << historyOffAllRolls.at(i)[1] << ", " << historyOffAllRolls.at(i)[2] << ", "
+		cout << "Roll #"<< i+1 <<": " << historyOffAllRolls.at(i)[0] << ", " << historyOffAllRolls.at(i)[1] << ", " << historyOffAllRolls.at(i)[2] << ", "
 			<< historyOffAllRolls.at(i)[3] << ", " << historyOffAllRolls.at(i)[4] << ", " << historyOffAllRolls.at(i)[5] << endl;
 	}
 
