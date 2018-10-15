@@ -10,6 +10,7 @@ private:
 	int vp; //Victory Points
 	string name;
 public:
+	Monster();
 	Monster(string name);
 	~Monster();
 	string getName() const;

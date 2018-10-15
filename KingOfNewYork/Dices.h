@@ -8,7 +8,7 @@ class Dices
 {
 private:
 	map<int,map<int, string>> historyOffAllRolls; 
-	map<int,string> currentDiceValues;
+	map<int,string> currentDiceValues; // That could have been a vector
 	const vector<string> possibleRolls{"Energy","Attack","Destruction","Heal","Celebrity","Ouch!"};
 	int numberOfRolls=0;	//Used to keep track of roll history
 	int numberOfRerolls = 0;	//Used to keep track of rerolls (Can't exceed 3)
@@ -23,6 +23,7 @@ public:
 	vector<int> stringToVectorInt(string reRolls);
 	map<int, string>* getCurrentValues();
 	void showRollHistory();
+	void applyEffect(string effect);
 	friend ostream& operator<<(ostream& os, const Dices& dices);
 
 };

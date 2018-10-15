@@ -15,7 +15,7 @@
 #include "BuildingTiles.h"
 #include "BuildingTilesDeck.h"
 #include "Monster.h"
-
+#include "Player.h"
 using namespace std;
 
 
@@ -155,11 +155,6 @@ int main() {
 	//Display the roll history
 	dices.showRollHistory();
 
-	cout << "--------------------------------PART 4--------------------------------" << endl;
-
-	
-
-
 	cout << "--------------------------------PART 5--------------------------------" << endl;
 	//Creating cards
 	std::map<string, int> effectPlaceholder;
@@ -212,4 +207,42 @@ int main() {
 	//Creating a monster and showing its info
 	Monster monster = Monster("Detective");
 	cout << "\nCreated monster here is its info!" << monster;
+
+	cout << "--------------------------------PART 4--------------------------------" << endl;
+	Player player = Player(monster,&queens);
+	cout << "\nCreated a new player and placed it in Queens.\n Will now show the first dice roll\n";
+	//Rolling dices
+	player.RollDices();
+	cout << *player.getDices() << endl;
+	//Resolve dices
+	//player.resolveDices();
+	//Make the player move.
+	cout << "\nMoving the player from Queens to Brooklyn\n";
+	player.move(&map, &brooklyn);
+
+	//Displaying current owner of brooklyn now
+	cout << "\nDisplaying owners for Queens and Brooklyn to see if change move was made properly\n";
+	queens.displayOwners();
+	brooklyn.displayOwners();
+
+	//Showing how many cards the user owns.
+	player.displayCards();
+
+	//Giving player energy cubes to test buying cards
+	cout << "\nPlayer was given 4 energy cubes, he will now try to buy Card4 worth 4 energy.\n";
+	player.addEnergyCubes(4);
+	player.buyCards(cardObjects[4],&cardDeck);
+
+	//Showing how many cards the player now owns.
+	player.displayCards();
+	cout <<"\nCard4 is now removed from the deck!" <<cardDeck << endl;
+
+	//Trying to buy a card now that the user does not have any funds
+	cout << "Trying to buy a card now that the user does not have any funds for and a card not currently in the deck\n";
+	player.buyCards(cardObjects[2], &cardDeck);
+	player.addEnergyCubes(20);
+	player.buyCards(cardObjects[4], &cardDeck);
+
+
 }
+

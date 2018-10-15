@@ -69,16 +69,15 @@ void Region::removePlayer(string player)
 
 	for (size_t i = 0; i < currentOwners.size(); i++) {
 		if (currentOwners[i] == player) {
-			currentOwners.erase(it);
+			currentOwners.erase(it+i);
 			deleted = true;
 		}
 
-		it++;
 	}
 
 	if (deleted)
 	{
-		cout << player << " has been deleted properly." << endl;
+		cout << player << " has been deleted properly from "<< this->name<<"." << endl;
 	}
 	else 
 	{
@@ -121,6 +120,18 @@ bool Region::operator==(const Region & object2) const
 		return true;
 	else
 		return false;
+}
+
+void Region::displayOwners() {
+	if (currentOwners.size() == 0)
+		cout << "No one currently owns " << this->name << ".\n";
+	else {
+		cout << "Here are the owners for " << this->name << ": " << endl;
+		for (int i = 0; i < currentOwners.size(); i++) {
+			cout << "- " << currentOwners[i]<<endl;
+		}
+	}
+
 }
 
 string Region::findOwnerOfSubregions(GraphGeneric<SubRegion> graph)

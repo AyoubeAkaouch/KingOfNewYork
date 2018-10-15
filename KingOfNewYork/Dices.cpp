@@ -90,6 +90,12 @@ void Dices::showRollHistory()
 
 }
 
+void Dices::applyEffect(string effect)
+{
+	//Currently empty will code in next assignment
+	cout << "Applied " << effect << " .\n";
+}
+
 ostream & operator<<(ostream & os, const Dices & dices)
 {
 	os << "Current dices are: " << dices.currentDiceValues.at(0) << ", " << dices.currentDiceValues.at(1) << ", " << dices.currentDiceValues.at(2) << ", "

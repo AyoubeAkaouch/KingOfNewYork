@@ -30,7 +30,7 @@ vector<EffectCard> EffectCardDeck::getAllCards()
 }
 
 //Used to pick a single card
-EffectCard EffectCardDeck::pickCard(string name) //Use this for picking tokens, monsters, etc. TO DRAW A CARD USE draw()
+EffectCard EffectCardDeck::pickCard(string name) 
 {
 	for (int i = 0; i < deckOfCards.size(); i++)
 	{

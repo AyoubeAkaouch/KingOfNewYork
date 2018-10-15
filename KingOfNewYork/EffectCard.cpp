@@ -11,6 +11,7 @@ EffectCard::EffectCard(int cost, string name, string howToPlay, map<string, int>
 
 EffectCard::EffectCard()
 {
+	name = "";
 }
 
 EffectCard::~EffectCard()

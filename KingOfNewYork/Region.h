@@ -32,6 +32,7 @@ public:
 	void addSubRegion(GraphGeneric<SubRegion> subRegionGraph); //Check if there is an owner and add it to current owners
 	vector<GraphGeneric<SubRegion>>* getSubRegions();
 	bool operator ==(const Region& object2) const;
+	void displayOwners();
 	friend ostream& operator<<(ostream& os, const Region& region);
 };
 

@@ -2,6 +2,10 @@
 
 
 
+Monster::Monster()
+{
+}
+
 Monster::Monster(string name)
 {
 	this->name = name;
