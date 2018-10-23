@@ -10,8 +10,10 @@ private:
 	vector<BuildingTiles> deckOfCards;
 public:
 	BuildingTilesDeck(vector<BuildingTiles> cards);
+	BuildingTilesDeck();
 	~BuildingTilesDeck();
 	void shuffle();
+	void setDeck(vector<BuildingTiles> deck);
 	BuildingTiles draw();
 	vector<BuildingTiles> getAllCards();
 	BuildingTiles  pickCard(string name);

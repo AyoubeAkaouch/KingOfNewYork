@@ -8,6 +8,10 @@ EffectCardDeck::EffectCardDeck(vector<EffectCard> cards)
 	deckOfCards = cards;
 }
 
+EffectCardDeck::EffectCardDeck()
+{
+}
+
 EffectCardDeck::~EffectCardDeck()
 {
 }
@@ -15,6 +19,11 @@ EffectCardDeck::~EffectCardDeck()
 void EffectCardDeck::shuffle()
 {
 	random_shuffle(deckOfCards.begin(), deckOfCards.end());
+}
+
+void EffectCardDeck::setDeck(vector<EffectCard> cards)
+{
+	this->deckOfCards = cards;
 }
 
 EffectCard EffectCardDeck::draw()

@@ -10,8 +10,10 @@ private:
 	vector<EffectCard> deckOfCards;
 public:
 	EffectCardDeck(vector<EffectCard> cards);
+	EffectCardDeck();
 	~EffectCardDeck();
 	void shuffle();
+	void setDeck(vector<EffectCard> cards);
 	EffectCard draw();
 	vector<EffectCard> getAllCards();
 	EffectCard  pickCard(string name);

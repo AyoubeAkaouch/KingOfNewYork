@@ -8,12 +8,12 @@
 class MapLoader
 {
 private:
-	vector<string> parseNeighbors(string regionNeighbors);
-	vector<vector<string>> parseSubRegions(string subregions);
+	static vector<string> parseNeighbors(string regionNeighbors);
+	static vector<vector<string>> parseSubRegions(string subregions);
 public:
 	MapLoader();
 	~MapLoader();
-	void mapToFile(GameMap* map);
-	GameMap mapLoader(string file);
+	static void mapToFile(GameMap* map);
+	static GameMap mapLoader(string file);
 };
 

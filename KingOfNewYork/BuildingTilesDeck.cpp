@@ -9,6 +9,10 @@ BuildingTilesDeck::BuildingTilesDeck(vector<BuildingTiles> cards)
 	deckOfCards = cards;
 }
 
+BuildingTilesDeck::BuildingTilesDeck()
+{
+}
+
 BuildingTilesDeck::~BuildingTilesDeck()
 {
 }
@@ -16,6 +20,11 @@ BuildingTilesDeck::~BuildingTilesDeck()
 void BuildingTilesDeck::shuffle()
 {
 	random_shuffle(deckOfCards.begin(), deckOfCards.end());
+}
+
+void BuildingTilesDeck::setDeck(vector<BuildingTiles> deck)
+{ 
+	this->deckOfCards = deck;
 }
 
 BuildingTiles BuildingTilesDeck::draw()
