@@ -1,0 +1,15 @@
+Region: Manhattan
+{Bronx,Brooklyn,Queens,StatenIsland}
+{{Lower Manhattan->Midtown Manhattan->Upper Manhattan}{area1->area2->area3}}
+Region: Bronx
+{Manhattan,Brooklyn,Queens,StatenIsland}
+{{test->test2->test3}{test1->test7->test9}}
+Region: Brooklyn
+{Bronx,Manhattan,Queens,StatenIsland}
+{}
+Region: Queens
+{Bronx,Brooklyn,Manhattan,StatenIsland}
+{}
+Region: StatenIsland
+{Bronx,Brooklyn,Manhattan,Queens}
+{}

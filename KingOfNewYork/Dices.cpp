@@ -27,8 +27,16 @@ void Dices::firstRoll()
 {
 	vector<int> fullReroll = { 0,1,2,3,4,5 };
 	numberOfRerolls = 0;
+	numberOfDices = 6;
 	rollDices(&fullReroll);
+}
 
+void Dices::firstRollExtra()
+{
+	vector<int> fullReroll = { 0,1,2,3,4,5,6,7 };
+	numberOfRerolls = 0;
+	numberOfDices = 8;
+	rollDices(&fullReroll);
 }
 
 bool Dices::reroll(vector<int>* dicesToRoll)
@@ -59,8 +67,14 @@ void Dices::rollDices(vector<int>* dicesToRoll)
 		diceToChange = dicesToRoll->at(i);
 		currentDiceValues[diceToChange] = possibleRolls[rand()%6];
 	}
+	if (numberOfDices<currentDiceValues.size()) {
+		currentDiceValues.erase(6);
+		cout << "asdfghjkl\n";
+		currentDiceValues.erase(7);
+	}
 	updateHistory();
 }
+
 
 vector<int> Dices::stringToVectorInt(string reRolls)
 {
@@ -84,8 +98,17 @@ void Dices::showRollHistory()
 	cout << "~~~~~~~~~~~~~~~Roll History~~~~~~~~~~~~~~~" << endl;
 	for (int i =0; i<historyOffAllRolls.size(); i++)  
 	{
-		cout << "Roll #"<< i+1 <<": " << historyOffAllRolls.at(i)[0] << ", " << historyOffAllRolls.at(i)[1] << ", " << historyOffAllRolls.at(i)[2] << ", "
-			<< historyOffAllRolls.at(i)[3] << ", " << historyOffAllRolls.at(i)[4] << ", " << historyOffAllRolls.at(i)[5] << endl;
+		cout << "Roll #: "<< i+1 << ": ";
+		for (int j = 0; j < historyOffAllRolls.at(i).size(); j++)
+		{
+			if (j == historyOffAllRolls.at(i).size() - 1) {
+				cout << historyOffAllRolls.at(i)[j] << endl;
+			}
+			else {
+				cout << historyOffAllRolls.at(i)[j] << ", ";
+			}
+		}
+		
 	}
 
 }
@@ -98,8 +121,17 @@ void Dices::applyEffect(string effect)
 
 ostream & operator<<(ostream & os, const Dices & dices)
 {
-	os << "Current dices are: " << dices.currentDiceValues.at(0) << ", " << dices.currentDiceValues.at(1) << ", " << dices.currentDiceValues.at(2) << ", "
-		<< dices.currentDiceValues.at(3) << ", " << dices.currentDiceValues.at(4) << ", " << dices.currentDiceValues.at(5) << endl;
+	os << "Current dices are: ";
+	for (int i = 0; i < dices.currentDiceValues.size(); i++)
+	{
+		if (i == dices.currentDiceValues.size() - 1) {
+			os << dices.currentDiceValues.at(i) << endl;
+		}
+		else {
+			os << dices.currentDiceValues.at(i) << ", ";
+		}
+		
+	}
 
 	return os;
 }

@@ -8,11 +8,16 @@ Player::Player()
 {
 }
 
+Player::Player(Monster monster)
+{
+	this->monster = monster;
+	this->energyCubes = 0;
+}
+
 Player::Player(Monster monster, Region * region)
 {
 	this->monster = monster;
 	this->region = region;
-	this->energyCubes= 0;
 	region->setOwner(monster.getName());
 }
 

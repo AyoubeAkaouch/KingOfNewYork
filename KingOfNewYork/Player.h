@@ -23,6 +23,7 @@ private:
 
 public:
 	Player();
+	Player(Monster monster);
 	Player(Monster monster, Region* region);
 	~Player();
 	void RollDices(); // For first roll

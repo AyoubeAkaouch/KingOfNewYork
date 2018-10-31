@@ -1,6 +1,6 @@
-#include<vector>
-#include<iostream>
-#include<string>
+#include <vector>
+#include <iostream>
+#include <string>
 #include <cstdlib>
 #include <ctime>
 #include <map>
@@ -46,7 +46,7 @@ int main() {
 		gameMap = MapLoader::mapLoader(completeDirectory);
 	}
 	else {
-		gameMap = MapLoader::mapLoader("C:\\Users\\Ayoube\\source\\repos\\KingOfNewYork\\Maps\\KingOfNewYork.map");
+		gameMap = MapLoader::mapLoader("..\\Maps\\KingOfNewYork.map");
 	}
 	
 	//Setting up the decks and game pieces object
@@ -60,11 +60,42 @@ int main() {
 	//Setup the number of players and associate them to a monster card
 	int numberOfPlayers;
 	do {
-		cout << "How many players will be playing this game?" << endl;
+		cout << "How many players will be playing this game? (Has to be between 2 or 6 players)" << endl;
 		cin >> numberOfPlayers;
 	} while (numberOfPlayers < 2 || numberOfPlayers > 6);
 
-	vector<Player> players;// Have to keep track of this order for them to play in the right order
+	vector<Player> players;// Have to keep track of the order of for them to play in the right order
+
+	for (int i = 1; i <= numberOfPlayers; i++) {
+		int x;
+		cout << "Player " << i << " please choose from this list which monster you want to pick.(Choose by index)" << endl;
+		cout << "{ ";
+		for (int j = 0; j < monsters.size();j++) {
+			cout <<"\""<< monsters[j].getName()<<"\" ";
+		}
+		cout << " }" << endl;
+		cin >> x;
+		players.push_back(Player(monsters[x]));
+		monsters.erase(monsters.begin()+x);
+	}
+
+		
+	/*Dices diceTest;
+	vector<int> toRoll = {1,2,5,0,7};
+	diceTest.firstRollExtra();
+	cout << diceTest << endl;	
+	diceTest.reroll(&toRoll);
+	cout << diceTest << endl;
+	toRoll = { 1,2,3,4 };
+	diceTest.reroll(&toRoll);
+	cout << diceTest << endl;
+	diceTest.firstRoll();
+	cout << diceTest << endl;
+	toRoll = { 1,0,5,6 };
+	diceTest.reroll(&toRoll);
+	cout << diceTest << endl;
+
+	diceTest.showRollHistory();*/
 
 }
 

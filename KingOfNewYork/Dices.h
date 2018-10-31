@@ -12,12 +12,14 @@ private:
 	const vector<string> possibleRolls{"Energy","Attack","Destruction","Heal","Celebrity","Ouch!"};
 	int numberOfRolls=0;	//Used to keep track of roll history
 	int numberOfRerolls = 0;	//Used to keep track of rerolls (Can't exceed 3)
+	int numberOfDices=6;
 
 	void updateHistory();
 public:
 	Dices();
 	~Dices();
 	void firstRoll();
+	void firstRollExtra();
 	bool reroll(vector<int>* dicesToRoll); //Makes sure not to exceed number of rerolls
 	void rollDices(vector<int>* dicesToRoll);
 	vector<int> stringToVectorInt(string reRolls);
