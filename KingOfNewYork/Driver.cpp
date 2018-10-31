@@ -79,7 +79,14 @@ int main() {
 		monsters.erase(monsters.begin()+x);
 	}
 
-		
+	cout << "Here are the size of the decks created." << endl;
+	cout << "Deck of building tiles: " << tilesDeck.sizeOfDeck() << endl;
+	cout << "Deck of cards: " << cardDeck.sizeOfDeck() << endl;
+	cout << "Number of Web tokens: " << tokens["Web"].size() << endl;
+	cout << "Number of Jynx tokens: " << tokens["Jynx"].size() << endl;
+	cout << "Number of Souvenir tokens: " << tokens["Souvenir"].size() << endl;
+	cout << "Number of Carapace tokens: " << tokens["Carapace"].size() << endl;
+
 	/*Dices diceTest;
 	vector<int> toRoll = {1,2,5,0,7};
 	diceTest.firstRollExtra();
