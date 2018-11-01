@@ -18,9 +18,9 @@ public:
 	~GameMap();
 	GraphGeneric<Region> getMapGraph();
 	string getNameMap();
-	vector<Region> getAllRegions();
-	bool setOwnerRegion(string name,Region region);
-	vector<string> getOwners(Region region);
+	vector<Region>& getAllRegions();
+	bool setOwnerRegion(string name,Region& region);
+	vector<string> getOwners(Region& region);
 	friend ostream& operator<<(ostream & os, GameMap & gameMap);
 };
 

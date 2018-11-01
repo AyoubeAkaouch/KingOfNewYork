@@ -27,11 +27,11 @@ string GameMap::getNameMap()
 {
 	return this->nameOfMap;
 }
-vector<Region> GameMap::getAllRegions()
+vector<Region>& GameMap::getAllRegions()
 {
 	return allRegions;
 }
-bool GameMap::setOwnerRegion(string name,Region region)
+bool GameMap::setOwnerRegion(string name,Region& region)
 {
 	for (size_t i = 0; i < allRegions.size(); i++)
 	{
@@ -40,7 +40,7 @@ bool GameMap::setOwnerRegion(string name,Region region)
 	}
 	return false;
 }
-vector<string> GameMap::getOwners(Region region)
+vector<string> GameMap::getOwners(Region& region)
 {
 	for (size_t i = 0; i < allRegions.size(); i++)
 	{

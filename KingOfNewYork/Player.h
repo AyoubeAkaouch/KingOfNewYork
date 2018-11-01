@@ -20,6 +20,7 @@ private:
 	Region* region;
 	Dices dices;
 	int energyCubes;
+	string Name;
 
 public:
 	Player();
@@ -27,11 +28,12 @@ public:
 	Player(Monster monster, Region* region);
 	~Player();
 	void RollDices(); // For first roll
-	Dices * getDices();
+
+	Dices&  getDices();
 	void displayCards();
 	void RollDices(vector<int>* dicesToRoll); //For rerolls
 	void resolveDices();
-	void move(GameMap* gameMap,Region* region);
+	void move(GameMap& gameMap,Region& region);
 	void buyCards(EffectCard card, EffectCardDeck* deck);
 	void addEnergyCubes(int i);
 	int getHealth() const;

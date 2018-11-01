@@ -37,9 +37,9 @@ void Player::RollDices()
 
 }
 
-Dices* Player::getDices()
+Dices& Player::getDices()
 {
-	return &dices;
+	return dices;
 }
 
 void Player::displayCards()
@@ -76,18 +76,18 @@ void Player::resolveDices()
 	}
 }
 
-void Player::move(GameMap* gameMap,Region* region)
+void Player::move(GameMap& gameMap,Region& region)
 {
 	//Check if move is possible
-	vector<Region> possibleRegions = gameMap->getAllRegions();
-	if (!(find(possibleRegions.begin(), possibleRegions.end(), *region) != possibleRegions.end())) // If region doesnt exist
+	vector<Region> possibleRegions = gameMap.getAllRegions();
+	if (!(find(possibleRegions.begin(), possibleRegions.end(), region) != possibleRegions.end())) // If region doesnt exist
 	{
 		cout << "This is an illegal move\n";
 	}
 	else
 	{
 		this->region->removePlayer(monster.getName());
-		region->setOwner(monster.getName());
+		region.setOwner(monster.getName());
 		cout << "Player succesfully move!\n";
 	}
 }
