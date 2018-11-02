@@ -17,6 +17,7 @@
 #include "BuildingTilesDeck.h"
 #include "Monster.h"
 #include "Player.h"
+#include "DriverMethods.h"
 using namespace std;
 
 
@@ -66,6 +67,7 @@ int main() {
 
 	vector<Player> players;// Have to keep track of the order of for them to play in the right order
 
+	cout << "Please select your player in the clockwise order you are sitting." << endl;
 	for (int i = 1; i <= numberOfPlayers; i++) {
 		int x;
 		cout << "Player " << i << " please choose from this list which monster you want to pick.(Choose by index)" << endl;
@@ -88,6 +90,13 @@ int main() {
 	cout << "Number of Carapace tokens: " << tokens["Carapace"].size() << endl;
 
 
+	///////////////////////////////////PART 2 here///////////////////////////////////////
+
+	//Determining order of the turns
+	int currentPlayersTurn = firstPlayer(players); //Gives the index in the vector of which player plays first
+
+	//Putting players in regions
+	setting
 	/*Dices diceTest;
 	vector<int> toRoll = {1,2,5,0,7};
 	diceTest.firstRollExtra();

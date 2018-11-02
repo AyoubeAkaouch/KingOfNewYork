@@ -23,7 +23,7 @@ public:
 	bool reroll(vector<int>* dicesToRoll); //Makes sure not to exceed number of rerolls
 	void rollDices(vector<int>* dicesToRoll);
 	vector<int> stringToVectorInt(string reRolls);
-	map<int, string>* getCurrentValues();
+	map<int, string> getCurrentValues();
 	void showRollHistory();
 	void applyEffect(string effect);
 	friend ostream& operator<<(ostream& os, const Dices& dices);

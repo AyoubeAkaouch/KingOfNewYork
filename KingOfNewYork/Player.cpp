@@ -11,6 +11,8 @@ Player::Player()
 Player::Player(Monster monster)
 {
 	this->monster = monster;
+	this->name = monster.getName();
+	this->region = NULL;
 	this->energyCubes = 0;
 }
 
@@ -18,6 +20,7 @@ Player::Player(Monster monster, Region * region)
 {
 	this->monster = monster;
 	this->region = region;
+	this->name = monster.getName();
 	region->setOwner(monster.getName());
 }
 
@@ -25,16 +28,28 @@ Player::~Player()
 {
 }
 
-void Player::RollDices(vector<int>* dicesToRoll)
+map<int, string> Player::RollDices(vector<int>* dicesToRoll) //For rerolls
 {
 	dices.reroll(dicesToRoll);
-
+	return dices.getCurrentValues();
 }
 
-void Player::RollDices()
+map<int, string> Player::RollDicesExtra(vector<int>* dicesToRoll)
+{
+	dices.reroll(dicesToRoll);
+	return dices.getCurrentValues();
+}
+
+map<int, string> Player::RollDices()
 {
 	dices.firstRoll();
+	return dices.getCurrentValues();
+}
 
+map<int, string> Player::RollDicesExtra()
+{
+	dices.firstRollExtra();
+	return dices.getCurrentValues();
 }
 
 Dices& Player::getDices()
@@ -42,6 +57,10 @@ Dices& Player::getDices()
 	return dices;
 }
 
+string Player::getName() {
+
+	return name;
+}
 void Player::displayCards()
 {
 	if (cards.size() == 0)
@@ -58,7 +77,7 @@ void Player::resolveDices()
 {
 	string toResolve;
 	vector<string> resolved; // Since we are getting a pointer we can't erase from map what has already been resolve, it wil change dice object.
-	map<int, string> currentDices = *dices.getCurrentValues();
+	map<int, string> currentDices = dices.getCurrentValues();
 	int dicesResolved = 0;
 	while (dicesResolved < 6) //Until all dices are resolved
 	{
@@ -80,7 +99,13 @@ void Player::move(GameMap& gameMap,Region& region)
 {
 	//Check if move is possible
 	vector<Region> possibleRegions = gameMap.getAllRegions();
-	if (!(find(possibleRegions.begin(), possibleRegions.end(), region) != possibleRegions.end())) // If region doesnt exist
+	
+	if (this->region==NULL)
+	{
+		this->region = &region;
+		cout << "Player succesfully moved!\n";	
+	}
+	else if (!(find(possibleRegions.begin(), possibleRegions.end(), region) != possibleRegions.end())) // If region doesnt exist
 	{
 		cout << "This is an illegal move\n";
 	}
@@ -88,7 +113,7 @@ void Player::move(GameMap& gameMap,Region& region)
 	{
 		this->region->removePlayer(monster.getName());
 		region.setOwner(monster.getName());
-		cout << "Player succesfully move!\n";
+		cout << "Player succesfully moved!\n";
 	}
 }
 

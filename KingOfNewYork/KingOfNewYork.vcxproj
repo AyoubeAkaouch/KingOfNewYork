@@ -26,6 +26,7 @@
     <ClInclude Include="EffectCardDeck.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="GraphGeneric.h" />
+    <ClInclude Include="DriverMethods.h" />
     <ClInclude Include="LoadGamePieces.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Monster.h" />
@@ -48,6 +49,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="DriverMethods.cpp" />
     <ClCompile Include="SubRegion.cpp" />
     <ClCompile Include="TestClass.cpp" />
     <ClCompile Include="Token.cpp" />

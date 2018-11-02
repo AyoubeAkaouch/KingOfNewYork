@@ -20,21 +20,25 @@ private:
 	Region* region;
 	Dices dices;
 	int energyCubes;
-	string Name;
+	string name;
 
 public:
 	Player();
 	Player(Monster monster);
 	Player(Monster monster, Region* region);
 	~Player();
-	void RollDices(); // For first roll
 
-	Dices&  getDices();
-	void displayCards();
-	void RollDices(vector<int>* dicesToRoll); //For rerolls
+	map<int, string> RollDices(); // For first roll
+	map<int, string> RollDicesExtra(); // For first roll
+	map<int, string> RollDices(vector<int>* dicesToRoll); //For rerolls
+	map<int, string> RollDicesExtra(vector<int>* dicesToRoll); //For rerolls
+	Dices&  getDices();	
 	void resolveDices();
+
+	void displayCards();
 	void move(GameMap& gameMap,Region& region);
 	void buyCards(EffectCard card, EffectCardDeck* deck);
+	string getName();
 	void addEnergyCubes(int i);
 	int getHealth() const;
 	int getVictoryPoints() const;

@@ -88,9 +88,9 @@ vector<int> Dices::stringToVectorInt(string reRolls)
 	return myNumbers;
 }
 
-map<int, string>* Dices::getCurrentValues()
+map<int, string> Dices::getCurrentValues()
 {
-	return &currentDiceValues;
+	return currentDiceValues;
 }
 
 void Dices::showRollHistory()
