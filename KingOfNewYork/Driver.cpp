@@ -93,10 +93,25 @@ int main() {
 	///////////////////////////////////PART 2 here///////////////////////////////////////
 
 	//Determining order of the turns
+	cout << endl;
 	int currentPlayersTurn = firstPlayer(players); //Gives the index in the vector of which player plays first
 
 	//Putting players in regions
-	setting
+	settingRegions(gameMap,players,currentPlayersTurn);
+	vector<Region> regions = gameMap.getAllRegions();
+
+	//Display the playing order
+	cout << "Here is the order in which players are going to play in:" << endl;
+	for (int i = 0; i < players.size(); i++) {
+		cout << i << ") " << players[(i + currentPlayersTurn) % players.size()];
+	}
+	cout << endl;
+
+	cout << "Here are all the regions and their players:" << endl;
+	for (int i = 0; i < regions.size();i++ ) {
+		cout << regions[i].getName() << ": ";
+		regions[i].displayOwners();
+	}
 	/*Dices diceTest;
 	vector<int> toRoll = {1,2,5,0,7};
 	diceTest.firstRollExtra();

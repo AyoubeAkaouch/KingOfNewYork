@@ -104,6 +104,7 @@ void Region::addSubRegion(GraphGeneric<SubRegion> subRegionGraph)
 	else
 	{
 		subRegions.push_back(subRegionGraph);
+		maxPlayers++;
 		cout << "Subregions were succesfully added to this region"<<endl;
 	}
 

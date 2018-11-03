@@ -95,27 +95,17 @@ void Player::resolveDices()
 	}
 }
 
-void Player::move(GameMap& gameMap,Region& region)
+Region * Player::getRegion()
 {
-	//Check if move is possible
-	vector<Region> possibleRegions = gameMap.getAllRegions();
-	
-	if (this->region==NULL)
-	{
-		this->region = &region;
-		cout << "Player succesfully moved!\n";	
-	}
-	else if (!(find(possibleRegions.begin(), possibleRegions.end(), region) != possibleRegions.end())) // If region doesnt exist
-	{
-		cout << "This is an illegal move\n";
-	}
-	else
-	{
-		this->region->removePlayer(monster.getName());
-		region.setOwner(monster.getName());
-		cout << "Player succesfully moved!\n";
-	}
+	return this->region;
 }
+
+void Player::setRegion(Region * region)
+{
+	this->region = region;
+}
+
+
 
 void Player::buyCards(EffectCard card,EffectCardDeck* deck)
 {

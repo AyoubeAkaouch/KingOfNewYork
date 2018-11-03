@@ -6,7 +6,6 @@
 #include "Monster.h"
 #include "Region.h"
 #include "Dices.h"
-#include "GameMap.h"
 #include "EffectCardDeck.h"
 
 using namespace std;
@@ -35,8 +34,10 @@ public:
 	Dices&  getDices();	
 	void resolveDices();
 
+	Region* getRegion(); 
+	void setRegion(Region* region);
+
 	void displayCards();
-	void move(GameMap& gameMap,Region& region);
 	void buyCards(EffectCard card, EffectCardDeck* deck);
 	string getName();
 	void addEnergyCubes(int i);

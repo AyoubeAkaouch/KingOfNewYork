@@ -15,14 +15,15 @@ private:
 	int findObjectPosition(T object);
 	int findConnection(int position, T object);
 	vector<T> allNodes;
+	vector<T> emptyVector;
 
 public:
 	GraphGeneric();
 	GraphGeneric(T node);
 	~GraphGeneric();
 	int addEdge(T node1, T node2);
-	vector<T> getConnections(T node);
-	vector<T> getAllNodes();
+	vector<T>& getConnections(T node);
+	vector<T>& getAllNodes();
 	template<typename T> friend ostream& operator<<(ostream& os, const GraphGeneric<T>& graph);
 
 };
@@ -30,7 +31,7 @@ public:
 template<typename T>
 GraphGeneric<T>::GraphGeneric()
 {
-
+	this->emptyVector = {};
 }
 
 template<typename T>
@@ -84,7 +85,7 @@ int GraphGeneric<T>::addEdge(T node1, T node2)//Returns 0 if unsuccesful and 1 i
 }
 
 template<typename T>
-vector<T> GraphGeneric<T>::getConnections(T node)
+vector<T>& GraphGeneric<T>::getConnections(T node)
 {
 	int position = findObjectPosition(node);
 
@@ -94,14 +95,14 @@ vector<T> GraphGeneric<T>::getConnections(T node)
 	}
 	else
 	{
-		cout << "This node does not exist in this graph, returning empty vector as the result" << endl;
-		return vector<T>();
+		cout << "This node does not exist in this graph, returning NULL as the result" << endl;
+		return this-> emptyVector;
 	}
 
 }
 
 template<typename T>
-vector<T> GraphGeneric<T>::getAllNodes()
+vector<T>& GraphGeneric<T>::getAllNodes()
 {
 	return allNodes;
 }

@@ -50,6 +50,28 @@ vector<string> GameMap::getOwners(Region& region)
 	cout << "This region does not exist in this map, returning empty vector"<<endl;
 	return vector<string>();
 }
+
+void GameMap::move(Player& player, Region& region)
+{
+	//Check if move is possible
+	if (player.getRegion() == NULL)
+	{
+		player.setRegion(&region);
+		cout << "Player succesfully moved!\n";
+	}
+	else if (!(find(allRegions.begin(), allRegions.end(), region) != allRegions.end())) // If region doesnt exist
+	{
+		cout << "This is an illegal move\n";
+	}
+	else
+	{
+		if (region.setOwner(player.getName())) {
+			player.getRegion()->removePlayer(player.getName());
+			player.setRegion(&region);
+			cout << "Player succesfully moved!\n";
+		}
+	}
+}
 ostream & operator<<(ostream & os, GameMap & gameMap)
 {
 	vector<Region> regions = gameMap.getAllRegions();

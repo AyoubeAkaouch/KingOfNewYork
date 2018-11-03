@@ -2,6 +2,7 @@
 
 #include "GraphGeneric.h"
 #include "Region.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ public:
 	vector<Region>& getAllRegions();
 	bool setOwnerRegion(string name,Region& region);
 	vector<string> getOwners(Region& region);
+	void move(Player & player, Region & region);
 	friend ostream& operator<<(ostream & os, GameMap & gameMap);
 };
 
