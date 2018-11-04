@@ -116,3 +116,70 @@ void settingRegions(GameMap& gameMap, vector<Player>& players, int currentTurn) 
 	}
 }
 
+void setPlayers(vector<Player>& players, vector<Monster>& monsters)
+{
+	//Setup the number of players and associate them to a monster card
+	int numberOfPlayers;
+	do {
+		cout << "How many players will be playing this game? (Has to be between 2 or 6 players)" << endl;
+		cin >> numberOfPlayers;
+	} while (numberOfPlayers < 2 || numberOfPlayers > 6);
+
+
+	cout << "Please select your player in the clockwise order you are sitting." << endl;
+	for (int i = 1; i <= numberOfPlayers; i++) {
+		int x;
+		cout << "Player " << i << " please choose from this list which monster you want to pick.(Choose by index)" << endl;
+		cout << "{ ";
+		for (int j = 0; j < monsters.size(); j++) {
+			cout << "\"" << monsters[j].getName() << "\" ";
+		}
+		cout << " }" << endl;
+		cin >> x;
+		players.push_back(Player(monsters[x]));
+		monsters.erase(monsters.begin() + x);
+	}
+}
+
+
+void gameLoop(vector<Player>& players, GameMap & gameMap, EffectCardDeck & effectCards, BuildingTilesDeck & tilesDeck, map<string, vector<Token>>& tokens, int firstToPlay)
+{
+	vector<EffectCard> buyableCards; // This will be a smaller deck of 3 cards that the player can purchase
+	effectCards.shuffle(); //Making sure all cards are shuffled before drawing the top 3
+	
+	for (int i = 0; i < 3; i++) {
+		buyableCards.push_back(effectCards.draw());
+	}
+	
+	int turnOf = firstToPlay;
+	while (gameEnded()) //This method will check if game ended yet (20 victory points or only 1 player left)
+	{
+		cout << "It is now " << players[turnOf].getName() << "\'s turn." << endl;
+		diceRoll(players[turnOf]);//Up to 3times, rerolls will be handled inside this method
+		resolveDices(players[turnOf]);//Mandatory
+		move(players[turnOf],gameMap); //Method will check if player wants to move or not, will also check if manhattan is empty it will move him there automatically
+		buyCards(players[turnOf], buyableCards, effectCards); //Will first prompt the player to ask if he wants to buy card, then will proceed.
+	}
+}
+
+void diceRoll(Player & player)
+{
+}
+
+void resolveDices(Player & player)
+{
+}
+
+void move(Player & player, GameMap & gameMap)
+{
+}
+
+void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
+{
+}
+
+bool gameEnded()
+{
+	return true;
+}
+

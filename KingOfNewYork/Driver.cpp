@@ -5,15 +5,10 @@
 #include <ctime>
 #include <map>
 #include "LoadGamePieces.h"
-#include "GraphGeneric.h"
-#include "SubRegion.h"
 #include "Region.h"
 #include "GameMap.h"
 #include "MapLoader.h"
-#include "Dices.h"
 #include "EffectCardDeck.h"
-#include "EffectCard.h"
-#include "BuildingTiles.h"
 #include "BuildingTilesDeck.h"
 #include "Monster.h"
 #include "Player.h"
@@ -34,6 +29,7 @@ void getAllMapFiles (string directory){
 
 int main() {
 	srand((int)time(0)); // Setting up the seed here, to have random numbers for all dice objects
+
 	string directory, mapFile, completeDirectory;
 	cout << "In which dirctory you wish to get your maps from?(If want to use default King Of NewYork map press x)" << endl;
 	cin >> directory;
@@ -58,28 +54,9 @@ int main() {
 	
 	LoadGamePieces::LoadAllPieces(monsters,tilesDeck, cardDeck,tokens); //This will create all the card objects and their values
 	
-	//Setup the number of players and associate them to a monster card
-	int numberOfPlayers;
-	do {
-		cout << "How many players will be playing this game? (Has to be between 2 or 6 players)" << endl;
-		cin >> numberOfPlayers;
-	} while (numberOfPlayers < 2 || numberOfPlayers > 6);
-
 	vector<Player> players;// Have to keep track of the order of for them to play in the right order
+	setPlayers(players,monsters);// Method to create the player objects and associate them to monster cards!.
 
-	cout << "Please select your player in the clockwise order you are sitting." << endl;
-	for (int i = 1; i <= numberOfPlayers; i++) {
-		int x;
-		cout << "Player " << i << " please choose from this list which monster you want to pick.(Choose by index)" << endl;
-		cout << "{ ";
-		for (int j = 0; j < monsters.size();j++) {
-			cout <<"\""<< monsters[j].getName()<<"\" ";
-		}
-		cout << " }" << endl;
-		cin >> x;
-		players.push_back(Player(monsters[x]));
-		monsters.erase(monsters.begin()+x);
-	}
 
 	cout << "Here are the size of the decks created." << endl;
 	cout << "Deck of building tiles: " << tilesDeck.sizeOfDeck() << endl;
@@ -94,16 +71,16 @@ int main() {
 
 	//Determining order of the turns
 	cout << endl;
-	int currentPlayersTurn = firstPlayer(players); //Gives the index in the vector of which player plays first
+	int firstToPlay = firstPlayer(players); //Gives the index in the vector of which player plays first
 
 	//Putting players in regions
-	settingRegions(gameMap,players,currentPlayersTurn);
+	settingRegions(gameMap,players,firstToPlay);
 	vector<Region> regions = gameMap.getAllRegions();
 
 	//Display the playing order
 	cout << "Here is the order in which players are going to play in:" << endl;
 	for (int i = 0; i < players.size(); i++) {
-		cout << i << ") " << players[(i + currentPlayersTurn) % players.size()];
+		cout << i << ") " << players[(i + firstToPlay) % players.size()];
 	}
 	cout << endl;
 
@@ -112,6 +89,9 @@ int main() {
 		cout << regions[i].getName() << ": ";
 		regions[i].displayOwners();
 	}
+
+	///////////////////////////////////PART 3 here///////////////////////////////////////
+
 	/*Dices diceTest;
 	vector<int> toRoll = {1,2,5,0,7};
 	diceTest.firstRollExtra();
