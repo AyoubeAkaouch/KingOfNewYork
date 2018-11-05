@@ -41,6 +41,7 @@ map<string, int>* EffectCard::getEffects()
 ostream & operator<<(ostream & os, const EffectCard & card)
 {
 	os << "{Card Name: " << card.getName() <<endl;
+	os << "Card price: " << card.getCost() << endl;
 	os << "Description: \"" << card.getDescription() << "\"}"<<endl;
 	return os;
 }

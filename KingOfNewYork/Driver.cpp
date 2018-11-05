@@ -94,17 +94,22 @@ int main() {
 	///////////////////////////////////PART 3 here///////////////////////////////////////
 	gameLoop(players, gameMap,  cardDeck,  tilesDeck,  tokens, firstToPlay);
 
-	for (int i = 0; i < players.size(); i++) {
-		cout << players[i] << endl;
-	}
-
-
 	cout << "Here are all the regions and their players:" << endl;
 	regions =gameMap.getAllRegions();
 	for (int i = 0; i < regions.size(); i++) {
 		cout << regions[i].getName() << ": ";
 		regions[i].displayOwners();
 	}
+
+	cout << "~~~~Here is the info for all players~~~~" << endl;
+	for (int i = 0; i < players.size(); i++) {
+		cout << "-----------------------------" << endl;
+		cout << players[i] << " ";
+		players[i].displayCards();
+		cout << "-----------------------------" << endl;
+	}
+	
+
 	/*Dices diceTest;
 	vector<int> toRoll = {1,2,5,0,7};
 	diceTest.firstRollExtra();

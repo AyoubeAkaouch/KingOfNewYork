@@ -39,9 +39,11 @@ public:
 	void setRegion(Region& region);
 
 	void displayCards();
-	void buyCards(EffectCard card, EffectCardDeck* deck);
+	bool buyCards(EffectCard card);
 	string getName();
 	void addEnergyCubes(int i);
+	bool removeEnergy(int i);
+	int getEnergyCubes();
 	int getHealth() const;
 	int getVictoryPoints() const;
 	void addHealth(int health);

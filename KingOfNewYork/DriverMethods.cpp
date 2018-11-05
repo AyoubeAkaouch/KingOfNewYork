@@ -150,18 +150,22 @@ void gameLoop(vector<Player>& players, GameMap & gameMap, EffectCardDeck & effec
 	}
 	
 	int turnOf = firstToPlay;
-	while (!gameEnded() && stop == "x") //This method will check if game ended yet (20 victory points or only 1 player left)
+	players[turnOf].addEnergyCubes(50); //To test the buying card feature!
+	while (!gameEnded(players,gameMap) && stop == "x") //This method will check if game ended yet (20 victory points or only 1 player left)
 	{
-		cout << endl <<"It is now " << players[turnOf].getName() << "\'s turn." << endl;
-		
-		diceRoll(players[turnOf],false);//Up to 3times, rerolls will be handled inside this method
-		cout << endl;
-		resolveDices(players[turnOf],gameMap,players);//Mandatory
-		cout << endl;
-		move(players[turnOf],gameMap,false); //Method will check if player wants to move or not, will also check if manhattan is empty it will move him there automatically
-		cout << endl;
-		buyCards(players[turnOf], buyableCards, effectCards); //Will first prompt the player to ask if he wants to buy card, then will proceed.
-		cout << endl;
+		//If player doesn't have any health he can't play anymore
+		if (players[turnOf].getHealth()>0) {
+			cout << endl << "It is now " << players[turnOf].getName() << "\'s turn." << endl;
+
+			diceRoll(players[turnOf], false);//Up to 3times, rerolls will be handled inside this method
+			cout << endl;
+			resolveDices(players[turnOf], gameMap, players);//Mandatory
+			cout << endl;
+			move(players[turnOf], gameMap, false); //Method will check if player wants to move or not, will also check if manhattan is empty it will move him there automatically
+			cout << endl;
+			buyCards(players[turnOf], buyableCards, effectCards); //Will first prompt the player to ask if he wants to buy card, then will proceed.
+			cout << endl;
+		}
 		
 		turnOf = (turnOf + 1) % players.size();//Setting up the nexts persons turn
 		cout << "Press x to continue, anything else to stop" << endl;
@@ -345,6 +349,53 @@ void move(Player & player, GameMap & gameMap,bool gotAttacked)
 
 void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
 {
+	char input;
+	int input2;
+	bool done = false;
+	cout << "Would you like to buy a card? (y/n)" << endl;
+	cin >> input;
+	if (input == 'y') {
+		cout << "Here are the 3 cards that you can buy:" << endl;
+		for (int i = 0; i < buyableCards.size(); i++) {
+			cout << i << ") " << buyableCards[i] << endl;
+		}
+		while (!done) {
+			cout << "Your current balance is: " << player.getEnergyCubes() << endl;
+			cout << "Choose card you wish to buy by index, press 3 to pay 2 energies and get 3 new cards, press 4 to quit buying." << endl;
+			cin >> input2;
+			if (input2 >= 0 && input2 <= 2) {
+				done = player.buyCards(buyableCards[input2]);
+				if (done) {
+					buyableCards.erase(buyableCards.begin() + input2);
+					buyableCards.push_back(effectCards.draw());
+					cout << "The card you bought got replaced by this one: " << endl;
+					cout << buyableCards[2] << endl;
+				}
+			}
+			else if (input2 == 3) {
+				if (player.removeEnergy(2)) {
+					buyableCards.clear();
+					for (int i = 0; i < 3; i++) {
+						buyableCards.push_back(effectCards.draw());
+					}
+					cout << "Here are the 3 cards that you can buy:" << endl;
+					for (int i = 0; i < buyableCards.size(); i++) {
+						cout << i << ") " << buyableCards[i] << endl;
+					}
+
+				}
+				else {
+					cout << "Can't replace these cards! Please choose another option" << endl;
+				}
+			}
+			else if (input2 == 4) {
+				cout << "Exiting the buying sequence!" << endl;
+				done = true;
+			}
+		}
+		
+	}
+
 }
 
 vector<int> stringToVectorInt(string reRolls)
@@ -359,8 +410,47 @@ vector<int> stringToVectorInt(string reRolls)
 	return myNumbers;
 }
 
-bool gameEnded()
+bool gameEnded(vector<Player>& players, GameMap& gameMap)
 {
+	static vector<int> deletedPlayers;
+	for (int i = 0; i < players.size() ; i++) {
+		//Deleting player from the game! No more turns for him. Removing him from gameMap
+		if (players[i].getHealth()<=0) {
+			bool alreadyDeleted = false;
+			for (int j = 0; j < deletedPlayers.size(); j++) {
+				if (deletedPlayers[j] == i) {
+					alreadyDeleted = true;
+					break;
+				}
+				
+			}
+			if (!alreadyDeleted) {
+				cout << players[i].getName() << " you have lost and been removed from the game Map." << endl;
+				gameMap.removeOwner(players[i].getName(), players[i].getRegion());// Removing player from his current Region
+				deletedPlayers.push_back(i);
+			}
+			
+		}
+
+	}
+	//Checks if only one player left, declare winner and return true
+	if (deletedPlayers.size() + 1 == players.size()) {
+		for (int i = 0; i < players.size(); i++) {
+			if (players[i].getHealth() > 0)
+			{
+				cout << players[i].getName() << " won!! He is the last monster standing." << endl;
+			}
+		}
+		return true;
+	}
+
+	for (int i = 0; i < players.size(); i++) {
+		if (players[i].getVictoryPoints() >= 20) {
+			cout << players[i].getName() << " won!!He is the first monster to get 20 victory points!!" << endl;
+			return true;
+		}
+	}
+
 	return false;
 }
 

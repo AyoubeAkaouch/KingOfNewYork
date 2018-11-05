@@ -105,23 +105,20 @@ void Player::setRegion(Region& region)
 
 
 
-void Player::buyCards(EffectCard card,EffectCardDeck* deck)
+bool Player::buyCards(EffectCard card)
 {
 	if (card.getCost() > energyCubes)
 	{
 		cout << "You can't buy this card, you don't have enough energy cubes.\n";
+		return false;
 	}
 	else
 	{
-		EffectCard returned = deck->pickCard(card.getName());
-		if (returned.getName() == card.getName()) {
+		
 			cards.push_back(card);
 			this->energyCubes = this->energyCubes - card.getCost();
 			cout << "The card was purchased.\n";
-		}
-		else {
-			cout << "This card does not currently exist in the deck of cards.\n";
-		}
+			return true;
 		
 	}
 }
@@ -129,6 +126,23 @@ void Player::buyCards(EffectCard card,EffectCardDeck* deck)
 void Player::addEnergyCubes(int i)
 {
 	this->energyCubes = energyCubes + i;
+}
+
+bool Player::removeEnergy(int i)
+{
+	if (energyCubes < i) {
+		cout << "You do not have enough funds!" << endl;
+		return false;
+	}
+	else {
+		energyCubes = energyCubes - i;
+		return true;
+	}
+}
+
+int Player::getEnergyCubes()
+{
+	return energyCubes;
 }
 
 

@@ -20,4 +20,4 @@ using namespace std;
  void buyCards(Player& player,vector<EffectCard>& buyableCards,EffectCardDeck& effectCards);
  vector<int> stringToVectorInt(string reRolls); // To help with parsing input when selecting rerolls
  void applyDiceEffect(vector<string> effect, Player& player, GameMap& gameMap, vector<Player> & players);
- bool gameEnded();
+ bool gameEnded(vector<Player>& players, GameMap& gameMap);// In this one we remove all players that are at 0 health and check if winning condition achieved!
