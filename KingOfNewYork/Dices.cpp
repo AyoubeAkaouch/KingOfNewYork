@@ -1,7 +1,6 @@
 #include "Dices.h"
 #include <string>
 #include <vector>
-#include <sstream>
 #include <iostream>
 
 
@@ -75,18 +74,6 @@ void Dices::rollDices(vector<int>* dicesToRoll)
 	updateHistory();
 }
 
-
-vector<int> Dices::stringToVectorInt(string reRolls)
-{
-	stringstream iss(reRolls);
-	int number;
-	vector<int> myNumbers;
-
-
-	while (iss >> number)
-		myNumbers.push_back(number);
-	return myNumbers;
-}
 
 map<int, string> Dices::getCurrentValues()
 {

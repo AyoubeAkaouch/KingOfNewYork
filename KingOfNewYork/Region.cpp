@@ -7,6 +7,7 @@ using namespace std;
 
 Region::Region()
 {
+	name = "";
 }
 
 Region::Region(string name )
@@ -15,7 +16,7 @@ Region::Region(string name )
 	maxPlayers = 2;//Default number of players
 }
 
-Region::Region(string name,GraphGeneric<SubRegion> subRegion)//Creates a region with 1 subregion
+Region::Region(string name,GraphGeneric<SubRegion>& subRegion)//Creates a region with 1 subregion
 {
 	this->name = name;
 	string player = findOwnerOfSubregions(subRegion);

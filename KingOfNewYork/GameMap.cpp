@@ -31,6 +31,16 @@ vector<Region>& GameMap::getAllRegions()
 {
 	return allRegions;
 }
+
+void GameMap::removeOwner(string name, Region& region)
+{
+	for (size_t i = 0; i < allRegions.size(); i++)
+	{
+		if (allRegions[i] == region)
+			allRegions[i].removePlayer(name);
+	}
+}
+
 bool GameMap::setOwnerRegion(string name,Region& region)
 {
 	for (size_t i = 0; i < allRegions.size(); i++)
@@ -54,9 +64,9 @@ vector<string> GameMap::getOwners(Region& region)
 void GameMap::move(Player& player, Region& region)
 {
 	//Check if move is possible
-	if (player.getRegion() == NULL)
+	if (player.getRegion().getName() == "")
 	{
-		player.setRegion(&region);
+		player.setRegion(region);
 		cout << "Player succesfully moved!\n";
 	}
 	else if (!(find(allRegions.begin(), allRegions.end(), region) != allRegions.end())) // If region doesnt exist
@@ -66,12 +76,49 @@ void GameMap::move(Player& player, Region& region)
 	else
 	{
 		if (region.setOwner(player.getName())) {
-			player.getRegion()->removePlayer(player.getName());
-			player.setRegion(&region);
+			player.getRegion().removePlayer(player.getName());
+			player.setRegion(region);
 			cout << "Player succesfully moved!\n";
 		}
 	}
 }
+Player & GameMap::getOwnerSuperStar(vector<Player>& players)
+{
+	int currentOwner;
+	//Do this to find current owner of superstar
+	for (int i = 0; i < players.size(); i++) {
+		if (players[i].getName() == ownerSuperStar) {
+			currentOwner = i;
+			break;
+		}
+	}
+
+	return players[currentOwner];
+}
+void GameMap::setOwnerSuperStar(Player& player,vector<Player>& players)
+{
+	if (ownerSuperStar == "") {
+		ownerSuperStar = player.getName();
+		player.setSuperStar(true);
+	}
+	else {
+		int currentOwner;
+		//Do this to find current owner of superstar
+		for (int i = 0; i < players.size(); i++) {
+			if (players[i].getName() == ownerSuperStar) {
+				currentOwner = i;
+				break;
+			}
+		}
+
+		//Removing ownership to the player before passing it to the new player
+		players[currentOwner].setSuperStar(false);
+		ownerSuperStar = player.getName();
+		player.setSuperStar(true);
+
+	}
+}
+
 ostream & operator<<(ostream & os, GameMap & gameMap)
 {
 	vector<Region> regions = gameMap.getAllRegions();

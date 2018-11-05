@@ -16,26 +16,27 @@ private:
 	vector<EffectCard> cards;
 	vector<Token> tokens;
 	Monster monster;
-	Region* region;
+	Region& region;
 	Dices dices;
 	int energyCubes;
 	string name;
+	bool superStar=false;
 
 public:
 	Player();
 	Player(Monster monster);
-	Player(Monster monster, Region* region);
+	Player(Monster monster, Region& region);
 	~Player();
 
 	map<int, string> RollDices(); // For first roll
 	map<int, string> RollDicesExtra(); // For first roll
-	map<int, string> RollDices(vector<int>* dicesToRoll); //For rerolls
-	map<int, string> RollDicesExtra(vector<int>* dicesToRoll); //For rerolls
-	Dices&  getDices();	
+	bool RollDices(vector<int>* dicesToRoll); //For rerolls, same method with or without extra dices
+	Dices&  getDices();
+	map<int, string> getCurrentValues();
 	void resolveDices();
 
-	Region* getRegion(); 
-	void setRegion(Region* region);
+	Region& getRegion(); 
+	void setRegion(Region& region);
 
 	void displayCards();
 	void buyCards(EffectCard card, EffectCardDeck* deck);
@@ -47,6 +48,10 @@ public:
 	void removeHealth(int health);
 	void addPoints(int points);
 	void removePoints(int points);
+	
+	bool hasSuperStar();
+	void setSuperStar(bool has);
+
 	friend ostream & operator<<(ostream & os, const Player & player);
 };
 

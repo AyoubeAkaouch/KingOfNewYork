@@ -4,41 +4,34 @@
 using namespace std;
 
 
-Player::Player()
+Player::Player() : region(*(new Region()))
 {
 }
 
-Player::Player(Monster monster)
+Player::Player(Monster monster) : region(*(new Region()))
 {
 	this->monster = monster;
 	this->name = monster.getName();
-	this->region = NULL;
 	this->energyCubes = 0;
 }
 
-Player::Player(Monster monster, Region * region)
+Player::Player(Monster monster, Region& region) : region(region)
 {
 	this->monster = monster;
-	this->region = region;
 	this->name = monster.getName();
-	region->setOwner(monster.getName());
+	region.setOwner(monster.getName());
 }
 
 Player::~Player()
 {
 }
 
-map<int, string> Player::RollDices(vector<int>* dicesToRoll) //For rerolls
+bool Player::RollDices(vector<int>* dicesToRoll) //For rerolls
 {
-	dices.reroll(dicesToRoll);
-	return dices.getCurrentValues();
+	return dices.reroll(dicesToRoll);
+	
 }
 
-map<int, string> Player::RollDicesExtra(vector<int>* dicesToRoll)
-{
-	dices.reroll(dicesToRoll);
-	return dices.getCurrentValues();
-}
 
 map<int, string> Player::RollDices()
 {
@@ -55,6 +48,11 @@ map<int, string> Player::RollDicesExtra()
 Dices& Player::getDices()
 {
 	return dices;
+}
+
+map<int, string> Player::getCurrentValues()
+{
+	return dices.getCurrentValues();
 }
 
 string Player::getName() {
@@ -95,12 +93,12 @@ void Player::resolveDices()
 	}
 }
 
-Region * Player::getRegion()
+Region& Player::getRegion()
 {
 	return this->region;
 }
 
-void Player::setRegion(Region * region)
+void Player::setRegion(Region& region)
 {
 	this->region = region;
 }
@@ -146,7 +144,13 @@ int Player::getVictoryPoints() const
 
 void Player::addHealth(int health)
 {
-	monster.addHealth(health);
+	if (getHealth() == 10) {
+		cout << "Can't add more health, you are already at full health!" << endl;
+	}
+	else {
+		monster.addHealth(health);
+	}
+
 }
 
 void Player::removeHealth(int health)
@@ -162,6 +166,16 @@ void Player::addPoints(int points)
 void Player::removePoints(int points)
 {
 	monster.removePoints(points);
+}
+
+bool Player::hasSuperStar()
+{
+	return superStar ;
+}
+
+void Player::setSuperStar(bool has)
+{
+	this->superStar = has;
 }
 
 ostream & operator<<(ostream & os, const Player & player)

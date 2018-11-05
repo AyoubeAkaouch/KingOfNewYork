@@ -20,7 +20,7 @@ private:
 public:
 	Region();
 	Region(string name);//Has a default of 2 players
-	Region(string name, GraphGeneric<SubRegion> subRegion);
+	Region(string name, GraphGeneric<SubRegion>& subRegion);
 	Region(string name, int maxPlayers);//Creates a region with no subregions.
 	~Region();
 	const Region* pointer = this; //Testing purposes
