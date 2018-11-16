@@ -7,9 +7,13 @@
 #include "Region.h"
 #include "Dices.h"
 #include "EffectCardDeck.h"
+#include "StrategyPlayerInterface.h"
+#include "GameMap.h"
 
 using namespace std;
-
+class StrategyPlayerInterface;
+class GameMap;
+	
 class Player
 {
 private:
@@ -21,6 +25,7 @@ private:
 	int energyCubes;
 	string name;
 	bool superStar=false;
+	StrategyPlayerInterface* playerBehaviour;
 
 public:
 	Player();
@@ -53,6 +58,11 @@ public:
 	
 	bool hasSuperStar();
 	void setSuperStar(bool has);
+
+	void move(Player & player, GameMap & gameMap, bool gotAttacked) ;
+	void resolveDices(Player & player, GameMap& gameMap, vector<Player> & players);
+	void diceRoll(Player & player, bool extraDices);
+	void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards);
 
 	friend ostream & operator<<(ostream & os, const Player & player);
 };

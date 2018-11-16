@@ -51,6 +51,11 @@ string Region::getName() const
 	return this->name;
 }
 
+int Region::getMaxPlayers()
+{
+	return maxPlayers;
+}
+
 bool Region::setOwner(string player)
 {
 	if (currentOwners.size() == maxPlayers)

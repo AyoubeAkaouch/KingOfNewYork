@@ -26,6 +26,7 @@ public:
 	const Region* pointer = this; //Testing purposes
 	vector<string> getOwners();
 	string getName() const;
+	int getMaxPlayers();
 	// Change for player object
 	bool setOwner(string player);// Take player object after
 	void removePlayer(string player);// Take player object after

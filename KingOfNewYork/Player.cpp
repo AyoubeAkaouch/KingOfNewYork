@@ -192,6 +192,26 @@ void Player::setSuperStar(bool has)
 	this->superStar = has;
 }
 
+void Player::move(Player & player, GameMap & gameMap, bool gotAttacked)
+{
+	playerBehaviour->move(player,  gameMap, gotAttacked);
+}
+
+void Player::resolveDices(Player & player, GameMap & gameMap, vector<Player>& players)
+{
+	playerBehaviour->resolveDices(player,gameMap,players);
+}
+
+void Player::diceRoll(Player & player, bool extraDices)
+{
+	playerBehaviour->diceRoll(player,extraDices);
+}
+
+void Player::buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
+{
+	playerBehaviour->buyCards(player,buyableCards,effectCards);
+}
+
 ostream & operator<<(ostream & os, const Player & player)
 {
 	return os<<player.monster;

@@ -32,11 +32,13 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Region.h" />
+    <ClInclude Include="StrategyPlayerInterface.h" />
     <ClInclude Include="SubRegion.h" />
     <ClInclude Include="TestClass.h" />
     <ClInclude Include="Token.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AggressivePlayerStrategy.cpp" />
     <ClCompile Include="BuildingTiles.cpp" />
     <ClCompile Include="BuildingTilesDeck.cpp" />
     <ClCompile Include="Dices.cpp" />
