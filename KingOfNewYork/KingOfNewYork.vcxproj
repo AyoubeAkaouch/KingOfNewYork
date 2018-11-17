@@ -39,12 +39,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AggressivePlayerStrategy.cpp" />
+    <ClCompile Include="BalancedPlayerStrategy.cpp" />
     <ClCompile Include="BuildingTiles.cpp" />
     <ClCompile Include="BuildingTilesDeck.cpp" />
     <ClCompile Include="Dices.cpp" />
     <ClCompile Include="EffectCard.cpp" />
     <ClCompile Include="EffectCardDeck.cpp" />
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="HumanPlayerStrategy.cpp" />
     <ClCompile Include="LoadGamePieces.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Monster.cpp" />

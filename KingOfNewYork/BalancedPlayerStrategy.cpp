@@ -1,21 +1,21 @@
 #include "StrategyPlayerInterface.h"
 
-class AggressivePlayerStrategy : public StrategyPlayerInterface {
+class BalancedPlayerStrategy : public StrategyPlayerInterface {
 public:
 
 	/*
 		The aggressive player strategy will have this player profile:
-			- During dice rolls : Will reroll anything that is not Destruction or Attack.
+			- During dice rolls : Will reroll anything that is not Heal or Attack.
 			- Resolve dices : Will just resolve in whatever order the dices are returned.
-			- Move : Will always try to get out off manhattan whenever he has the occasion, if not in manhattan will stay same position.
+			- Move : Will always stay in  Manhattan.
 			- Buy cards: Will always try to buy a card.
 	*/
-	 AggressivePlayerStrategy() {}
-	virtual ~AggressivePlayerStrategy() {}
+	BalancedPlayerStrategy() {}
+	virtual ~BalancedPlayerStrategy() {}
 
 
 	virtual void move(Player & player, GameMap & gameMap, bool gotAttacked) override {
-	
+
 		vector<Region> availableRegion = gameMap.getAllRegions();
 		int indexManhattan;
 		char changeRegion;
@@ -42,12 +42,12 @@ public:
 			player.addPoints(2);
 			player.addEnergyCubes(2);
 		}
-		//If in Manhattan and got attacked offer the player to move somewhere else.
+		//If in Manhattan and got attacked player stays here.
 		else if (player.getRegion().getName() == "Manhattan" && gotAttacked) {
 			Region currentRegionName = player.getRegion();
 			cout << "Oh no! Another player attacked you :( Would you like to move to a different borough outside of Manhattan?(y/n)" << endl;
-			cout << "Aggressive player will automatically move out of Manhattan" << endl;
-		
+			cout << "Balanced player will stay in Manhattan" << endl;
+
 
 			//Finding the first avaialble region to move our player to and putting him there.
 			for (int i = 0; i < availableRegion.size(); i++) {
@@ -65,14 +65,14 @@ public:
 			cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
 			cout << "Manhattan is now empty watch out!" << endl;
 
-			
-			
+
+
 		}
 		//A player in a normal borough is asked if he wants to move
 		else {
 			cout << "Would you like to change boroughs?(y/n)" << endl;
-			cout << "Aggressive player will stay in the same borough automatically." << endl;
-		}	
+			cout << "Balanced player will stay in the same borough automatically." << endl;
+		}
 	}
 
 	virtual void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players) override
@@ -85,9 +85,9 @@ public:
 		vector<string> resolved; // Since we are getting a pointer we can't erase from map what has already been resolve, it wil change dice object.
 		map<int, string> currentDices = player.getCurrentValues();
 		int dicesResolved = 0;
-		for (int j = 0; j < currentDices.size();j++) //Until all dices are resolved
+		for (int j = 0; j < currentDices.size(); j++) //Until all dices are resolved
 		{
-			toResolve=currentDices.at(j);
+			toResolve = currentDices.at(j);
 			for (int i = 0; i < currentDices.size(); i++)
 			{
 				if (currentDices.at(i) == toResolve && !(find(resolved.begin(), resolved.end(), toResolve) != resolved.end()))
@@ -105,7 +105,7 @@ public:
 	virtual void diceRoll(Player & player, bool extraDices) override
 	{
 		bool canRoll = true;
-		char rollAgain='n';
+		char rollAgain = 'n';
 		vector<int> toReroll;
 
 
@@ -126,9 +126,9 @@ public:
 			rollAgain = 'n';//Having it default to no reroll until we check if a reroll is necessary. If all dices are attack or desrtrruction no need to reroll!
 
 			//Here we check if we have at least on dice that is not attack or destruction to see if we proceed with a reroll
-			for (int i = 0; i < currentDices.size();i++) {
-			
-				if (currentDices.at(i) == "Destruction" || currentDices.at(i) == "Attack") {
+			for (int i = 0; i < currentDices.size(); i++) {
+
+				if (currentDices.at(i) == "Heal" || currentDices.at(i) == "Attack") {
 					//Do nothing we keep them
 				}
 				else {
@@ -142,22 +142,22 @@ public:
 			{
 				cout << "Automatically rerolling anything that is not Attack or Destruction" << endl;
 				//Going through all possible dices and if it is not a destrction or attack reroll it.
-				for (int i = 0; i < currentDices.size();i++) {
+				for (int i = 0; i < currentDices.size(); i++) {
 
-					if (currentDices.at(i) == "Destruction" || currentDices.at(i) == "Attack") {
-							//Do nothing we keep them
+					if (currentDices.at(i) == "Heal" || currentDices.at(i) == "Attack") {
+						//Do nothing we keep them
 					}
 					else {
 						toReroll.push_back(i);
 					}
 				}
-				
+
 				cout << "Rerolled dices are the following: ";
-				for (int i = 0; i < toReroll.size();i++) {
+				for (int i = 0; i < toReroll.size(); i++) {
 					cout << toReroll[i] << "  ";
 				}
 
-				cout << endl ;
+				cout << endl;
 				canRoll = player.RollDices(&toReroll);
 				toReroll.clear(); // Clearing to have an empty vector if there is another set of rerolls
 				cout << "\nHere are your current dices:\n" << player.getDices();
@@ -175,7 +175,7 @@ public:
 	{
 		bool done = false;
 		cout << "Aggressive player now checking if he will buy a card or not." << endl;
-		
+
 		cout << "Here are the 3 cards that you can buy:" << endl;
 		for (int i = 0; i < buyableCards.size(); i++) {
 			cout << i << ") " << buyableCards[i] << endl;
@@ -183,8 +183,8 @@ public:
 
 		//Going over the possible cards and buying the first card the player can get.
 		//If no cards were bought pay 2 energy if possible to change all cards.
-		for (int i = 0; i < buyableCards.size();i++) {
-			if (buyableCards[i].getCost() < player.getEnergyCubes()){
+		for (int i = 0; i < buyableCards.size(); i++) {
+			if (buyableCards[i].getCost() < player.getEnergyCubes()) {
 				done = player.buyCards(buyableCards[i]);
 				buyableCards.erase(buyableCards.begin() + i);
 				buyableCards.push_back(effectCards.draw());
@@ -266,7 +266,7 @@ private:
 						noOneInManhattan = false;
 						players[i]->removeHealth(effect.size());
 						cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
-						move(*players[i], gameMap, true);
+						players[i]->move(*players[i], gameMap, true);
 					}
 				}
 				//If no one in manhattan the attack dices had no effect
@@ -295,6 +295,3 @@ private:
 
 
 };
-
-
-

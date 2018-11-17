@@ -1,18 +1,21 @@
 #include "DriverMethods.h"
+#include "AggressivePlayerStrategy.cpp"
+#include "BalancedPlayerStrategy.cpp"
+#include "HumanPlayerStrategy.cpp"
 
 
 using namespace std;
 
-int firstPlayer(vector<Player> players) {
+int firstPlayer(vector<Player*>& players) {
 	int bestPlayerRollPosition=0, currentBestRoll=0, numberOfAttacks=0;
 	vector<int> equalTopRolls; // Used to deal with equal rolls
 
 	cout << "~~~~~~~~~~~We are now determining who goes first!~~~~~~~~~~~" << endl << endl;
 
 	for (int i = 0; i < players.size(); i++) {
-		cout << players[i].getName() << " press Enter to roll your dices!" << endl;
-		map<int, string > current = players[i].RollDicesExtra();
-		cout << players[i].getDices() << endl << endl;
+		cout << players[i]->getName() << " press Enter to roll your dices!" << endl;
+		map<int, string > current = players[i]->RollDicesExtra();
+		cout << players[i]->getDices() << endl << endl;
 		for (int j = 0; j < current.size();j++) {
 			
 			if (current[j] == "Attack") {
@@ -44,10 +47,10 @@ int firstPlayer(vector<Player> players) {
 		equalTopRolls.clear();
 
 		for (int i = 0; i < rerolls.size(); i++) {
-			cout << players[rerolls[i]].getName() << " press Enter to roll your dices!" << endl;
+			cout << players[rerolls[i]]->getName() << " press Enter to roll your dices!" << endl;
 			//cin.get();
-			map<int, string > current = players[rerolls[i]].RollDicesExtra();
-			cout << players[rerolls[i]].getDices() << endl;
+			map<int, string > current = players[rerolls[i]]->RollDicesExtra();
+			cout << players[rerolls[i]]->getDices() << endl;
 			for (int j = 0; j < current.size(); j++) {
 
 				if (current[j] == "Attack") {
@@ -69,13 +72,13 @@ int firstPlayer(vector<Player> players) {
 			numberOfAttacks = 0; // Reseting our counter
 		}
 	}
-	cout << players[bestPlayerRollPosition].getName() << " starts! Then the others play clockwise" << endl;
+	cout << players[bestPlayerRollPosition]->getName() << " starts! Then the others play clockwise" << endl;
 
 	return bestPlayerRollPosition;
 
 }
 
-void settingRegions(GameMap& gameMap, vector<Player>& players, int currentTurn) {
+void settingRegions(GameMap& gameMap, vector<Player*>& players, int currentTurn) {
 	cout << "~~~~~~~~~~~~~We are now setting up the pieces on the board!~~~~~~~~~~~~~" << endl;
 	cout << "--------------------------------MAP--------------------------------"<< endl << endl;
 	cout << gameMap;
@@ -96,24 +99,24 @@ void settingRegions(GameMap& gameMap, vector<Player>& players, int currentTurn) 
 	
 	for (int i = 0; i < players.size() ; i++ ) {
 		isSet = false;
-		cout << players[(i + currentTurn) % players.size()].getName() << " which region do you want to start in (Choose by index)?"<<endl;
+		cout << players[(i + currentTurn) % players.size()]->getName() << " which region do you want to start in (Choose by index)?"<<endl;
 		while (!isSet) {
 			cin >> selectedRegion;
 			if (availableRegion[selectedRegion].getName() == "Manhattan") {
 				cout << "A player can't select Manhattan as his staring region, Please select another one!" << endl;
 			}
 			else {
-				isSet = gameMap.setOwnerRegion(players[(i + currentTurn) % players.size()].getName(), availableRegion[selectedRegion]);
+				isSet = gameMap.setOwnerRegion(players[(i + currentTurn) % players.size()]->getName(), availableRegion[selectedRegion]);
 				if (!isSet) {
 					cout << "Select another region please." << endl;
 				}
 			}
 		}
-		players[(i + currentTurn) % players.size()].setRegion(availableRegion[selectedRegion]);
+		players[(i + currentTurn) % players.size()]->setRegion(availableRegion[selectedRegion]);
 	}
 }
 
-void setPlayers(vector<Player>& players, vector<Monster>& monsters)
+void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlayerInterface* strategy)
 {
 	//Setup the number of players and associate them to a monster card
 	int numberOfPlayers;
@@ -133,13 +136,23 @@ void setPlayers(vector<Player>& players, vector<Monster>& monsters)
 		}
 		cout << " }" << endl;
 		cin >> x;
-		players.push_back(Player(monsters[x]));
-		monsters.erase(monsters.begin() + x);
+		if (i%3==0) {
+			players.push_back(new Player(monsters[x], new AggressivePlayerStrategy()));
+			monsters.erase(monsters.begin() + x);
+		}
+		else if(i%3==1){
+			players.push_back(new Player(monsters[x], new BalancedPlayerStrategy()));
+			monsters.erase(monsters.begin() + x);
+		}
+		else {
+			players.push_back(new Player(monsters[x], new HumanPlayerStrategy()));
+			monsters.erase(monsters.begin() + x);
+		}
 	}
 }
 
 
-void gameLoop(vector<Player>& players, GameMap & gameMap, EffectCardDeck & effectCards, BuildingTilesDeck & tilesDeck, map<string, vector<Token>>& tokens, int firstToPlay)
+void gameLoop(vector<Player*>& players, GameMap & gameMap, EffectCardDeck & effectCards, BuildingTilesDeck & tilesDeck, map<string, vector<Token>>& tokens, int firstToPlay)
 {
 	vector<EffectCard> buyableCards; // This will be a smaller deck of 3 cards that the player can purchase
 	effectCards.shuffle(); //Making sure all cards are shuffled before drawing the top 3
@@ -150,20 +163,20 @@ void gameLoop(vector<Player>& players, GameMap & gameMap, EffectCardDeck & effec
 	}
 	
 	int turnOf = firstToPlay;
-	players[turnOf].addEnergyCubes(50); //To test the buying card feature!
+	players[turnOf]->addEnergyCubes(50); //To test the buying card feature!
 	while (!gameEnded(players,gameMap) && stop == "x") //This method will check if game ended yet (20 victory points or only 1 player left)
 	{
 		//If player doesn't have any health he can't play anymore
-		if (players[turnOf].getHealth()>0) {
-			cout << endl << "It is now " << players[turnOf].getName() << "\'s turn." << endl;
+		if (players[turnOf]->getHealth()>0) {
+			cout << endl << "It is now " << players[turnOf]->getName() << "\'s turn." << endl;
 
-			diceRoll(players[turnOf], false);//Up to 3times, rerolls will be handled inside this method
+			players[turnOf]->diceRoll(*players[turnOf], false);//Up to 3times, rerolls will be handled inside this method
 			cout << endl;
-			resolveDices(players[turnOf], gameMap, players);//Mandatory
+			players[turnOf]->resolveDices(*players[turnOf], gameMap, players);//Mandatory
 			cout << endl;
-			move(players[turnOf], gameMap, false); //Method will check if player wants to move or not, will also check if manhattan is empty it will move him there automatically
+			players[turnOf]->move(*players[turnOf], gameMap, false); //Method will check if player wants to move or not, will also check if manhattan is empty it will move him there automatically
 			cout << endl;
-			buyCards(players[turnOf], buyableCards, effectCards); //Will first prompt the player to ask if he wants to buy card, then will proceed.
+			players[turnOf]->buyCards(*players[turnOf], buyableCards, effectCards); //Will first prompt the player to ask if he wants to buy card, then will proceed.
 			cout << endl;
 		}
 		
@@ -212,7 +225,7 @@ void diceRoll(Player & player,bool extraDices)
 
 }
 
-void resolveDices(Player & player, GameMap& gameMap, vector<Player> & players)
+void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players)
 {
 	string toResolve;
 	vector<string> sameToResolve;
@@ -410,12 +423,12 @@ vector<int> stringToVectorInt(string reRolls)
 	return myNumbers;
 }
 
-bool gameEnded(vector<Player>& players, GameMap& gameMap)
+bool gameEnded(vector<Player*>& players, GameMap& gameMap)
 {
 	static vector<int> deletedPlayers;
 	for (int i = 0; i < players.size() ; i++) {
 		//Deleting player from the game! No more turns for him. Removing him from gameMap
-		if (players[i].getHealth()<=0) {
+		if (players[i]->getHealth()<=0) {
 			bool alreadyDeleted = false;
 			for (int j = 0; j < deletedPlayers.size(); j++) {
 				if (deletedPlayers[j] == i) {
@@ -425,8 +438,8 @@ bool gameEnded(vector<Player>& players, GameMap& gameMap)
 				
 			}
 			if (!alreadyDeleted) {
-				cout << players[i].getName() << " you have lost and been removed from the game Map." << endl;
-				gameMap.removeOwner(players[i].getName(), players[i].getRegion());// Removing player from his current Region
+				cout << players[i]->getName() << " you have lost and been removed from the game Map." << endl;
+				gameMap.removeOwner(players[i]->getName(), players[i]->getRegion());// Removing player from his current Region
 				deletedPlayers.push_back(i);
 			}
 			
@@ -436,17 +449,17 @@ bool gameEnded(vector<Player>& players, GameMap& gameMap)
 	//Checks if only one player left, declare winner and return true
 	if (deletedPlayers.size() + 1 == players.size()) {
 		for (int i = 0; i < players.size(); i++) {
-			if (players[i].getHealth() > 0)
+			if (players[i]->getHealth() > 0)
 			{
-				cout << players[i].getName() << " won!! He is the last monster standing." << endl;
+				cout << players[i]->getName() << " won!! He is the last monster standing." << endl;
 			}
 		}
 		return true;
 	}
 
 	for (int i = 0; i < players.size(); i++) {
-		if (players[i].getVictoryPoints() >= 20) {
-			cout << players[i].getName() << " won!!He is the first monster to get 20 victory points!!" << endl;
+		if (players[i]->getVictoryPoints() >= 20) {
+			cout << players[i]->getName() << " won!!He is the first monster to get 20 victory points!!" << endl;
 			return true;
 		}
 	}
@@ -454,7 +467,7 @@ bool gameEnded(vector<Player>& players, GameMap& gameMap)
 	return false;
 }
 
-void applyDiceEffect(vector<string> effect,Player& player,GameMap& gameMap, vector<Player> & players) {
+void applyDiceEffect(vector<string> effect,Player& player,GameMap& gameMap, vector<Player*> & players) {
 	//For all the if statement only checking the first index because we can't pass an empty vector!
 	
 	if (effect.empty()) {
@@ -486,10 +499,10 @@ void applyDiceEffect(vector<string> effect,Player& player,GameMap& gameMap, vect
 		//apply damage to everyone outside of manhattan if in manhattan
 		if (player.getRegion().getName() == "Manhattan") {
 			for (int i = 0; i < players.size(); i++) {
-				if (players[i].getRegion().getName() != "Manhattan")
+				if (players[i]->getRegion().getName() != "Manhattan")
 				{
-					players[i].removeHealth(effect.size());
-					cout << players[i].getName() << " just lost " << effect.size() << " health by being attacked." << endl;
+					players[i]->removeHealth(effect.size());
+					cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
 				}
 			}
 		}
@@ -497,12 +510,12 @@ void applyDiceEffect(vector<string> effect,Player& player,GameMap& gameMap, vect
 		else {
 			bool noOneInManhattan = true;
 			for (int i = 0; i < players.size(); i++) {
-				if (players[i].getRegion().getName() == "Manhattan")
+				if (players[i]->getRegion().getName() == "Manhattan")
 				{
 					noOneInManhattan = false;
-					players[i].removeHealth(effect.size());
-					cout << players[i].getName() << " just lost " << effect.size() << " health by being attacked." << endl;
-					move(players[i],gameMap,true);
+					players[i]->removeHealth(effect.size());
+					cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
+					move(*players[i],gameMap,true);
 				}
 			}
 			//If no one in manhattan the attack dices had no effect
@@ -523,7 +536,7 @@ void applyDiceEffect(vector<string> effect,Player& player,GameMap& gameMap, vect
 		else {
 			addedHealth = effect.size();
 		}
-		player.addHealth(effect.size());
+		player.addHealth(addedHealth);
 		cout << player.getName() << " just gained " << addedHealth << " health points." << endl;
 
 	}

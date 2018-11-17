@@ -1,21 +1,23 @@
 #include "StrategyPlayerInterface.h"
+#include <sstream>
 
-class AggressivePlayerStrategy : public StrategyPlayerInterface {
+
+class HumanPlayerStrategy : public StrategyPlayerInterface {
 public:
 
 	/*
 		The aggressive player strategy will have this player profile:
-			- During dice rolls : Will reroll anything that is not Destruction or Attack.
+			- During dice rolls : Will reroll anything that is not Heal or Attack.
 			- Resolve dices : Will just resolve in whatever order the dices are returned.
-			- Move : Will always try to get out off manhattan whenever he has the occasion, if not in manhattan will stay same position.
+			- Move : Will always stay in  Manhattan.
 			- Buy cards: Will always try to buy a card.
 	*/
-	 AggressivePlayerStrategy() {}
-	virtual ~AggressivePlayerStrategy() {}
+	HumanPlayerStrategy() {}
+	virtual ~HumanPlayerStrategy() {}
 
 
-	virtual void move(Player & player, GameMap & gameMap, bool gotAttacked) override {
-	
+	virtual void move(Player & player, GameMap & gameMap, bool gotAttacked)
+	{
 		vector<Region> availableRegion = gameMap.getAllRegions();
 		int indexManhattan;
 		char changeRegion;
@@ -33,61 +35,108 @@ public:
 			gameMap.setOwnerRegion(player.getName(), availableRegion[indexManhattan]); // Adding him to new region
 			player.setRegion(availableRegion[indexManhattan]); // Pointing to new region where player is
 			cout << "No one currently in Manhattan, you were placed in Manhattan, you unfortunately have no choice!" << endl;
-			player.addPoints(1);
-			player.addEnergyCubes(2);
 		}
 		//If already in manhattan, move player one level upper
 		else if (player.getRegion().getName() == "Manhattan" && !gotAttacked) {
 			cout << "You are currently in Manhattan, you can't change boroughs but you are moving one space up inside of Manhattan!" << endl;
-			player.addPoints(2);
-			player.addEnergyCubes(2);
 		}
 		//If in Manhattan and got attacked offer the player to move somewhere else.
 		else if (player.getRegion().getName() == "Manhattan" && gotAttacked) {
 			Region currentRegionName = player.getRegion();
 			cout << "Oh no! Another player attacked you :( Would you like to move to a different borough outside of Manhattan?(y/n)" << endl;
-			cout << "Aggressive player will automatically move out of Manhattan" << endl;
-		
+			cin >> changeRegion;
+			if (changeRegion == 'y') {
+				//Showing the possible regions for him to go
+				cout << "All the regions in this map: ";
+				for (int i = 0; i < availableRegion.size(); i++) {
 
-			//Finding the first avaialble region to move our player to and putting him there.
-			for (int i = 0; i < availableRegion.size(); i++) {
+					cout << i << ") " << availableRegion[i].getName() << " ";
 
-				if (availableRegion[i].getOwners().size() < availableRegion[i].getMaxPlayers()) {
-					selectedRegion = i;
-					gameMap.setOwnerRegion(player.getName(), availableRegion[i]);
-					break;
 				}
+				cout << endl;
+
+
+				bool isSet = false;
+
+				cout << player.getName() << " which region do you want to go to (Choose by index)?" << endl;
+				while (!isSet) {
+					cin >> selectedRegion;
+					if (availableRegion[selectedRegion].getName() == "Manhattan") {
+						cout << "You can't choose Manhattan again sorry!" << endl;
+						cout << "Select another region please." << endl;
+					}
+					else {
+						isSet = gameMap.setOwnerRegion(player.getName(), availableRegion[selectedRegion]);
+						if (!isSet) {
+							cout << "Select another region please." << endl;
+						}
+					}
+				}
+				gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
+				player.setRegion(availableRegion[selectedRegion]);
+				cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
+				cout << "Manhattan is now empty watch out!" << endl;
 
 			}
-
-			gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
-			player.setRegion(availableRegion[selectedRegion]);
-			cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
-			cout << "Manhattan is now empty watch out!" << endl;
-
-			
-			
+			else {
+				cout << "Alright! " << player.getName() << " stays in Manhattan" << endl;
+			}
 		}
 		//A player in a normal borough is asked if he wants to move
 		else {
 			cout << "Would you like to change boroughs?(y/n)" << endl;
-			cout << "Aggressive player will stay in the same borough automatically." << endl;
-		}	
+			cin >> changeRegion;
+			if (changeRegion == 'y') {
+				//Showing the possible regions for him to go
+				cout << "All the regions in this map: ";
+				for (int i = 0; i < availableRegion.size(); i++) {
+
+					cout << i << ") " << availableRegion[i].getName() << " ";
+
+				}
+				cout << endl;
+
+
+				bool isSet = false;
+				cout << player.getName() << " you are now currently in " << player.getRegion().getName() << endl;
+				cout << player.getName() << " which region do you want to go to (Choose by index)?" << endl;
+				while (!isSet) {
+					cin >> selectedRegion;
+					if (availableRegion[selectedRegion].getName() == "Manhattan") {
+						cout << "You can't choose Manhattan sorry!" << endl;
+					}
+					else if (availableRegion[selectedRegion].getName() == player.getRegion().getName()) {
+						cout << "You are already in this region! This is not a legal move." << endl;
+					}
+					else {
+						isSet = gameMap.setOwnerRegion(player.getName(), availableRegion[selectedRegion]);
+						if (!isSet) {
+							cout << "Select another region please." << endl;
+						}
+					}
+				}
+				cout << "THE REGION INSIDE PLAYER OBJECT " << player.getRegion().getName();
+				gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
+				player.setRegion(availableRegion[selectedRegion]);
+				cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
+			}
+		}
+
+
+
 	}
 
-	virtual void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players) override
+	virtual void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players)
 	{
-
-		cout << "Automatically resolving all the rolled dices!" << endl;
-
 		string toResolve;
 		vector<string> sameToResolve;
 		vector<string> resolved; // Since we are getting a pointer we can't erase from map what has already been resolve, it wil change dice object.
 		map<int, string> currentDices = player.getCurrentValues();
 		int dicesResolved = 0;
-		for (int j = 0; j < currentDices.size();j++) //Until all dices are resolved
+		while (dicesResolved < 6) //Until all dices are resolved
 		{
-			toResolve=currentDices.at(j);
+			cout << "Which effect you want to apply?\n";
+			cin >> toResolve;
 			for (int i = 0; i < currentDices.size(); i++)
 			{
 				if (currentDices.at(i) == toResolve && !(find(resolved.begin(), resolved.end(), toResolve) != resolved.end()))
@@ -102,10 +151,11 @@ public:
 		}
 	}
 
-	virtual void diceRoll(Player & player, bool extraDices) override
+
+	virtual void diceRoll(Player & player, bool extraDices)
 	{
 		bool canRoll = true;
-		char rollAgain='n';
+		char rollAgain;
 		vector<int> toReroll;
 
 
@@ -118,50 +168,20 @@ public:
 
 
 		cout << "Here is the first roll :\n" << player.getDices();
-		map<int, string> currentDices = player.getDices().getCurrentValues();
-
-
 		while (canRoll)
 		{
-			rollAgain = 'n';//Having it default to no reroll until we check if a reroll is necessary. If all dices are attack or desrtrruction no need to reroll!
-
-			//Here we check if we have at least on dice that is not attack or destruction to see if we proceed with a reroll
-			for (int i = 0; i < currentDices.size();i++) {
-			
-				if (currentDices.at(i) == "Destruction" || currentDices.at(i) == "Attack") {
-					//Do nothing we keep them
-				}
-				else {
-					rollAgain = 'y';
-					break;
-				}
-			}
-
-			//If decides to roll again go through de reroll process
+			cout << "Would you like to roll again (y/n)?" << endl;
+			cin >> rollAgain;
 			if (rollAgain == 'y')
 			{
-				cout << "Automatically rerolling anything that is not Attack or Destruction" << endl;
-				//Going through all possible dices and if it is not a destrction or attack reroll it.
-				for (int i = 0; i < currentDices.size();i++) {
+				cout << "Which dices you which to roll again (Input the dice positions with a space in between)?" << endl;
+				string line;
+				getline(cin, line);
+				getline(cin, line);
+				toReroll = stringToVectorInt(line);
 
-					if (currentDices.at(i) == "Destruction" || currentDices.at(i) == "Attack") {
-							//Do nothing we keep them
-					}
-					else {
-						toReroll.push_back(i);
-					}
-				}
-				
-				cout << "Rerolled dices are the following: ";
-				for (int i = 0; i < toReroll.size();i++) {
-					cout << toReroll[i] << "  ";
-				}
-
-				cout << endl ;
 				canRoll = player.RollDices(&toReroll);
-				toReroll.clear(); // Clearing to have an empty vector if there is another set of rerolls
 				cout << "\nHere are your current dices:\n" << player.getDices();
-				currentDices = player.getCurrentValues();
 			}
 			else
 			{
@@ -170,59 +190,65 @@ public:
 		}
 
 	}
+	
 
 	virtual void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
 	{
+		char input;
+		int input2;
 		bool done = false;
-		cout << "Aggressive player now checking if he will buy a card or not." << endl;
-		
-		cout << "Here are the 3 cards that you can buy:" << endl;
-		for (int i = 0; i < buyableCards.size(); i++) {
-			cout << i << ") " << buyableCards[i] << endl;
-		}
-
-		//Going over the possible cards and buying the first card the player can get.
-		//If no cards were bought pay 2 energy if possible to change all cards.
-		for (int i = 0; i < buyableCards.size();i++) {
-			if (buyableCards[i].getCost() < player.getEnergyCubes()){
-				done = player.buyCards(buyableCards[i]);
-				buyableCards.erase(buyableCards.begin() + i);
-				buyableCards.push_back(effectCards.draw());
-				cout << "The card you bought got replaced by this one: " << endl;
-				cout << buyableCards[2] << endl;
-				break;
+		cout << "Would you like to buy a card? (y/n)" << endl;
+		cin >> input;
+		if (input == 'y') {
+			cout << "Here are the 3 cards that you can buy:" << endl;
+			for (int i = 0; i < buyableCards.size(); i++) {
+				cout << i << ") " << buyableCards[i] << endl;
 			}
-		}
-
-		//If we could not buy a card redraw new 3 cards
-		if (!done) {
-			if (player.getEnergyCubes() >= 2) {
-				done = true;
-				buyableCards.clear();
-				for (int i = 0; i < 3; i++) {
-					buyableCards.push_back(effectCards.draw());
+			while (!done) {
+				cout << "Your current balance is: " << player.getEnergyCubes() << endl;
+				cout << "Choose card you wish to buy by index, press 3 to pay 2 energies and get 3 new cards, press 4 to quit buying." << endl;
+				cin >> input2;
+				if (input2 >= 0 && input2 <= 2) {
+					done = player.buyCards(buyableCards[input2]);
+					if (done) {
+						buyableCards.erase(buyableCards.begin() + input2);
+						buyableCards.push_back(effectCards.draw());
+						cout << "The card you bought got replaced by this one: " << endl;
+						cout << buyableCards[2] << endl;
+					}
 				}
-				cout << "Here are the 3 new cards:" << endl;
-				for (int i = 0; i < buyableCards.size(); i++) {
-					cout << i << ") " << buyableCards[i] << endl;
-				}
+				else if (input2 == 3) {
+					if (player.removeEnergy(2)) {
+						buyableCards.clear();
+						for (int i = 0; i < 3; i++) {
+							buyableCards.push_back(effectCards.draw());
+						}
+						cout << "Here are the 3 cards that you can buy:" << endl;
+						for (int i = 0; i < buyableCards.size(); i++) {
+							cout << i << ") " << buyableCards[i] << endl;
+						}
 
+					}
+					else {
+						cout << "Can't replace these cards! Please choose another option" << endl;
+					}
+				}
+				else if (input2 == 4) {
+					cout << "Exiting the buying sequence!" << endl;
+					done = true;
+				}
 			}
-		}
 
-		if (!done) {
-			cout << player.getName() << " could not do anything during the buying phase, now going to the next phase." << endl;
 		}
 
 	}
-
 
 private:
 	void applyDiceEffect(vector<string> effect, Player& player, GameMap& gameMap, vector<Player*> & players) {
 		//For all the if statement only checking the first index because we can't pass an empty vector!
 
 		if (effect.empty()) {
-			//cout << "There was a typo please retry" << endl;
+			cout << "There was a typo please retry" << endl;
 		}
 		//Applying celebrity dices
 		else if (effect[0] == "Celebrity") {
@@ -266,7 +292,7 @@ private:
 						noOneInManhattan = false;
 						players[i]->removeHealth(effect.size());
 						cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
-						move(*players[i], gameMap, true);
+						players[i]->move(*players[i], gameMap, true);
 					}
 				}
 				//If no one in manhattan the attack dices had no effect
@@ -293,8 +319,17 @@ private:
 		}
 	}
 
+	//This is to convert the user input to a string of int when rerolling dices
+	vector<int> stringToVectorInt(string reRolls)
+	{
+		stringstream iss(reRolls);
+		int number;
+		vector<int> myNumbers;
+
+
+		while (iss >> number)
+			myNumbers.push_back(number);
+		return myNumbers;
+	}
 
 };
-
-
-

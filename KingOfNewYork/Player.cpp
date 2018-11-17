@@ -8,22 +8,27 @@ Player::Player() : region(*(new Region()))
 {
 }
 
-Player::Player(Monster monster) : region(*(new Region()))
+Player::Player(Monster monster, StrategyPlayerInterface* playerBehaviour) : region(*(new Region()))
 {
 	this->monster = monster;
 	this->name = monster.getName();
 	this->energyCubes = 0;
+	this->playerBehaviour = playerBehaviour;
 }
 
-Player::Player(Monster monster, Region& region) : region(region)
+Player::Player(Monster monster, Region& region, StrategyPlayerInterface* playerBehaviour) : region(region)
 {
 	this->monster = monster;
 	this->name = monster.getName();
 	region.setOwner(monster.getName());
+	this->playerBehaviour = playerBehaviour;
+	this->energyCubes = 0;
 }
 
 Player::~Player()
 {
+	//Since we have a pointer we have to make sure it has been deleted before destroying object.
+	delete playerBehaviour;
 }
 
 bool Player::RollDices(vector<int>* dicesToRoll) //For rerolls
@@ -197,7 +202,7 @@ void Player::move(Player & player, GameMap & gameMap, bool gotAttacked)
 	playerBehaviour->move(player,  gameMap, gotAttacked);
 }
 
-void Player::resolveDices(Player & player, GameMap & gameMap, vector<Player>& players)
+void Player::resolveDices(Player & player, GameMap & gameMap, vector<Player*>& players)
 {
 	playerBehaviour->resolveDices(player,gameMap,players);
 }

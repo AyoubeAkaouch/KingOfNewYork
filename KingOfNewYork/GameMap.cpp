@@ -82,20 +82,20 @@ void GameMap::move(Player& player, Region& region)
 		}
 	}
 }
-Player & GameMap::getOwnerSuperStar(vector<Player>& players)
+Player & GameMap::getOwnerSuperStar(vector<Player*>& players)
 {
 	int currentOwner;
 	//Do this to find current owner of superstar
 	for (int i = 0; i < players.size(); i++) {
-		if (players[i].getName() == ownerSuperStar) {
+		if (players[i]->getName() == ownerSuperStar) {
 			currentOwner = i;
 			break;
 		}
 	}
 
-	return players[currentOwner];
+	return *players[currentOwner];
 }
-void GameMap::setOwnerSuperStar(Player& player,vector<Player>& players)
+void GameMap::setOwnerSuperStar(Player& player,vector<Player*>& players)
 {
 	if (ownerSuperStar == "") {
 		ownerSuperStar = player.getName();
@@ -105,14 +105,14 @@ void GameMap::setOwnerSuperStar(Player& player,vector<Player>& players)
 		int currentOwner;
 		//Do this to find current owner of superstar
 		for (int i = 0; i < players.size(); i++) {
-			if (players[i].getName() == ownerSuperStar) {
+			if (players[i]->getName() == ownerSuperStar) {
 				currentOwner = i;
 				break;
 			}
 		}
 
 		//Removing ownership to the player before passing it to the new player
-		players[currentOwner].setSuperStar(false);
+		players[currentOwner]->setSuperStar(false);
 		ownerSuperStar = player.getName();
 		player.setSuperStar(true);
 

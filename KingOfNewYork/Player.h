@@ -29,8 +29,8 @@ private:
 
 public:
 	Player();
-	Player(Monster monster);
-	Player(Monster monster, Region& region);
+	Player(Monster monster,StrategyPlayerInterface* playerBehaviour);
+	Player(Monster monster, Region& region,StrategyPlayerInterface* playerBehaviour);
 	~Player();
 
 	map<int, string> RollDices(); // For first roll
@@ -60,7 +60,7 @@ public:
 	void setSuperStar(bool has);
 
 	void move(Player & player, GameMap & gameMap, bool gotAttacked) ;
-	void resolveDices(Player & player, GameMap& gameMap, vector<Player> & players);
+	void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players);
 	void diceRoll(Player & player, bool extraDices);
 	void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards);
 

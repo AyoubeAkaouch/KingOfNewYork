@@ -13,6 +13,8 @@
 #include "Monster.h"
 #include "Player.h"
 #include "DriverMethods.h"
+#include "StrategyPlayerInterface.h"
+#include "AggressivePlayerStrategy.cpp"
 using namespace std;
 
 
@@ -51,11 +53,15 @@ int main() {
 	BuildingTilesDeck tilesDeck;
 	EffectCardDeck cardDeck;
 	map<string, vector<Token>> tokens;
+
+	
 	
 	LoadGamePieces::LoadAllPieces(monsters,tilesDeck, cardDeck,tokens); //This will create all the card objects and their values
+	AggressivePlayerStrategy aggressive;
+	vector<Player*> players;// Have to keep track of the order of for them to play in the right order
 	
-	vector<Player> players;// Have to keep track of the order of for them to play in the right order
-	setPlayers(players,monsters);// Method to create the player objects and associate them to monster cards!.
+	setPlayers(players,monsters,&aggressive);// Method to create the player objects and associate them to monster cards!.
+
 
 
 	cout << "Here are the size of the decks created." << endl;
@@ -104,9 +110,17 @@ int main() {
 	cout << "~~~~Here is the info for all players~~~~" << endl;
 	for (int i = 0; i < players.size(); i++) {
 		cout << "-----------------------------" << endl;
-		cout << players[i] << " ";
-		players[i].displayCards();
+		cout << *players[i] << " ";
+		players[i]->displayCards();
 		cout << "-----------------------------" << endl;
+	}
+
+	//Deleting the Player pointers that we created in the heap!
+
+	for (int i = 0; i < players.size(); i++) {
+		
+		//When deleting the players we will also delete all the design pattern pointers we used!
+		delete players[i];
 	}
 	
 

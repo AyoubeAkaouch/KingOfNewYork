@@ -26,8 +26,8 @@ public:
 	void removeOwner(string name, Region& region);
 	vector<string> getOwners(Region& region);
 	void move(Player & player, Region & region);
-	Player& getOwnerSuperStar(vector<Player>& players);
-	void setOwnerSuperStar(Player& player, vector<Player>& players);
+	Player& getOwnerSuperStar(vector<Player*>& players);
+	void setOwnerSuperStar(Player& player, vector<Player*>& players);
 	friend ostream& operator<<(ostream & os, GameMap & gameMap);
 };
 

@@ -68,7 +68,6 @@ void Dices::rollDices(vector<int>* dicesToRoll)
 	}
 	if (numberOfDices<currentDiceValues.size()) {
 		currentDiceValues.erase(6);
-		cout << "asdfghjkl\n";
 		currentDiceValues.erase(7);
 	}
 	updateHistory();
