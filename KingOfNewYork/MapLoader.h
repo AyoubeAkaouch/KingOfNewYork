@@ -14,6 +14,6 @@ public:
 	MapLoader();
 	~MapLoader();
 	static void mapToFile(GameMap* map);
-	static GameMap mapLoader(string file);
+	static GameMap* mapLoader(string file);
 };
 

@@ -77,7 +77,7 @@ void MapLoader::mapToFile(GameMap * map)
 	output.close();
 }
 
-GameMap MapLoader::mapLoader(string file)
+GameMap* MapLoader::mapLoader(string file)
 {
 	ifstream input(file);
 	//ifstream input2("..\\\\KingOfNewYork.txt");
@@ -155,5 +155,5 @@ GameMap MapLoader::mapLoader(string file)
 		}
 	}
 
-	return GameMap(graphRegion,"ImportedMap");
+	return (new GameMap(graphRegion,"ImportedMap"));
 }

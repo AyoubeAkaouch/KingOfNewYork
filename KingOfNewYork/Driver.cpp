@@ -35,7 +35,7 @@ int main() {
 	string directory, mapFile, completeDirectory;
 	cout << "In which dirctory you wish to get your maps from?(If want to use default King Of NewYork map press x)" << endl;
 	cin >> directory;
-	GameMap gameMap;
+	GameMap* gameMap;
 	if (directory != "x")
 	{
 		::getAllMapFiles(directory);
@@ -80,7 +80,7 @@ int main() {
 	int firstToPlay = firstPlayer(players); //Gives the index in the vector of which player plays first
 
 	//Putting players in regions
-	settingRegions(gameMap,players,firstToPlay);
+	settingRegions(*gameMap,players,firstToPlay);
 
 	//Display the playing order
 	cout << "Here is the order in which players are going to play in:" << endl;
@@ -90,7 +90,7 @@ int main() {
 	cout << endl;
 
 	//Displaying the regions and the current players inside of them.
-	vector<Region> regions = gameMap.getAllRegions();
+	vector<Region> regions = gameMap->getAllRegions();
 	cout << "Here are all the regions and their players:" << endl;
 	for (int i = 0; i < regions.size();i++ ) {
 		cout << regions[i].getName() << ": ";
@@ -98,10 +98,10 @@ int main() {
 	}
 
 	///////////////////////////////////PART 3 here///////////////////////////////////////
-	gameLoop(players, gameMap,  cardDeck,  tilesDeck,  tokens, firstToPlay);
+	gameLoop(players, *gameMap,  cardDeck,  tilesDeck,  tokens, firstToPlay);
 
 	cout << "Here are all the regions and their players:" << endl;
-	regions =gameMap.getAllRegions();
+	regions =gameMap->getAllRegions();
 	for (int i = 0; i < regions.size(); i++) {
 		cout << regions[i].getName() << ": ";
 		regions[i].displayOwners();
@@ -115,14 +115,17 @@ int main() {
 		cout << "-----------------------------" << endl;
 	}
 
-	//Deleting the Player pointers that we created in the heap!
-
+	//Deleting the Player pointers that we created in the heap
 	for (int i = 0; i < players.size(); i++) {
 		
 		//When deleting the players we will also delete all the design pattern pointers we used!
 		delete players[i];
+		players[i] = NULL; // To avoid danling pointiers
 	}
-	
+
+	//Deleting the Game Map pointer that we got from the maploader!
+	delete gameMap;
+	gameMap = NULL;//To avoid dangling pointers
 
 	/*Dices diceTest;
 	vector<int> toRoll = {1,2,5,0,7};
