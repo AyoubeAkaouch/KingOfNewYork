@@ -30,9 +30,11 @@
     <ClInclude Include="LoadGamePieces.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="ObserverInterface.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="StrategyPlayerInterface.h" />
+    <ClInclude Include="SubjectInterface.h" />
     <ClInclude Include="SubRegion.h" />
     <ClInclude Include="TestClass.h" />
     <ClInclude Include="Token.h" />

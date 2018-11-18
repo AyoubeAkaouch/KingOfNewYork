@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <map>
+#include "windows.h"
 #include "LoadGamePieces.h"
 #include "Region.h"
 #include "GameMap.h"
@@ -31,7 +32,7 @@ void getAllMapFiles (string directory){
 
 int main() {
 	srand((int)time(0)); // Setting up the seed here, to have random numbers for all dice objects
-
+	
 	string directory, mapFile, completeDirectory;
 	cout << "In which dirctory you wish to get your maps from?(If want to use default King Of NewYork map press x)" << endl;
 	cin >> directory;

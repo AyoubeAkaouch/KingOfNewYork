@@ -66,6 +66,12 @@
     <ClInclude Include="StrategyPlayerInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ObserverInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SubjectInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SubRegion.cpp">

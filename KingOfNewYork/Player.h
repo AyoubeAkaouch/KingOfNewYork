@@ -9,12 +9,14 @@
 #include "EffectCardDeck.h"
 #include "StrategyPlayerInterface.h"
 #include "GameMap.h"
+#include "SubjectInterface.h"
+#include "ObserverInterface.h"
 
 using namespace std;
 class StrategyPlayerInterface;
 class GameMap;
 	
-class Player
+class Player : public SubjectInterface
 {
 private:
 	vector<EffectCard> cards;
@@ -26,6 +28,7 @@ private:
 	string name;
 	bool superStar=false;
 	StrategyPlayerInterface* playerBehaviour;
+	vector<ObserverInterface*> observers;
 
 public:
 	Player();
@@ -63,6 +66,11 @@ public:
 	void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players);
 	void diceRoll(Player & player, bool extraDices);
 	void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards);
+
+	//Mathods of the observer
+	virtual void registerOb(ObserverInterface* ob) ;
+	virtual void removeOb(ObserverInterface* ob);
+	virtual void notifyOb();
 
 	friend ostream & operator<<(ostream & os, const Player & player);
 };

@@ -29,6 +29,7 @@ Player::~Player()
 {
 	//Since we have a pointer we have to make sure it has been deleted before destroying object.
 	delete playerBehaviour;
+	//Not destroying the observers since we using the same ones for all players
 }
 
 bool Player::RollDices(vector<int>* dicesToRoll) //For rerolls
@@ -215,6 +216,28 @@ void Player::diceRoll(Player & player, bool extraDices)
 void Player::buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
 {
 	playerBehaviour->buyCards(player,buyableCards,effectCards);
+}
+
+void Player::registerOb(ObserverInterface * ob)
+{
+	this->observers.push_back(ob);
+}
+
+void Player::removeOb(ObserverInterface * ob)
+{
+	for (int i = 0; i < observers.size(); i++) {
+		if (observers[i] == ob) {
+			observers.erase(observers.begin()+i);
+			break;
+		}
+	}
+}
+
+void Player::notifyOb()
+{
+	for (int i = 0; i < observers.size();i++) {
+		observers[i]->Update(this); //Passing the player to make the observer aware of which player got updated. 
+	}
 }
 
 ostream & operator<<(ostream & os, const Player & player)
