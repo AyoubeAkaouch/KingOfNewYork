@@ -96,27 +96,15 @@ int main() {
 	//Display the playing order
 	cout << "Here is the order in which players are going to play in:" << endl;
 	for (int i = 0; i < players.size(); i++) {
-		cout << i << ") " << players[(i + firstToPlay) % players.size()];
+		cout << i << ") " << &players[(i + firstToPlay) % players.size()];
 	}
 	cout << endl;
 
-	//Displaying the regions and the current players inside of them.
-	vector<Region> regions = gameMap->getAllRegions();
-	cout << "Here are all the regions and their players:" << endl;
-	for (int i = 0; i < regions.size();i++ ) {
-		cout << regions[i].getName() << ": ";
-		regions[i].displayOwners();
-	}
-
-	///////////////////////////////////PART 3 here///////////////////////////////////////
 	gameLoop(players, *gameMap,  cardDeck,  tilesDeck,  tokens, firstToPlay);
 
-	cout << "Here are all the regions and their players:" << endl;
-	regions =gameMap->getAllRegions();
-	for (int i = 0; i < regions.size(); i++) {
-		cout << regions[i].getName() << ": ";
-		regions[i].displayOwners();
-	}
+
+	cout << "___________________Final Board___________________" << endl;
+	gameMapObserver->update(gameMap);
 
 	cout << "~~~~Here is the info for all players~~~~" << endl;
 	for (int i = 0; i < players.size(); i++) {

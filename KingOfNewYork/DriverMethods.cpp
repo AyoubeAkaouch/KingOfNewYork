@@ -13,7 +13,6 @@ int firstPlayer(vector<Player*>& players) {
 	cout << "~~~~~~~~~~~We are now determining who goes first!~~~~~~~~~~~" << endl << endl;
 
 	for (int i = 0; i < players.size(); i++) {
-		cout << players[i]->getName() << " press Enter to roll your dices!" << endl;
 		map<int, string > current = players[i]->RollDicesExtra();
 		cout << players[i]->getDices() << endl << endl;
 		for (int j = 0; j < current.size();j++) {
@@ -136,19 +135,27 @@ void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlay
 		}
 		cout << " }" << endl;
 		cin >> x;
-		if (i%3==0) {
+
+		//Here the user will choose which strategy he wants to associate to his player
+		int strategy;
+		cout << "Which strategy do you want to use?" << endl;
+		cout << "1) Human player" << endl;
+		cout << "2) Balanced player" << endl;
+		cout << "3) Aggressive player" << endl;
+		cin >> strategy;
+		if (strategy==1) {
 			Player* player = new Player(monsters[x], new HumanPlayerStrategy());
 			player->registerOb(observer);
 			players.push_back(player);
 			monsters.erase(monsters.begin() + x);
 		}
-		else if(i%3==1){
+		else if(strategy==2){
 			Player* player = new Player(monsters[x], new BalancedPlayerStrategy());
 			player->registerOb(observer);
 			players.push_back(player);
 			monsters.erase(monsters.begin() + x);
 		}
-		else {
+		else if(strategy ==3){
 			Player* player = new Player(monsters[x], new AggressivePlayerStrategy());
 			player->registerOb(observer);
 			players.push_back(player);

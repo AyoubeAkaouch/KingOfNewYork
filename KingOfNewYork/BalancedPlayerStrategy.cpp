@@ -263,7 +263,8 @@ private:
 			//apply damage to everyone outside of manhattan if in manhattan
 			if (player.getRegion().getName() == "Manhattan") {
 				for (int i = 0; i < players.size(); i++) {
-					if (players[i]->getRegion().getName() != "Manhattan")
+					//Attacking players not in manhattan AND that are not already dead and removed from the game (health points > 0)
+					if (players[i]->getRegion().getName() != "Manhattan" && players[i]->getHealth() > 0)
 					{
 						players[i]->removeHealth(effect.size());
 						cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;

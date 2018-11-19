@@ -59,8 +59,10 @@ bool GameMap::setOwnerRegion(string name,Region& region)
 	{
 		if (allRegions[i] == region) {
 			wasSet = allRegions[i].setOwner(name);	
-			this->notifyOb();
 		}
+	}
+	if (wasSet) {
+		this->notifyOb();
 	}
 	return wasSet;
 }
