@@ -14,12 +14,13 @@ public:
 	virtual ~AggressivePlayerStrategy() {}
 
 
-	virtual void move(Player & player, GameMap & gameMap, bool gotAttacked) override {
+	virtual bool move(Player & player, GameMap & gameMap, bool gotAttacked) override {
 	
 		vector<Region> availableRegion = gameMap.getAllRegions();
 		int indexManhattan;
 		char changeRegion;
 		int selectedRegion;
+		bool wasMoved=false; 
 		for (int i = 0; i < availableRegion.size(); i++) {
 			if (availableRegion[i].getName() == "Manhattan") {
 				indexManhattan = i;
@@ -35,6 +36,7 @@ public:
 			cout << "No one currently in Manhattan, you were placed in Manhattan, you unfortunately have no choice!" << endl;
 			player.addPoints(1);
 			player.addEnergyCubes(2);
+			wasMoved = true;
 		}
 		//If already in manhattan, move player one level upper
 		else if (player.getRegion().getName() == "Manhattan" && !gotAttacked) {
@@ -60,6 +62,7 @@ public:
 
 			}
 
+			wasMoved = true;
 			gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
 			player.setRegion(availableRegion[selectedRegion]);
 			cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
@@ -72,10 +75,12 @@ public:
 		else {
 			cout << "Would you like to change boroughs?(y/n)" << endl;
 			cout << "Aggressive player will stay in the same borough automatically." << endl;
-		}	
+		}
+
+		return wasMoved;
 	}
 
-	virtual void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players) override
+	virtual vector<string> resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players) override
 	{
 
 		cout << "Automatically resolving all the rolled dices!" << endl;
@@ -100,6 +105,8 @@ public:
 			sameToResolve.clear(); // So that we can do this again with next effect we wish to apply.
 			resolved.push_back(toResolve);
 		}
+
+		return resolved;
 	}
 
 	virtual void diceRoll(Player & player, bool extraDices) override
@@ -140,7 +147,7 @@ public:
 			//If decides to roll again go through de reroll process
 			if (rollAgain == 'y')
 			{
-				cout << "Automatically rerolling anything that is not Attack or Destruction" << endl;
+				cout << "Balanced player will automatically reroll anything that is not Destruction or Attack" << endl;
 				//Going through all possible dices and if it is not a destrction or attack reroll it.
 				for (int i = 0; i < currentDices.size();i++) {
 

@@ -16,12 +16,13 @@ public:
 	virtual ~HumanPlayerStrategy() {}
 
 
-	virtual void move(Player & player, GameMap & gameMap, bool gotAttacked)
+	virtual bool move(Player & player, GameMap & gameMap, bool gotAttacked)
 	{
 		vector<Region> availableRegion = gameMap.getAllRegions();
 		int indexManhattan;
 		char changeRegion;
 		int selectedRegion;
+		bool wasMoved=false;
 		for (int i = 0; i < availableRegion.size(); i++) {
 			if (availableRegion[i].getName() == "Manhattan") {
 				indexManhattan = i;
@@ -35,6 +36,7 @@ public:
 			gameMap.setOwnerRegion(player.getName(), availableRegion[indexManhattan]); // Adding him to new region
 			player.setRegion(availableRegion[indexManhattan]); // Pointing to new region where player is
 			cout << "No one currently in Manhattan, you were placed in Manhattan, you unfortunately have no choice!" << endl;
+			wasMoved = true;
 		}
 		//If already in manhattan, move player one level upper
 		else if (player.getRegion().getName() == "Manhattan" && !gotAttacked) {
@@ -72,6 +74,7 @@ public:
 						}
 					}
 				}
+				wasMoved = true;
 				gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
 				player.setRegion(availableRegion[selectedRegion]);
 				cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
@@ -115,7 +118,7 @@ public:
 						}
 					}
 				}
-				cout << "THE REGION INSIDE PLAYER OBJECT " << player.getRegion().getName();
+				wasMoved = true;
 				gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
 				player.setRegion(availableRegion[selectedRegion]);
 				cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
@@ -123,10 +126,10 @@ public:
 		}
 
 
-
+		return wasMoved;
 	}
 
-	virtual void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players)
+	virtual vector<string> resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players)
 	{
 		string toResolve;
 		vector<string> sameToResolve;
@@ -149,6 +152,8 @@ public:
 			sameToResolve.clear(); // So that we can do this again with next effect we wish to apply.
 			resolved.push_back(toResolve);
 		}
+
+		return resolved;
 	}
 
 

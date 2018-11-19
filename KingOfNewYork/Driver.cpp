@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <map>
-#include "windows.h"
 #include "LoadGamePieces.h"
 #include "Region.h"
 #include "GameMap.h"
@@ -16,6 +15,7 @@
 #include "DriverMethods.h"
 #include "StrategyPlayerInterface.h"
 #include "AggressivePlayerStrategy.cpp"
+#include "ConcretePlayerObserver.h"
 using namespace std;
 
 
@@ -35,6 +35,9 @@ int main() {
 	
 	string directory, mapFile, completeDirectory;
 	cout << "In which dirctory you wish to get your maps from?(If want to use default King Of NewYork map press x)" << endl;
+
+	ConcretePlayerObserver* playerObserver = new ConcretePlayerObserver();
+
 	cin >> directory;
 	GameMap* gameMap;
 	if (directory != "x")
@@ -61,7 +64,7 @@ int main() {
 	AggressivePlayerStrategy aggressive;
 	vector<Player*> players;// Have to keep track of the order of for them to play in the right order
 	
-	setPlayers(players,monsters,&aggressive);// Method to create the player objects and associate them to monster cards!.
+	setPlayers(players,monsters,&aggressive,playerObserver);// Method to create the player objects and associate them to monster cards!.
 
 
 
@@ -127,6 +130,10 @@ int main() {
 	//Deleting the Game Map pointer that we got from the maploader!
 	delete gameMap;
 	gameMap = NULL;//To avoid dangling pointers
+
+	//Deleting the PlayerObserver pointer
+	delete playerObserver;
+	playerObserver = NULL;
 
 	/*Dices diceTest;
 	vector<int> toRoll = {1,2,5,0,7};

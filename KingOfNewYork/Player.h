@@ -25,10 +25,13 @@ private:
 	Region& region;
 	Dices dices;
 	int energyCubes;
+	string turnPhase;
 	string name;
 	bool superStar=false;
 	StrategyPlayerInterface* playerBehaviour;
 	vector<ObserverInterface*> observers;
+	vector<string> resolved; // Is used for the observer to know in which order we resolved dices once we notify it.
+	bool wasMoved; // For observer to know if player moved or not.
 
 public:
 	Player();
@@ -61,6 +64,10 @@ public:
 	
 	bool hasSuperStar();
 	void setSuperStar(bool has);
+
+	string getTurnPhase();
+	vector<string> getResolved();
+	bool getMovedStatus();
 
 	void move(Player & player, GameMap & gameMap, bool gotAttacked) ;
 	void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players);

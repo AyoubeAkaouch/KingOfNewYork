@@ -116,7 +116,7 @@ void settingRegions(GameMap& gameMap, vector<Player*>& players, int currentTurn)
 	}
 }
 
-void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlayerInterface* strategy)
+void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlayerInterface* strategy,ObserverInterface* observer)
 {
 	//Setup the number of players and associate them to a monster card
 	int numberOfPlayers;
@@ -137,15 +137,21 @@ void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlay
 		cout << " }" << endl;
 		cin >> x;
 		if (i%3==0) {
-			players.push_back(new Player(monsters[x], new AggressivePlayerStrategy()));
+			Player* player = new Player(monsters[x], new AggressivePlayerStrategy());
+			player->registerOb(observer);
+			players.push_back(player);
 			monsters.erase(monsters.begin() + x);
 		}
 		else if(i%3==1){
-			players.push_back(new Player(monsters[x], new BalancedPlayerStrategy()));
+			Player* player = new Player(monsters[x], new BalancedPlayerStrategy());
+			player->registerOb(observer);
+			players.push_back(player);
 			monsters.erase(monsters.begin() + x);
 		}
 		else {
-			players.push_back(new Player(monsters[x], new HumanPlayerStrategy()));
+			Player* player = new Player(monsters[x], new HumanPlayerStrategy());
+			player->registerOb(observer);
+			players.push_back(player);
 			monsters.erase(monsters.begin() + x);
 		}
 	}

@@ -14,6 +14,8 @@ Player::Player(Monster monster, StrategyPlayerInterface* playerBehaviour) : regi
 	this->name = monster.getName();
 	this->energyCubes = 0;
 	this->playerBehaviour = playerBehaviour;
+	this->turnPhase = "diceRoll";
+	this->wasMoved = false;
 }
 
 Player::Player(Monster monster, Region& region, StrategyPlayerInterface* playerBehaviour) : region(region)
@@ -23,6 +25,8 @@ Player::Player(Monster monster, Region& region, StrategyPlayerInterface* playerB
 	region.setOwner(monster.getName());
 	this->playerBehaviour = playerBehaviour;
 	this->energyCubes = 0;
+	this->turnPhase = "diceRoll"; // Setting it to diceRoll since it is the first step a turn starts by.
+	this->wasMoved = false;
 }
 
 Player::~Player()
@@ -34,7 +38,10 @@ Player::~Player()
 
 bool Player::RollDices(vector<int>* dicesToRoll) //For rerolls
 {
-	return dices.reroll(dicesToRoll);
+	bool canReroll = dices.reroll(dicesToRoll);
+	//Notfying observers here instead of in thediceRoll method to update whenever dices are rolled!
+	this->notifyOb();
+	return canReroll;
 	
 }
 
@@ -42,12 +49,16 @@ bool Player::RollDices(vector<int>* dicesToRoll) //For rerolls
 map<int, string> Player::RollDices()
 {
 	dices.firstRoll();
+	//Notfying observers here instead of in thediceRoll method to update whenever dices are rolled!
+	this->notifyOb();
 	return dices.getCurrentValues();
 }
 
 map<int, string> Player::RollDicesExtra()
 {
 	dices.firstRollExtra();
+	//Notfying observers here instead of in thediceRoll method to update whenever dices are rolled!
+	this->notifyOb();
 	return dices.getCurrentValues();
 }
 
@@ -198,24 +209,46 @@ void Player::setSuperStar(bool has)
 	this->superStar = has;
 }
 
+string Player::getTurnPhase()
+{
+	return this->turnPhase;
+}
+
+vector<string> Player::getResolved()
+{
+	return this->resolved;
+}
+
+bool Player::getMovedStatus() {
+	return this->wasMoved;
+}
+
 void Player::move(Player & player, GameMap & gameMap, bool gotAttacked)
 {
-	playerBehaviour->move(player,  gameMap, gotAttacked);
+	this->turnPhase = "move";
+	wasMoved = playerBehaviour->move(player, gameMap, gotAttacked);
+	this->notifyOb();
 }
 
 void Player::resolveDices(Player & player, GameMap & gameMap, vector<Player*>& players)
 {
-	playerBehaviour->resolveDices(player,gameMap,players);
+	this->turnPhase = "resolvingDices";
+	this->resolved = playerBehaviour->resolveDices(player, gameMap, players);
+	this->notifyOb();
 }
 
 void Player::diceRoll(Player & player, bool extraDices)
 {
+	this->turnPhase = "diceRoll";
 	playerBehaviour->diceRoll(player,extraDices);
+	//Not notifying here since we are notifying in other methods
 }
 
 void Player::buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
 {
+	this->turnPhase = "buyCard";
 	playerBehaviour->buyCards(player,buyableCards,effectCards);
+	this->notifyOb();
 }
 
 void Player::registerOb(ObserverInterface * ob)
@@ -236,7 +269,7 @@ void Player::removeOb(ObserverInterface * ob)
 void Player::notifyOb()
 {
 	for (int i = 0; i < observers.size();i++) {
-		observers[i]->Update(this); //Passing the player to make the observer aware of which player got updated. 
+		observers[i]->update(this); //Passing the player to make the observer aware of which player got updated. 
 	}
 }
 

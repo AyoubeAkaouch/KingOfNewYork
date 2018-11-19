@@ -107,7 +107,6 @@ void Dices::applyEffect(string effect)
 
 ostream & operator<<(ostream & os, const Dices & dices)
 {
-	os << "Current dices are: ";
 	for (int i = 0; i < dices.currentDiceValues.size(); i++)
 	{
 		if (i == dices.currentDiceValues.size() - 1) {
