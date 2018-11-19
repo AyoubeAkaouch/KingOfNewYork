@@ -203,7 +203,7 @@ public:
 		}
 
 		//If we could not buy a card redraw new 3 cards
-		if (!done) {
+		if (!done && effectCards.getAllCards().size()>0) {
 			if (player.getEnergyCubes() >= 2) {
 				done = true;
 				buyableCards.clear();
@@ -216,6 +216,10 @@ public:
 				}
 
 			}
+		}
+		else {
+			cout << "No more cards to draw from deck sorry!" << endl;
+			done = true;
 		}
 
 		if (!done) {

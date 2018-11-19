@@ -224,7 +224,7 @@ public:
 					}
 				}
 				else if (input2 == 3) {
-					if (player.removeEnergy(2)) {
+					if (player.removeEnergy(2)&&effectCards.getAllCards().size()>0) {
 						buyableCards.clear();
 						for (int i = 0; i < 3; i++) {
 							buyableCards.push_back(effectCards.draw());
