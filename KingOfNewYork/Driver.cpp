@@ -66,6 +66,8 @@ int main() {
 	
 	setPlayers(players,monsters,&aggressive,playerObserver);// Method to create the player objects and associate them to monster cards!.
 
+	//Once we create the players we pass them to the GameMap.
+	gameMap->addPlayers(&players);
 
 
 	cout << "Here are the size of the decks created." << endl;

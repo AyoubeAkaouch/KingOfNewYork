@@ -16,11 +16,17 @@ GameMap::GameMap(GraphGeneric<Region> connectRegion, string nameOfMap)
 
 GameMap::~GameMap()
 {
+	//Pleyers is deleted outside of the gameMap since it has been used in multiple places we can't let the GameMap handle it
 }
 
 GraphGeneric<Region> GameMap::getMapGraph()
 {
 	return connectRegions;
+}
+
+void GameMap::addPlayers(vector<Player*>* players)
+{
+	this->players = players;
 }
 
 string GameMap::getNameMap()
@@ -116,6 +122,29 @@ void GameMap::setOwnerSuperStar(Player& player,vector<Player*>& players)
 		ownerSuperStar = player.getName();
 		player.setSuperStar(true);
 
+	}
+}
+
+
+void GameMap::registerOb(ObserverInterface * ob)
+{
+	this->observers.push_back(ob);
+}
+
+void GameMap::removeOb(ObserverInterface * ob)
+{
+	for (int i = 0; i < observers.size(); i++) {
+		if (observers[i] == ob) {
+			observers.erase(observers.begin() + i);
+			break;
+		}
+	}
+}
+
+void GameMap::notifyOb()
+{
+	for (int i = 0; i < observers.size(); i++) {
+		observers[i]->update(this); //Passing the GameMap to make the observer aware of which GameMap got updated. 
 	}
 }
 

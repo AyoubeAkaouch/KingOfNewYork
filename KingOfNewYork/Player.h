@@ -75,7 +75,7 @@ public:
 	void diceRoll(Player & player, bool extraDices);
 	void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards);
 
-	//Mathods of the observer
+	//Methods of the observer
 	virtual void registerOb(ObserverInterface* ob) ;
 	virtual void removeOb(ObserverInterface* ob);
 	virtual void notifyOb();
