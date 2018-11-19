@@ -5,7 +5,9 @@
 
 class Player;
 class SubjectInterface;
-
+/*
+	Whenever the player completes a new phase this gets called to show the new state of the object after completing said phase.
+*/
 class ConcretePlayerObserver :
 	public ObserverInterface
 {

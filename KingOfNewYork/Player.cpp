@@ -231,7 +231,7 @@ StrategyPlayerInterface * Player::getPlayerBehaviour()
 void Player::move(Player & player, GameMap & gameMap, bool gotAttacked)
 {
 	this->turnPhase = "move";
-	wasMoved = player.getPlayerBehaviour()->move(player, gameMap, gotAttacked); // This method is not called on itself all the time, for example when moving a player out of manhattan
+	wasMoved = playerBehaviour->move(player, gameMap, gotAttacked);
 	this->notifyOb();
 }
 

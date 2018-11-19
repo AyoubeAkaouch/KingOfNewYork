@@ -37,7 +37,7 @@ public:
 	Player();
 	Player(Monster monster,StrategyPlayerInterface* playerBehaviour);
 	Player(Monster monster, Region& region,StrategyPlayerInterface* playerBehaviour);
-	~Player();
+	virtual ~Player(); //Since we are inheriting from a class with virtual method we need a virtual destructor
 
 	map<int, string> RollDices(); // For first roll
 	map<int, string> RollDicesExtra(); // For first roll

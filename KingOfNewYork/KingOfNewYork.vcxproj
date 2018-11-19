@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="BuildingTiles.h" />
     <ClInclude Include="BuildingTilesDeck.h" />
+    <ClInclude Include="ConcreteGameMapObserver.h" />
     <ClInclude Include="ConcretePlayerObserver.h" />
     <ClInclude Include="Dices.h" />
     <ClInclude Include="EffectCard.h" />
@@ -45,6 +46,7 @@
     <ClCompile Include="BalancedPlayerStrategy.cpp" />
     <ClCompile Include="BuildingTiles.cpp" />
     <ClCompile Include="BuildingTilesDeck.cpp" />
+    <ClCompile Include="ConcreteGameMapObserver.cpp" />
     <ClCompile Include="ConcretePlayerObserver.cpp" />
     <ClCompile Include="Dices.cpp" />
     <ClCompile Include="EffectCard.cpp" />

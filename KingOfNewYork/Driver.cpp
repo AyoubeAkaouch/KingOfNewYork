@@ -16,6 +16,7 @@
 #include "StrategyPlayerInterface.h"
 #include "AggressivePlayerStrategy.cpp"
 #include "ConcretePlayerObserver.h"
+#include "ConcreteGameMapObserver.h"
 using namespace std;
 
 
@@ -37,6 +38,7 @@ int main() {
 	cout << "In which dirctory you wish to get your maps from?(If want to use default King Of NewYork map press x)" << endl;
 
 	ConcretePlayerObserver* playerObserver = new ConcretePlayerObserver();
+	ConcreteGameMapObserver* gameMapObserver = new ConcreteGameMapObserver();
 
 	cin >> directory;
 	GameMap* gameMap;
@@ -52,6 +54,9 @@ int main() {
 		gameMap = MapLoader::mapLoader("..\\Maps\\KingOfNewYork.map");
 	}
 	
+	//Adding an observer to our gameMap
+	gameMap->registerOb(gameMapObserver);
+
 	//Setting up the decks and game pieces object
 	vector<Monster> monsters;
 	BuildingTilesDeck tilesDeck;
@@ -133,26 +138,11 @@ int main() {
 	delete gameMap;
 	gameMap = NULL;//To avoid dangling pointers
 
-	//Deleting the PlayerObserver pointer
+	//Deleting the PlayerObserver and GameMap pointer
 	delete playerObserver;
 	playerObserver = NULL;
-
-	/*Dices diceTest;
-	vector<int> toRoll = {1,2,5,0,7};
-	diceTest.firstRollExtra();
-	cout << diceTest << endl;	
-	diceTest.reroll(&toRoll);
-	cout << diceTest << endl;
-	toRoll = { 1,2,3,4 };
-	diceTest.reroll(&toRoll);
-	cout << diceTest << endl;
-	diceTest.firstRoll();
-	cout << diceTest << endl;
-	toRoll = { 1,0,5,6 };
-	diceTest.reroll(&toRoll);
-	cout << diceTest << endl;
-
-	diceTest.showRollHistory();*/
+	delete gameMapObserver;
+	gameMapObserver = NULL;
 
 }
 

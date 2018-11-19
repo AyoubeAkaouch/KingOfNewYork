@@ -16,7 +16,7 @@ GameMap::GameMap(GraphGeneric<Region> connectRegion, string nameOfMap)
 
 GameMap::~GameMap()
 {
-	//Pleyers is deleted outside of the gameMap since it has been used in multiple places we can't let the GameMap handle it
+	// players pointer is not deleted, the players are handled outside of the gameMap since they were instantiated elsewhere
 }
 
 GraphGeneric<Region> GameMap::getMapGraph()
@@ -27,6 +27,11 @@ GraphGeneric<Region> GameMap::getMapGraph()
 void GameMap::addPlayers(vector<Player*>* players)
 {
 	this->players = players;
+}
+
+vector<Player*>* GameMap::getPlayers()
+{
+	return this->players;
 }
 
 string GameMap::getNameMap()
@@ -49,12 +54,15 @@ void GameMap::removeOwner(string name, Region& region)
 
 bool GameMap::setOwnerRegion(string name,Region& region)
 {
+	bool wasSet = false;
 	for (size_t i = 0; i < allRegions.size(); i++)
 	{
-		if (allRegions[i] == region)
-			return allRegions[i].setOwner(name);
+		if (allRegions[i] == region) {
+			wasSet = allRegions[i].setOwner(name);	
+			this->notifyOb();
+		}
 	}
-	return false;
+	return wasSet;
 }
 vector<string> GameMap::getOwners(Region& region)
 {

@@ -12,7 +12,7 @@ class Player;
 class SubjectInterface;
 class ObserverInterface;
 
-class GameMap : SubjectInterface
+class GameMap : public SubjectInterface
 {
 private: 
 	GraphGeneric<Region> connectRegions;
@@ -26,9 +26,10 @@ private:
 public:
 	GameMap();
 	GameMap(GraphGeneric<Region> connectRegion, string nameOfMap);
-	~GameMap();
+	virtual ~GameMap();
 	GraphGeneric<Region> getMapGraph();
 	void addPlayers(vector<Player*>* players); // Have all the players stored in the GameMap.
+	vector<Player*>* getPlayers();
 	string getNameMap();
 	vector<Region>& getAllRegions();
 	bool setOwnerRegion(string name,Region& region);

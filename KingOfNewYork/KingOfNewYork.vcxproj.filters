@@ -75,6 +75,9 @@
     <ClInclude Include="ConcretePlayerObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ConcreteGameMapObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SubRegion.cpp">
@@ -135,6 +138,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ConcretePlayerObserver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConcreteGameMapObserver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
