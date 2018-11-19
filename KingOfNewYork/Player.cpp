@@ -223,10 +223,15 @@ bool Player::getMovedStatus() {
 	return this->wasMoved;
 }
 
+StrategyPlayerInterface * Player::getPlayerBehaviour()
+{
+	return this->playerBehaviour;
+}
+
 void Player::move(Player & player, GameMap & gameMap, bool gotAttacked)
 {
 	this->turnPhase = "move";
-	wasMoved = playerBehaviour->move(player, gameMap, gotAttacked);
+	wasMoved = player.getPlayerBehaviour()->move(player, gameMap, gotAttacked); // This method is not called on itself all the time, for example when moving a player out of manhattan
 	this->notifyOb();
 }
 
@@ -249,6 +254,8 @@ void Player::buyCards(Player & player, vector<EffectCard>& buyableCards, EffectC
 	this->turnPhase = "buyCard";
 	playerBehaviour->buyCards(player,buyableCards,effectCards);
 	this->notifyOb();
+	turnPhase = "endTurn"; //Having this right here because after buying cards the turn is finished
+	this->notifyOb(); // Now observer knows that it is the end of the urn and will display final info.
 }
 
 void Player::registerOb(ObserverInterface * ob)

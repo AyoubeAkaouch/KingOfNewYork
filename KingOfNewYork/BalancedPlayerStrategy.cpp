@@ -47,8 +47,32 @@ public:
 		//If in Manhattan and got attacked player stays here.
 		else if (player.getRegion().getName() == "Manhattan" && gotAttacked) {
 			Region currentRegionName = player.getRegion();
-			cout << "Oh no! Another player attacked you :( Would you like to move to a different borough outside of Manhattan?(y/n)" << endl;
-			cout << "Balanced player will stay in Manhattan" << endl;
+			cout << "\n\nOh no! Another player attacked you :( Would you like to move to a different borough outside of Manhattan?(y/n)" << endl;
+			
+			//Balanced player will stay in Manhattan if he has more than 2 health points, if not he will change borough to heal." 
+			if (player.getHealth() <= 2) {
+				cout << "Balanced player will leave Manhattan to have a chnance to heal since he has less than 3 hp" << endl;
+				//Finding the first avaialble region to move our player to and putting him there.
+				for (int i = 0; i < availableRegion.size(); i++) {
+
+					if (availableRegion[i].getOwners().size() < availableRegion[i].getMaxPlayers()) {
+						selectedRegion = i;
+						gameMap.setOwnerRegion(player.getName(), availableRegion[i]);
+						break;
+					}
+
+				}
+
+				wasMoved = true;
+				gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
+				player.setRegion(availableRegion[selectedRegion]);
+				cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
+				cout << "Manhattan is now empty watch out!\n\n" << endl;
+			}
+			else {
+				cout << "Balanced player has enough hp and will stay in Manhattan to stack up on rewards\n\n" << endl;
+			}
+			
 			
 		}
 		//A player in a normal borough is asked if he wants to move
@@ -104,7 +128,7 @@ public:
 		}
 
 
-		cout << "Here is the first roll :\n" << player.getDices();
+		//cout << "Here is the first roll :\n" << player.getDices(); Commented out since the player observer now takes care of this
 		map<int, string> currentDices = player.getDices().getCurrentValues();
 
 
@@ -147,7 +171,9 @@ public:
 				cout << endl;
 				canRoll = player.RollDices(&toReroll);
 				toReroll.clear(); // Clearing to have an empty vector if there is another set of rerolls
-				cout << "\nHere are your current dices:\n" << player.getDices();
+				
+				//Taken care of in player observer				  
+				//cout << "\nHere are your current dices:\n" << player.getDices();
 				currentDices = player.getCurrentValues();
 			}
 			else

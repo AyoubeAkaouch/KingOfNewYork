@@ -68,6 +68,7 @@ public:
 	string getTurnPhase();
 	vector<string> getResolved();
 	bool getMovedStatus();
+	StrategyPlayerInterface* getPlayerBehaviour();
 
 	void move(Player & player, GameMap & gameMap, bool gotAttacked) ;
 	void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players);

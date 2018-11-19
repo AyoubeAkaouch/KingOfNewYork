@@ -15,8 +15,7 @@ void ConcretePlayerObserver::update(SubjectInterface* subject)
 {
 	Player* player = dynamic_cast<Player*>(subject); // Casting here because we need to pass SubjectInterface
 	if (player == NULL) {
-		cout << "You are unfortunately using the concrete player observer on an object\
-			different than a player, please register an appropriate observer to your player object" << endl;
+		cout << "You are unfortunately using the concrete player observer on an object different than a player, please register an appropriate observer to your player object" << endl;
 	}
 	else {
 		cout << "~~~~~~~~~~~~~~~~~~~~~Player Observer~~~~~~~~~~~~~~~~~~~~~" << endl;
@@ -33,6 +32,10 @@ void ConcretePlayerObserver::update(SubjectInterface* subject)
 		else if (player->getTurnPhase() == "buyCard") {
 			this->displayBuyCards(player);
 		}
+		else if (player->getTurnPhase() == "endTurn") {
+			this->displayEndOfTurn(player);
+		}
+
 		cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 	}
 	
@@ -76,3 +79,10 @@ void ConcretePlayerObserver::displayBuyCards(Player* player)
 	cout << player->getName() << " just finished the buy phase and he currently has these cards: " << endl;
 	player->displayCards();
 }
+
+void ConcretePlayerObserver::displayEndOfTurn(Player* player)
+{
+	cout << "Phase: End of turn" << endl;
+	cout << player->getName() << " currently has {" << player->getEnergyCubes() << " energy cubes} {" << player->getHealth() << " health points} {" << player->getVictoryPoints() << " victory points}" << endl;
+
+	}

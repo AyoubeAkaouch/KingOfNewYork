@@ -47,7 +47,7 @@ public:
 		//If in Manhattan and got attacked offer the player to move somewhere else.
 		else if (player.getRegion().getName() == "Manhattan" && gotAttacked) {
 			Region currentRegionName = player.getRegion();
-			cout << "Oh no! Another player attacked you :( Would you like to move to a different borough outside of Manhattan?(y/n)" << endl;
+			cout << "\n\nOh no! Another player attacked you :( Would you like to move to a different borough outside of Manhattan?(y/n)" << endl;
 			cout << "Aggressive player will automatically move out of Manhattan" << endl;
 		
 
@@ -66,7 +66,7 @@ public:
 			gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
 			player.setRegion(availableRegion[selectedRegion]);
 			cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
-			cout << "Manhattan is now empty watch out!" << endl;
+			cout << "Manhattan is now empty watch out!\n\n" << endl;
 
 			
 			
@@ -124,7 +124,7 @@ public:
 		}
 
 
-		cout << "Here is the first roll :\n" << player.getDices();
+		//cout << "Here is the first roll :\n" << player.getDices(); Commented out since the player observer now takes care of this
 		map<int, string> currentDices = player.getDices().getCurrentValues();
 
 
@@ -147,7 +147,7 @@ public:
 			//If decides to roll again go through de reroll process
 			if (rollAgain == 'y')
 			{
-				cout << "Balanced player will automatically reroll anything that is not Destruction or Attack" << endl;
+				cout << "Aggressive player will automatically reroll anything that is not Destruction or Attack" << endl;
 				//Going through all possible dices and if it is not a destrction or attack reroll it.
 				for (int i = 0; i < currentDices.size();i++) {
 
@@ -167,7 +167,8 @@ public:
 				cout << endl ;
 				canRoll = player.RollDices(&toReroll);
 				toReroll.clear(); // Clearing to have an empty vector if there is another set of rerolls
-				cout << "\nHere are your current dices:\n" << player.getDices();
+				//Taken care of in player observer				  
+				//cout << "\nHere are your current dices:\n" << player.getDices();
 				currentDices = player.getCurrentValues();
 			}
 			else
@@ -273,7 +274,7 @@ private:
 						noOneInManhattan = false;
 						players[i]->removeHealth(effect.size());
 						cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
-						move(*players[i], gameMap, true);
+						players[i]->move(*players[i], gameMap, true);
 					}
 				}
 				//If no one in manhattan the attack dices had no effect

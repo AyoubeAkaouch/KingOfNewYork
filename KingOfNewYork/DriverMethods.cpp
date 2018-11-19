@@ -137,7 +137,7 @@ void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlay
 		cout << " }" << endl;
 		cin >> x;
 		if (i%3==0) {
-			Player* player = new Player(monsters[x], new AggressivePlayerStrategy());
+			Player* player = new Player(monsters[x], new HumanPlayerStrategy());
 			player->registerOb(observer);
 			players.push_back(player);
 			monsters.erase(monsters.begin() + x);
@@ -149,7 +149,7 @@ void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlay
 			monsters.erase(monsters.begin() + x);
 		}
 		else {
-			Player* player = new Player(monsters[x], new HumanPlayerStrategy());
+			Player* player = new Player(monsters[x], new AggressivePlayerStrategy());
 			player->registerOb(observer);
 			players.push_back(player);
 			monsters.erase(monsters.begin() + x);
@@ -170,7 +170,7 @@ void gameLoop(vector<Player*>& players, GameMap & gameMap, EffectCardDeck & effe
 	
 	int turnOf = firstToPlay;
 	players[turnOf]->addEnergyCubes(50); //To test the buying card feature!
-	while (!gameEnded(players,gameMap) && stop == "x") //This method will check if game ended yet (20 victory points or only 1 player left)
+	while (stop == "x" && !gameEnded(players, gameMap)) //This method will check if game ended yet (20 victory points or only 1 player left)
 	{
 		//If player doesn't have any health he can't play anymore
 		if (players[turnOf]->getHealth()>0) {

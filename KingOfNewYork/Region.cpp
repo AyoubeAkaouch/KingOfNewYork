@@ -39,9 +39,12 @@ Region::~Region()
 
 vector<string> Region::getOwners()
 {
+	/*
 	if (currentOwners.size() == 0) {
 		cout << "There are no players currently in "<< name<<". Vector is empty." << endl;
 	}
+	This was commented out after the addition of player observer and no need to use it for debugging.
+	*/
 	
 	return currentOwners;
 }
@@ -81,6 +84,7 @@ void Region::removePlayer(string player)
 
 	}
 
+	/*This was used for debugging but is no longer necessary
 	if (deleted)
 	{
 		cout << player << " has been deleted properly from "<< this->name<<"." << endl;
@@ -90,6 +94,7 @@ void Region::removePlayer(string player)
 		cout << player << " has not been deleted, it wasn't currently in this region." << endl;
 
 	}
+	*/
 
 }
 

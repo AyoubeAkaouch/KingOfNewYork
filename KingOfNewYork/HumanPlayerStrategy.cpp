@@ -45,7 +45,7 @@ public:
 		//If in Manhattan and got attacked offer the player to move somewhere else.
 		else if (player.getRegion().getName() == "Manhattan" && gotAttacked) {
 			Region currentRegionName = player.getRegion();
-			cout << "Oh no! Another player attacked you :( Would you like to move to a different borough outside of Manhattan?(y/n)" << endl;
+			cout << "\n\nOh no! Another player attacked you :( Would you like to move to a different borough outside of Manhattan?(y/n)" << endl;
 			cin >> changeRegion;
 			if (changeRegion == 'y') {
 				//Showing the possible regions for him to go
@@ -78,7 +78,7 @@ public:
 				gameMap.removeOwner(player.getName(), player.getRegion());// Removing player from his current Region
 				player.setRegion(availableRegion[selectedRegion]);
 				cout << player.getName() << " was moved to " << availableRegion[selectedRegion].getName() << endl;
-				cout << "Manhattan is now empty watch out!" << endl;
+				cout << "Manhattan is now empty watch out!\n\n" << endl;
 
 			}
 			else {
@@ -172,7 +172,7 @@ public:
 		}
 
 
-		cout << "Here is the first roll :\n" << player.getDices();
+		//cout << "Here is the first roll :\n" << player.getDices();
 		while (canRoll)
 		{
 			cout << "Would you like to roll again (y/n)?" << endl;
@@ -186,7 +186,8 @@ public:
 				toReroll = stringToVectorInt(line);
 
 				canRoll = player.RollDices(&toReroll);
-				cout << "\nHere are your current dices:\n" << player.getDices();
+				//Taken care of in player observer				  
+				//cout << "\nHere are your current dices:\n" << player.getDices();
 			}
 			else
 			{

@@ -18,5 +18,6 @@ private:
 	void displayResolveDices(Player* player);
 	void displayMove(Player* player);
 	void displayBuyCards(Player* player);
+	void displayEndOfTurn(Player* player);
 };
 
