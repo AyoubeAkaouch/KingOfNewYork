@@ -115,7 +115,7 @@ void settingRegions(GameMap& gameMap, vector<Player*>& players, int currentTurn)
 	}
 }
 
-void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlayerInterface* strategy,ObserverInterface* observer)
+void setPlayers(vector<Player*>& players, vector<Monster>& monsters,ObserverInterface* observer)
 {
 	//Setup the number of players and associate them to a monster card
 	int numberOfPlayers;
@@ -167,7 +167,7 @@ void setPlayers(vector<Player*>& players, vector<Monster>& monsters,StrategyPlay
 
 void gameLoop(vector<Player*>& players, GameMap & gameMap, EffectCardDeck & effectCards, BuildingTilesDeck & tilesDeck, map<string, vector<Token>>& tokens, int firstToPlay)
 {
-	vector<EffectCard> buyableCards; // This will be a smaller deck of 3 cards that the player can purchase
+	vector<EffectCard*> buyableCards; // This will be a smaller deck of 3 cards that the player can purchase
 	effectCards.shuffle(); //Making sure all cards are shuffled before drawing the top 3
 	string stop = "x";
 

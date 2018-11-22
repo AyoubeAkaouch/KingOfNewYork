@@ -60,16 +60,15 @@ int main() {
 	//Setting up the decks and game pieces object
 	vector<Monster> monsters;
 	BuildingTilesDeck tilesDeck;
-	EffectCardDeck cardDeck;
+	EffectCardDeck* cardDeck = new EffectCardDeck();
 	map<string, vector<Token>> tokens;
 
 	
 	
-	LoadGamePieces::LoadAllPieces(monsters,tilesDeck, cardDeck,tokens); //This will create all the card objects and their values
-	AggressivePlayerStrategy aggressive;
+	LoadGamePieces::LoadAllPieces(monsters,tilesDeck, *cardDeck,tokens); //This will create all the card objects and their values
 	vector<Player*> players;// Have to keep track of the order of for them to play in the right order
 	
-	setPlayers(players,monsters,&aggressive,playerObserver);// Method to create the player objects and associate them to monster cards!.
+	setPlayers(players,monsters,playerObserver);// Method to create the player objects and associate them to monster cards!.
 
 	//Once we create the players we pass them to the GameMap.
 	gameMap->addPlayers(&players);
@@ -77,7 +76,7 @@ int main() {
 
 	cout << "Here are the size of the decks created." << endl;
 	cout << "Deck of building tiles: " << tilesDeck.sizeOfDeck() << endl;
-	cout << "Deck of cards: " << cardDeck.sizeOfDeck() << endl;
+	cout << "Deck of cards: " << cardDeck->sizeOfDeck() << endl;
 	cout << "Number of Web tokens: " << tokens["Web"].size() << endl;
 	cout << "Number of Jynx tokens: " << tokens["Jynx"].size() << endl;
 	cout << "Number of Souvenir tokens: " << tokens["Souvenir"].size() << endl;
@@ -100,7 +99,7 @@ int main() {
 	}
 	cout << endl;
 
-	gameLoop(players, *gameMap,  cardDeck,  tilesDeck,  tokens, firstToPlay);
+	gameLoop(players, *gameMap,  *cardDeck,  tilesDeck,  tokens, firstToPlay);
 
 
 	cout << "___________________Final Board___________________" << endl;
@@ -131,6 +130,10 @@ int main() {
 	playerObserver = NULL;
 	delete gameMapObserver;
 	gameMapObserver = NULL;
+
+	//Deleting the deck of cards here
+	delete cardDeck;
+	cardDeck = NULL;
 
 }
 

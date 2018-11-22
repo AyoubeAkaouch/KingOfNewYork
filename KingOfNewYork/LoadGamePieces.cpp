@@ -14,14 +14,14 @@ LoadGamePieces::~LoadGamePieces()
 void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck & bDeck, EffectCardDeck & eDeck, map<string,vector<Token>>& tokens)
 {
 	//Setting up the Cards first (PlaceHolders)
-	vector<EffectCard> cardObjects;
+	vector<EffectCard*> cardObjects;
 	std::map<string, int> effectPlaceholder;
 	effectPlaceholder["victory"] = 2;//Gives 2 victory points
 
 	for (int i = 0; i < 64; i++)
 	{
 		string cardName = "Card " + to_string(i);
-		cardObjects.push_back((EffectCard(i, cardName, "PlaceHolder definition for the moment", effectPlaceholder)));
+		cardObjects.push_back((new EffectCard(i, cardName, "PlaceHolder definition for the moment", effectPlaceholder)));
 	}
 
 	eDeck.setDeck(cardObjects);

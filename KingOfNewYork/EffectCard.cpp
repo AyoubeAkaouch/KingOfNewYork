@@ -1,5 +1,5 @@
 #include "EffectCard.h"
-
+#include <iostream>
 
 EffectCard::EffectCard(int cost, string name, string howToPlay, map<string, int> effects)
 {

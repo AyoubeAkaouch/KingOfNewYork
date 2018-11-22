@@ -19,7 +19,7 @@ class GameMap;
 class Player : public SubjectInterface
 {
 private:
-	vector<EffectCard> cards;
+	vector<EffectCard*> cards;
 	vector<Token> tokens;
 	Monster monster;
 	Region& region;
@@ -50,7 +50,7 @@ public:
 	void setRegion(Region& region);
 
 	void displayCards();
-	bool buyCards(EffectCard card);
+	bool buyCards(EffectCard* card);
 	string getName();
 	void addEnergyCubes(int i);
 	bool removeEnergy(int i);
@@ -73,7 +73,7 @@ public:
 	void move(Player & player, GameMap & gameMap, bool gotAttacked) ;
 	void resolveDices(Player & player, GameMap& gameMap, vector<Player*> & players);
 	void diceRoll(Player & player, bool extraDices);
-	void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards);
+	void buyCards(Player & player, vector<EffectCard*>& buyableCards, EffectCardDeck & effectCards);
 
 	//Methods of the observer
 	virtual void registerOb(ObserverInterface* ob) ;

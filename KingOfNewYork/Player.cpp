@@ -83,7 +83,7 @@ void Player::displayCards()
 	else {
 		cout << "Here are the cards owned by " << this->monster.getName() << ": " << endl;
 		for (int i = 0; i < cards.size(); i++) {
-			cout << "- " << cards[i] << endl;
+			cout << "- " << *cards[i] << endl;
 		}
 	}
 }
@@ -122,9 +122,9 @@ void Player::setRegion(Region& region)
 
 
 
-bool Player::buyCards(EffectCard card)
+bool Player::buyCards(EffectCard* card)
 {
-	if (card.getCost() > energyCubes)
+	if (card->getCost() > energyCubes)
 	{
 		cout << "You can't buy this card, you don't have enough energy cubes.\n";
 		return false;
@@ -133,7 +133,7 @@ bool Player::buyCards(EffectCard card)
 	{
 		
 			cards.push_back(card);
-			this->energyCubes = this->energyCubes - card.getCost();
+			this->energyCubes = this->energyCubes - card->getCost();
 			cout << "The card was purchased.\n";
 			return true;
 		
@@ -249,7 +249,7 @@ void Player::diceRoll(Player & player, bool extraDices)
 	//Not notifying here since we are notifying in other methods
 }
 
-void Player::buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
+void Player::buyCards(Player & player, vector<EffectCard*>& buyableCards, EffectCardDeck & effectCards)
 {
 	this->turnPhase = "buyCard";
 	playerBehaviour->buyCards(player,buyableCards,effectCards);

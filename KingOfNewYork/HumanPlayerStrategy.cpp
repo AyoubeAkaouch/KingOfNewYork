@@ -198,7 +198,7 @@ public:
 	}
 	
 
-	virtual void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
+	virtual void buyCards(Player & player, vector<EffectCard*>& buyableCards, EffectCardDeck & effectCards)
 	{
 		char input;
 		int input2;
@@ -208,7 +208,7 @@ public:
 		if (input == 'y') {
 			cout << "Here are the 3 cards that you can buy:" << endl;
 			for (int i = 0; i < buyableCards.size(); i++) {
-				cout << i << ") " << buyableCards[i] << endl;
+				cout << i << ") " << *buyableCards[i] << endl;
 			}
 			while (!done) {
 				cout << "Your current balance is: " << player.getEnergyCubes() << endl;
@@ -220,10 +220,10 @@ public:
 						buyableCards.erase(buyableCards.begin() + input2);
 						buyableCards.push_back(effectCards.draw());
 						cout << "The card you bought got replaced by this one: " << endl;
-						cout << buyableCards[2] << endl;
+						cout << *buyableCards[2] << endl;
 					}
 				}
-				else if (input2 == 3) {
+				else if (input2 == 3 && effectCards.getAllCards().size() > 2) {
 					if (player.removeEnergy(2)&&effectCards.getAllCards().size()>0) {
 						buyableCards.clear();
 						for (int i = 0; i < 3; i++) {
@@ -231,7 +231,7 @@ public:
 						}
 						cout << "Here are the 3 cards that you can buy:" << endl;
 						for (int i = 0; i < buyableCards.size(); i++) {
-							cout << i << ") " << buyableCards[i] << endl;
+							cout << i << ") " << *buyableCards[i] << endl;
 						}
 
 					}

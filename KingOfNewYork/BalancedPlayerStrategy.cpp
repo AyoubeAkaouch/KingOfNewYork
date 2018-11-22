@@ -184,31 +184,31 @@ public:
 
 	}
 
-	virtual void buyCards(Player & player, vector<EffectCard>& buyableCards, EffectCardDeck & effectCards)
+	virtual void buyCards(Player & player, vector<EffectCard*>& buyableCards, EffectCardDeck & effectCards)
 	{
 		bool done = false;
 		cout << "Aggressive player now checking if he will buy a card or not." << endl;
 
 		cout << "Here are the 3 cards that you can buy:" << endl;
 		for (int i = 0; i < buyableCards.size(); i++) {
-			cout << i << ") " << buyableCards[i] << endl;
+			cout << i << ") " << *buyableCards[i] << endl;
 		}
 
 		//Going over the possible cards and buying the first card the player can get.
 		//If no cards were bought pay 2 energy if possible to change all cards.
 		for (int i = 0; i < buyableCards.size(); i++) {
-			if (buyableCards[i].getCost() < player.getEnergyCubes()) {
+			if (buyableCards[i]->getCost() < player.getEnergyCubes()) {
 				done = player.buyCards(buyableCards[i]);
 				buyableCards.erase(buyableCards.begin() + i);
 				buyableCards.push_back(effectCards.draw());
 				cout << "The card you bought got replaced by this one: " << endl;
-				cout << buyableCards[2] << endl;
+				cout << *buyableCards[2] << endl;
 				break;
 			}
 		}
 
 		//If we could not buy a card redraw new 3 cards
-		if (!done && effectCards.getAllCards().size() > 0) {
+		if (!done && effectCards.getAllCards().size() > 2) {
 			if (player.getEnergyCubes() >= 2) {
 				done = true;
 				buyableCards.clear();
@@ -217,7 +217,7 @@ public:
 				}
 				cout << "Here are the 3 new cards:" << endl;
 				for (int i = 0; i < buyableCards.size(); i++) {
-					cout << i << ") " << buyableCards[i] << endl;
+					cout << i << ") " << *buyableCards[i] << endl;
 				}
 
 			}

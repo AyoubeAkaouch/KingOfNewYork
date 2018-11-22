@@ -44,13 +44,13 @@ void ConcretePlayerObserver::update(SubjectInterface* subject)
 
 void ConcretePlayerObserver::displayDiceRolling(Player* player)
 {
-	cout << "Phase : Dice Rolling" << endl;
+	cout << "Phase : Dice Rolling ( Player: "<< player->getName() << " )" << endl;
 	cout << player->getName() << " just rolled these dices: " << player->getDices();
 }
 
 void ConcretePlayerObserver::displayResolveDices(Player* player)
 {
-	cout << "Phase : Resolving dices" << endl;
+	cout << "Phase : Resolving dices ( Player: " << player->getName() << " )" << endl;
 	cout << "The dices were resolved in this order: ";
 
 	vector<string> resolved = player->getResolved();
@@ -63,7 +63,7 @@ void ConcretePlayerObserver::displayResolveDices(Player* player)
 
 void ConcretePlayerObserver::displayMove(Player* player)
 {
-	cout << "Phase : Moving " << endl;
+	cout << "Phase : Moving ( Player: " << player->getName() << " )" << endl;
 	if (player->getMovedStatus()) {
 		cout << player->getName() << " was moved and is now in this region: " << player->getRegion().getName() << endl;
 	}
@@ -74,7 +74,7 @@ void ConcretePlayerObserver::displayMove(Player* player)
 
 void ConcretePlayerObserver::displayBuyCards(Player* player)
 {
-	cout << "Phase: Buying cards" << endl;
+	cout << "Phase: Buying cards ( Player: " << player->getName() << " )" << endl;
 	cout << player->getName() << " has a current energy balance of: " << player->getEnergyCubes() << endl;
 	cout << player->getName() << " just finished the buy phase and he currently has these cards: " << endl;
 	player->displayCards();
@@ -82,7 +82,7 @@ void ConcretePlayerObserver::displayBuyCards(Player* player)
 
 void ConcretePlayerObserver::displayEndOfTurn(Player* player)
 {
-	cout << "Phase: End of turn" << endl;
+	cout << "Phase: End of turn ( Player: " << player->getName() << " )" << endl;
 	cout << player->getName() << " currently has {" << player->getEnergyCubes() << " energy cubes} {" << player->getHealth() << " health points} {" << player->getVictoryPoints() << " victory points}" << endl;
 
 	}

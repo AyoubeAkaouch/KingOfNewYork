@@ -3,7 +3,7 @@
 
 using namespace std;
 
-EffectCardDeck::EffectCardDeck(vector<EffectCard> cards)
+EffectCardDeck::EffectCardDeck(vector<EffectCard*> cards)
 {
 	deckOfCards = cards;
 }
@@ -14,6 +14,16 @@ EffectCardDeck::EffectCardDeck()
 
 EffectCardDeck::~EffectCardDeck()
 {
+	//Deleting cards still in deck
+	for (auto * card : deckOfCards) {
+		delete card;
+		card = NULL;
+	}
+	//Deleting cards that have been used
+	for (auto * card : notInDeckCards) {
+		delete card;
+		card = NULL;
+	}
 }
 
 void EffectCardDeck::shuffle()
@@ -21,39 +31,25 @@ void EffectCardDeck::shuffle()
 	random_shuffle(deckOfCards.begin(), deckOfCards.end());
 }
 
-void EffectCardDeck::setDeck(vector<EffectCard> cards)
+void EffectCardDeck::setDeck(vector<EffectCard*> cards)
 {
 	this->deckOfCards = cards;
 }
 
-EffectCard EffectCardDeck::draw()
+EffectCard* EffectCardDeck::draw()
 {
-	EffectCard card = deckOfCards[deckOfCards.size() - 1];
+	EffectCard* card = deckOfCards[deckOfCards.size() - 1];
+	notInDeckCards.push_back(card);//Adding this card to keep track, have to delete it later
+
 	deckOfCards.erase(deckOfCards.end()-1);
 	return card;
 }
 
-vector<EffectCard> EffectCardDeck::getAllCards() 
+vector<EffectCard*> EffectCardDeck::getAllCards() 
 {
 	return deckOfCards;
 }
 
-//Used to pick a single card
-EffectCard EffectCardDeck::pickCard(string name) 
-{
-	for (int i = 0; i < deckOfCards.size(); i++)
-	{
-		if (deckOfCards[i].getName() == name)
-		{
-			EffectCard card = deckOfCards[i];
-			deckOfCards.erase(deckOfCards.begin() + i);
-			return card;
-		}
-	}
-
-	//If that token/monster does not exist it will return a card with an empty name!!! Check if valid when called (Implement exception later)
-	return EffectCard();
-}
 
 int EffectCardDeck::sizeOfDeck() const
 {
