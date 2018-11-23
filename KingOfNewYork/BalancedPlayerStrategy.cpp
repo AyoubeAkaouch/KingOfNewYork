@@ -202,15 +202,14 @@ public:
 				buyableCards.erase(buyableCards.begin() + i);
 				buyableCards.push_back(effectCards.draw());
 				cout << "The card you bought got replaced by this one: " << endl;
-				buyableCards[2]->useCard();
 				cout << *buyableCards[2] << endl;
 				break;
 			}
 		}
 
 		//If we could not buy a card redraw new 3 cards
-		if (!done && effectCards.getAllCards().size() > 2) {
-			if (player.getEnergyCubes() >= 2) {
+		if (effectCards.getAllCards().size() > 2) {
+			if (!done && player.getEnergyCubes() >= 2) {
 				done = true;
 				buyableCards.clear();
 				for (int i = 0; i < 3; i++) {

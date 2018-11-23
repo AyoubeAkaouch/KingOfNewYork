@@ -223,8 +223,8 @@ public:
 						cout << *buyableCards[2] << endl;
 					}
 				}
-				else if (input2 == 3 && effectCards.getAllCards().size() > 2) {
-					if (player.removeEnergy(2)&&effectCards.getAllCards().size()>0) {
+				else if (input2 == 3) {
+					if (player.removeEnergy(2)&&effectCards.getAllCards().size()>2) {
 						buyableCards.clear();
 						for (int i = 0; i < 3; i++) {
 							buyableCards.push_back(effectCards.draw());
