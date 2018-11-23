@@ -202,6 +202,7 @@ public:
 				buyableCards.erase(buyableCards.begin() + i);
 				buyableCards.push_back(effectCards.draw());
 				cout << "The card you bought got replaced by this one: " << endl;
+				buyableCards[2]->useCard();
 				cout << *buyableCards[2] << endl;
 				break;
 			}
