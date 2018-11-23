@@ -7,6 +7,7 @@
 #include "EffectCardDeck.h"
 #include "BuildingTiles.h"
 #include "BuildingTilesDeck.h"
+#include "ConcreteCardObserver.h"
 
 using namespace std;
 
@@ -15,6 +16,6 @@ class LoadGamePieces
 public:
 	LoadGamePieces();
 	~LoadGamePieces();
-	static void LoadAllPieces(vector<Monster> &monsters, BuildingTilesDeck & bDeck, EffectCardDeck &eDeck, map<string, vector<Token>> &tokens);
+	static void LoadAllPieces(vector<Monster> &monsters, BuildingTilesDeck & bDeck, EffectCardDeck &eDeck, map<string, vector<Token>> &tokens, ConcreteCardObserver* cardObserver);
 };
 

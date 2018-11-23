@@ -11,7 +11,7 @@ LoadGamePieces::~LoadGamePieces()
 {
 }
 
-void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck & bDeck, EffectCardDeck & eDeck, map<string,vector<Token>>& tokens)
+void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck & bDeck, EffectCardDeck & eDeck, map<string,vector<Token>>& tokens, ConcreteCardObserver* cardObserver)
 {
 	//Setting up the Cards first (PlaceHolders)
 	vector<EffectCard*> cardObjects;
@@ -22,6 +22,7 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	{
 		string cardName = "Card " + to_string(i);
 		cardObjects.push_back((new EffectCard(i, cardName, "PlaceHolder definition for the moment", effectPlaceholder)));
+		cardObjects[i]->registerOb(cardObserver);
 	}
 
 	eDeck.setDeck(cardObjects);

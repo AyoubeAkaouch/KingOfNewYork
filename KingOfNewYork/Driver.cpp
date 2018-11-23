@@ -17,6 +17,8 @@
 #include "AggressivePlayerStrategy.cpp"
 #include "ConcretePlayerObserver.h"
 #include "ConcreteGameMapObserver.h"
+#include "ConcreteCardObserver.h"
+
 using namespace std;
 
 
@@ -39,6 +41,7 @@ int main() {
 
 	ConcretePlayerObserver* playerObserver = new ConcretePlayerObserver();
 	ConcreteGameMapObserver* gameMapObserver = new ConcreteGameMapObserver();
+	ConcreteCardObserver* cardObserver = new ConcreteCardObserver();
 
 	cin >> directory;
 	GameMap* gameMap;
@@ -65,7 +68,7 @@ int main() {
 
 	
 	
-	LoadGamePieces::LoadAllPieces(monsters,tilesDeck, *cardDeck,tokens); //This will create all the card objects and their values
+	LoadGamePieces::LoadAllPieces(monsters,tilesDeck, *cardDeck,tokens,cardObserver); //This will create all the card objects and their values
 	vector<Player*> players;// Have to keep track of the order of for them to play in the right order
 	
 	setPlayers(players,monsters,playerObserver);// Method to create the player objects and associate them to monster cards!.
