@@ -19,7 +19,8 @@ void ConcreteCardObserver::update(SubjectInterface * subject)
 	}
 	else {
 		cout << "~~~~~~~~~~~~~~~~~~~~~~~Card Observer~~~~~~~~~~~~~~~~~~~~~~" << endl;
-		cout <<"Using: " << card->getName() << "  " << endl;
+		cout <<"Using: " << card->getName() << endl;
+		cout << "Effect: " << card->getDescription() << endl;
 		cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 	}
 

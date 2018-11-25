@@ -9,12 +9,13 @@ using namespace std;
 class EffectCard : public SubjectInterface
 {
 	string name;
+	string type;
 	int cost;
 	string howToPlay;
 	map<string, int> effects; //Key: Category affecting Value: What it is affecting
 	vector<ObserverInterface*> observers;
 public:
-	EffectCard(int cost, string name, string howToPlay, map<string, int> effects);
+	EffectCard(int cost, string type, string name, string howToPlay, map<string, int> effects);
 	EffectCard();
 	~EffectCard();
 	string getName() const;

@@ -18,12 +18,14 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	std::map<string, int> effectPlaceholder;
 	effectPlaceholder["victory"] = 2;//Gives 2 victory points
 
-	for (int i = 0; i < 64; i++)
-	{
-		string cardName = "Card " + to_string(i);
-		cardObjects.push_back((new EffectCard(i, cardName, "PlaceHolder definition for the moment", effectPlaceholder)));
-		cardObjects[i]->registerOb(cardObserver);
-	}
+	
+
+	//Creating the tower titan card
+	EffectCard* card = new EffectCard(10,"keep", "Towering Titan" , "Add 2 ATTACK to your result.",effectPlaceholder);
+	card->registerOb(cardObserver);
+	cardObjects.push_back(card);
+
+
 
 	eDeck.setDeck(cardObjects);
 	eDeck.shuffle(); //Be sure the returned deck is shuffled

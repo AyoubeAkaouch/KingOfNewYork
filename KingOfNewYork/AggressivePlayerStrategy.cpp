@@ -89,6 +89,17 @@ public:
 		vector<string> sameToResolve;
 		vector<string> resolved; // Since we are getting a pointer we can't erase from map what has already been resolve, it wil change dice object.
 		map<int, string> currentDices = player.getCurrentValues();
+
+		//Seeing if player has 2 extra attacks
+		vector<EffectCard*> cards = player.getCards();
+		for (int i = 0; i < cards.size(); i++) {
+			if (cards[i]->getName() == "Towering Titan") {
+				currentDices.insert({ (currentDices.size()),"Attack" });
+				currentDices.insert({ (currentDices.size()),"Attack" });
+				cards[i]->useCard();
+			}
+		}
+
 		int dicesResolved = 0;
 		for (int j = 0; j < currentDices.size();j++) //Until all dices are resolved
 		{
@@ -195,9 +206,15 @@ public:
 			if (buyableCards[i]->getCost() < player.getEnergyCubes()){
 				done = player.buyCards(buyableCards[i]);
 				buyableCards.erase(buyableCards.begin() + i);
-				buyableCards.push_back(effectCards.draw());
-				cout << "The card you bought got replaced by this one: " << endl;
-				cout << *buyableCards[2] << endl;
+				if (effectCards.sizeOfDeck() >= 1) {
+					buyableCards.push_back(effectCards.draw());
+					cout << "The card you bought got replaced by this one: " << endl;
+					cout << *buyableCards[buyableCards.size() - 1] << endl;
+				}
+				else {
+					cout << "The deck is empty no cards added to the buyable cards";
+				}
+
 				break;
 			}
 		}
@@ -211,6 +228,21 @@ public:
 					buyableCards.push_back(effectCards.draw());
 				}
 				cout << "Here are the 3 new cards:" << endl;
+				for (int i = 0; i < buyableCards.size(); i++) {
+					cout << i << ") " << *buyableCards[i] << endl;
+				}
+
+			}
+		}
+		else if (effectCards.getAllCards().size() > 0) {
+			if (!done && player.getEnergyCubes() >= 2) {
+				done = true;
+				buyableCards.clear();
+				int sizeOfDeck = effectCards.sizeOfDeck();
+				for (int i = 0; i < sizeOfDeck; i++) {
+					buyableCards.push_back(effectCards.draw());
+				}
+				cout << "Here are the new cards:" << endl;
 				for (int i = 0; i < buyableCards.size(); i++) {
 					cout << i << ") " << *buyableCards[i] << endl;
 				}

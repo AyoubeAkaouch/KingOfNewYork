@@ -140,6 +140,11 @@ bool Player::buyCards(EffectCard* card)
 	}
 }
 
+vector<EffectCard*> Player::getCards()
+{
+	return this->cards;
+}
+
 void Player::addEnergyCubes(int i)
 {
 	this->energyCubes = energyCubes + i;

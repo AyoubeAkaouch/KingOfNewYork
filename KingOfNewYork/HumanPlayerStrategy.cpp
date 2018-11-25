@@ -136,6 +136,17 @@ public:
 		vector<string> resolved; // Since we are getting a pointer we can't erase from map what has already been resolve, it wil change dice object.
 		map<int, string> currentDices = player.getCurrentValues();
 		int dicesResolved = 0;
+
+		//Seeing if player has 2 extra attacks
+		vector<EffectCard*> cards = player.getCards();
+		for (int i = 0; i < cards.size(); i++) {
+			if (cards[i]->getName() == "Towering Titan") {
+				currentDices.insert({ (currentDices.size()),"Attack" });
+				currentDices.insert({ (currentDices.size()),"Attack" });
+				cards[i]->useCard();
+			}
+		}
+
 		while (dicesResolved < 6) //Until all dices are resolved
 		{
 			cout << "Which effect you want to apply?\n";
@@ -206,7 +217,7 @@ public:
 		cout << "Would you like to buy a card? (y/n)" << endl;
 		cin >> input;
 		if (input == 'y') {
-			cout << "Here are the 3 cards that you can buy:" << endl;
+			cout << "Here are the cards that you can buy:" << endl;
 			for (int i = 0; i < buyableCards.size(); i++) {
 				cout << i << ") " << *buyableCards[i] << endl;
 			}
@@ -218,13 +229,21 @@ public:
 					done = player.buyCards(buyableCards[input2]);
 					if (done) {
 						buyableCards.erase(buyableCards.begin() + input2);
-						buyableCards.push_back(effectCards.draw());
-						cout << "The card you bought got replaced by this one: " << endl;
-						cout << *buyableCards[2] << endl;
+						if (effectCards.sizeOfDeck() >= 1) {
+							buyableCards.push_back(effectCards.draw());
+							cout << "The card you bought got replaced by this one: " << endl;
+							cout << *buyableCards[buyableCards.size() - 1] << endl;
+						}
+						else {
+							cout << "The deck is empty no cards added to the buyable cards";
+						}
+
 					}
 				}
 				else if (input2 == 3) {
-					if (player.removeEnergy(2)&&effectCards.getAllCards().size()>2) {
+					if (player.getEnergyCubes() >= 2 && effectCards.getAllCards().size()>2) {
+						done = true;
+						player.removeEnergy(2);
 						buyableCards.clear();
 						for (int i = 0; i < 3; i++) {
 							buyableCards.push_back(effectCards.draw());
@@ -234,6 +253,21 @@ public:
 							cout << i << ") " << *buyableCards[i] << endl;
 						}
 
+					}
+					else if (effectCards.getAllCards().size() > 0) {
+						if (!done && player.getEnergyCubes() >= 2) {
+							done = true;
+							buyableCards.clear();
+							int sizeOfDeck = effectCards.sizeOfDeck();
+							for (int i = 0; i < sizeOfDeck; i++) {
+								buyableCards.push_back(effectCards.draw());
+							}
+							cout << "Here are the new cards:" << endl;
+							for (int i = 0; i < buyableCards.size(); i++) {
+								cout << i << ") " << *buyableCards[i] << endl;
+							}
+
+						}
 					}
 					else {
 						cout << "Can't replace these cards! Please choose another option" << endl;

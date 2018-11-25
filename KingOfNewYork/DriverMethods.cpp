@@ -171,8 +171,17 @@ void gameLoop(vector<Player*>& players, GameMap & gameMap, EffectCardDeck & effe
 	effectCards.shuffle(); //Making sure all cards are shuffled before drawing the top 3
 	string stop = "x";
 
-	for (int i = 0; i < 3; i++) {
-		buyableCards.push_back(effectCards.draw());
+	if (effectCards.sizeOfDeck() >= 3) {
+		for (int i = 0; i < 3; i++) {
+			buyableCards.push_back(effectCards.draw());
+		}
+	}
+	//If size of deck is smaller than 3 instantiate the buyable cards with all the cards in the deck
+	else {
+		int sizeOfDeck = effectCards.sizeOfDeck();
+		for (int i = 0; i < sizeOfDeck; i++) {
+			buyableCards.push_back(effectCards.draw());
+		}
 	}
 	
 	int turnOf = firstToPlay;

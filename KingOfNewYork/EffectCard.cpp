@@ -1,10 +1,11 @@
 #include "EffectCard.h"
 #include <iostream>
 
-EffectCard::EffectCard(int cost, string name, string howToPlay, map<string, int> effects)
+EffectCard::EffectCard(int cost, string type, string name, string howToPlay, map<string, int> effects)
 {
 	this->cost = cost;
 	this->name = name;
+	this->type = type;
 	this->howToPlay = howToPlay;
 	this->effects = effects;
 }

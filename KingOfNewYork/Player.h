@@ -51,6 +51,7 @@ public:
 
 	void displayCards();
 	bool buyCards(EffectCard* card);
+	vector<EffectCard*> getCards();
 	string getName();
 	void addEnergyCubes(int i);
 	bool removeEnergy(int i);
