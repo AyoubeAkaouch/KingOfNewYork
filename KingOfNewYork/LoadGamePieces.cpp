@@ -39,7 +39,11 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	card = new EffectCard(4, "keep", "Super Speed", "You can have an extra move before rolling your dice.", effectPlaceholder);
 	card->registerOb(cardObserver);
 	cardObjects.push_back(card);
-
+	
+	//Creating the drain card
+	card = new EffectCard(4, "keep", "Drain", "Take 2 ENERGY_POINT from Monsters that attack you.", effectPlaceholder);
+	card->registerOb(cardObserver);
+	cardObjects.push_back(card);
 
 
 	eDeck.setDeck(cardObjects);

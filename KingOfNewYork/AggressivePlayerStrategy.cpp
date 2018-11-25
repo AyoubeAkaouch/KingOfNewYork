@@ -303,9 +303,32 @@ private:
 			if (player.getRegion().getName() == "Manhattan") {
 				for (int i = 0; i < players.size(); i++) {
 					//Attacking players not in manhattan AND that are not already dead and removed from the game (health points > 0)
-					if (players[i]->getRegion().getName() != "Manhattan" && players[i]->getHealth()>0)
+					if (players[i]->getRegion().getName() != "Manhattan" && players[i]->getHealth() > 0)
 					{
 						players[i]->removeHealth(effect.size());
+
+						//Check if attacked player has Drain card, then remove 2 energy from the attacker
+						vector<EffectCard*> cards = players[i]->getCards();
+						for (int j = 0; j < cards.size(); j++) {
+							if (cards[j]->getName() == "Drain") {
+								cards[j]->useCard();
+								if (player.getEnergyCubes() >= 2) {
+									player.removeEnergy(2);
+									players[i]->addEnergyCubes(2);
+									cout << players[i]->getName() << " stole 2 Energy from " << player.getName() << endl;
+								}
+								else if (player.getEnergyCubes() == 1) {
+									player.removeEnergy(1);
+									players[i]->addEnergyCubes(1);
+									cout << players[i]->getName() << " stole 1 Energy from " << player.getName() << endl;
+								}
+								else {
+									player.removeEnergy(93);
+								}
+							}
+						}
+
+
 						cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
 					}
 				}
@@ -318,6 +341,26 @@ private:
 					{
 						noOneInManhattan = false;
 						players[i]->removeHealth(effect.size());
+						//Check if attacked player has Drain card, then remove 2 energy from the attacker
+						vector<EffectCard*> cards = players[i]->getCards();
+						for (int j = 0; j < cards.size(); j++) {
+							if (cards[j]->getName() == "Drain") {
+								cards[j]->useCard();
+								if (player.getEnergyCubes() >= 2) {
+									player.removeEnergy(2);
+									players[i]->addEnergyCubes(2);
+									cout << players[i]->getName() << " stole 2 Energy from " << player.getName() << endl;
+								}
+								else if (player.getEnergyCubes() == 1) {
+									player.removeEnergy(1);
+									players[i]->addEnergyCubes(1);
+									cout << players[i]->getName() << " stole 1 Energy from " << player.getName() << endl;
+								}
+								else {
+									player.removeEnergy(93);
+								}
+							}
+						}
 						cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
 						players[i]->move(*players[i], gameMap, true);
 					}

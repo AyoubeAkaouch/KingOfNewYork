@@ -157,6 +157,7 @@ bool Player::removeEnergy(int i)
 		return false;
 	}
 	else {
+		cout <<this->name<<" just lost "<<i<<" Energy." <<endl;
 		energyCubes = energyCubes - i;
 		return true;
 	}
