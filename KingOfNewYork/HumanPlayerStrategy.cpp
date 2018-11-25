@@ -243,7 +243,7 @@ public:
 							cout << *buyableCards[buyableCards.size() - 1] << endl;
 						}
 						else {
-							cout << "The deck is empty no cards added to the buyable cards";
+							cout << "The deck is empty no cards added to the buyable cards" << endl;
 						}
 
 					}

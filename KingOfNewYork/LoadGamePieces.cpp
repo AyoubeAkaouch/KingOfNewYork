@@ -30,6 +30,11 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	card->registerOb(cardObserver);
 	cardObjects.push_back(card);
 
+	//Creating the King Of Queens card
+	card = new EffectCard(5, "keep", "King of Queens", "Gain 1 ENERGY_POINT and heal 1 damage when you start your turn in Queens.", effectPlaceholder);
+	card->registerOb(cardObserver);
+	cardObjects.push_back(card);
+
 
 
 	eDeck.setDeck(cardObjects);

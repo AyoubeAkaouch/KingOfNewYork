@@ -192,6 +192,17 @@ void gameLoop(vector<Player*>& players, GameMap & gameMap, EffectCardDeck & effe
 		if (players[turnOf]->getHealth()>0) {
 			cout << endl << "It is now " << players[turnOf]->getName() << "\'s turn." << endl;
 
+			//Checking if player starts in queens and has King of queens card
+			vector<EffectCard*> cards = players[turnOf]->getCards();
+			for (int i = 0; i < cards.size(); i++) {
+				if (cards[i]->getName() == "King of Queens"&&players[turnOf]->getRegion().getName()=="Queens") {
+					cards[i]->useCard();
+					players[turnOf]->addEnergyCubes(1);
+					players[turnOf]->addHealth(1);
+				}
+			}
+
+
 			players[turnOf]->diceRoll(*players[turnOf], false);//Up to 3times, rerolls will be handled inside this method
 			cout << endl;
 			players[turnOf]->resolveDices(*players[turnOf], gameMap, players);//Mandatory
