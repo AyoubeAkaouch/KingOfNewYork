@@ -147,6 +147,14 @@ public:
 			}
 		}
 
+		//Seeing if player has 1 extra destruction
+		for (int i = 0; i < cards.size(); i++) {
+			if (cards[i]->getName() == "Stomp") {
+				currentDices.insert({ (currentDices.size()),"Destruction" });
+				cards[i]->useCard();
+			}
+		}
+
 		while (dicesResolved < 6) //Until all dices are resolved
 		{
 			cout << "Which effect you want to apply?\n";

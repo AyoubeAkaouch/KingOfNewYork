@@ -25,6 +25,11 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	card->registerOb(cardObserver);
 	cardObjects.push_back(card);
 
+	//Creating the stomp card
+	card = new EffectCard(4, "keep", "Stomp", "Add 1 DESTRUCTION to your result.", effectPlaceholder);
+	card->registerOb(cardObserver);
+	cardObjects.push_back(card);
+
 
 
 	eDeck.setDeck(cardObjects);

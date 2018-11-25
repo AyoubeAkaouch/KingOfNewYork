@@ -100,6 +100,14 @@ public:
 			}
 		}
 
+		//Seeing if player has 1 extra destruction
+		for (int i = 0; i < cards.size(); i++) {
+			if (cards[i]->getName() == "Stomp") {
+				currentDices.insert({ (currentDices.size()),"Destruction" });
+				cards[i]->useCard();
+			}
+		}
+
 		int dicesResolved = 0;
 		for (int j = 0; j < currentDices.size();j++) //Until all dices are resolved
 		{
