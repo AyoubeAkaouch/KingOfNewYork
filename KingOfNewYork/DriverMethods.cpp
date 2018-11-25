@@ -202,6 +202,13 @@ void gameLoop(vector<Player*>& players, GameMap & gameMap, EffectCardDeck & effe
 				}
 			}
 
+			//If player has super speed card give him one extra move before he rolls his dices
+			for (int i = 0; i < cards.size(); i++) {
+				if (cards[i]->getName() == "Super Speed") {
+					cards[i]->useCard();
+					players[turnOf]->move(*players[turnOf], gameMap, false);
+				}
+			}
 
 			players[turnOf]->diceRoll(*players[turnOf], false);//Up to 3times, rerolls will be handled inside this method
 			cout << endl;
