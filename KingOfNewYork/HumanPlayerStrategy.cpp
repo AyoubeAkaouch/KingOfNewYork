@@ -339,6 +339,16 @@ private:
 
 						}
 
+						//Check if attacked player has Tesla Antennae card, then remove 2 energy from the attacker
+						for (int j = 0; j < cards.size(); j++) {
+							//If player has the card and less health than opponent, deal 1 extra damage
+							if (cards[j]->getName() == "Tesla Antennae" && (player.getHealth() < players[i]->getHealth())) {
+								cards[j]->useCard();
+								damageDealt++;
+							}
+
+						}
+
 						players[i]->removeHealth(damageDealt);
 
 						//Check if attacked player has Drain card, then remove 2 energy from the attacker
@@ -385,6 +395,18 @@ private:
 
 						}
 
+						//Check if attacked player has Tesla Antenna card, then remove 2 energy from the attacker
+						for (int j = 0; j < cards.size(); j++) {
+							//If player has the card and less health than opponent, deal 1 extra damage
+							if (cards[j]->getName() == "Tesla Antennae" &&(player.getHealth() < players[i]->getHealth())) {
+								cards[j]->useCard();
+								damageDealt++;
+							}
+
+						}
+
+
+
 						players[i]->removeHealth(damageDealt);
 						//Check if attacked player has Drain card, then remove 2 energy from the attacker
 						for (int j = 0; j < cards.size(); j++) {
@@ -405,6 +427,8 @@ private:
 								}
 							}
 						}
+
+
 						cout << players[i]->getName() << " just lost " << damageDealt << " health by being attacked." << endl;
 						players[i]->move(*players[i], gameMap, true);
 					}

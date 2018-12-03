@@ -48,6 +48,10 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	card = new EffectCard(12, "keep", "Shadow Double", "Whenever you attack you deal double damage.", effectPlaceholder);
 	card->registerOb(cardObserver);
 	cardObjects.push_back(card);
+	
+	card = new EffectCard(4, "keep", "Tesla Antennae", "Monsters that have more HEART_POINT than you take 1 extra damage whenever you attack them.", effectPlaceholder);
+	card->registerOb(cardObserver);
+	cardObjects.push_back(card);
 
 	eDeck.setDeck(cardObjects);
 	eDeck.shuffle(); //Be sure the returned deck is shuffled
