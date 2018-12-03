@@ -329,10 +329,11 @@ private:
 
 						players[i]->removeHealth(damageDealt);
 
+						vector<EffectCard*> cardsAttacked = players[i]->getCards();
 						//Check if attacked player has Drain card, then remove 2 energy from the attacker
-						for (int j = 0; j < cards.size(); j++) {
-							if (cards[j]->getName() == "Drain") {
-								cards[j]->useCard();
+						for (int j = 0; j < cardsAttacked.size(); j++) {
+							if (cardsAttacked[j]->getName() == "Drain") {
+								cardsAttacked[j]->useCard();
 								if (player.getEnergyCubes() >= 2) {
 									player.removeEnergy(2);
 									players[i]->addEnergyCubes(2);
@@ -347,6 +348,15 @@ private:
 									player.removeEnergy(93); //Just to trigger the not enough funds message, passing a high value
 								}
 							}
+						}
+
+						//Check if attacked player has Phoenix Blood card
+						for (int j = 0; j < cardsAttacked.size(); j++) {
+							if (cardsAttacked[j]->getName() == "Phoenix Blood") {
+								cardsAttacked[j]->useCard();
+								players[i]->addEnergyCubes(1);
+							}
+
 						}
 
 
@@ -386,10 +396,11 @@ private:
 
 
 						players[i]->removeHealth(damageDealt);
+						vector<EffectCard*> cardsAttacked = players[i]->getCards();
 						//Check if attacked player has Drain card, then remove 2 energy from the attacker
-						for (int j = 0; j < cards.size(); j++) {
-							if (cards[j]->getName() == "Drain") {
-								cards[j]->useCard();
+						for (int j = 0; j < cardsAttacked.size(); j++) {
+							if (cardsAttacked[j]->getName() == "Drain") {
+								cardsAttacked[j]->useCard();
 								if (player.getEnergyCubes() >= 2) {
 									player.removeEnergy(2);
 									players[i]->addEnergyCubes(2);
@@ -401,9 +412,17 @@ private:
 									cout << players[i]->getName() << " stole 1 Energy from " << player.getName() << endl;
 								}
 								else {
-									player.removeEnergy(93);
+									player.removeEnergy(93); //Just to trigger the not enough funds message, passing a high value
 								}
 							}
+						}
+						//Check if attacked player has Phoenix Blood card
+						for (int j = 0; j < cardsAttacked.size(); j++) {
+							if (cardsAttacked[j]->getName() == "Phoenix Blood") {
+								cardsAttacked[j]->useCard();
+								players[i]->addEnergyCubes(1);
+							}
+
 						}
 
 
