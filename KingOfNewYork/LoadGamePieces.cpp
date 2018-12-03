@@ -57,6 +57,10 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	card = new EffectCard(4, "keep", "Phoenix Blood", "Gain 1 ENERGY_POINT each time you take damage.", effectPlaceholder);
 	card->registerOb(cardObserver);
 	cardObjects.push_back(card);
+	
+	card = new EffectCard(5, "keep", "Trash Thrower", "Monsters you attack lose 1 VICTORY_POINT.", effectPlaceholder);
+	card->registerOb(cardObserver);
+	cardObjects.push_back(card);
 
 
 	eDeck.setDeck(cardObjects);

@@ -296,7 +296,7 @@ private:
 		//For all the if statement only checking the first index because we can't pass an empty vector!
 
 		if (effect.empty()) {
-			cout << "There was a typo please retry" << endl;
+			//cout << "There was a typo please retry" << endl;
 		}
 		//Applying celebrity dices
 		else if (effect[0] == "Celebrity") {
@@ -330,7 +330,7 @@ private:
 						int damageDealt = effect.size();
 						vector<EffectCard*> cards = player.getCards();
 
-						//Check if attacked player has Shadow Double card, then remove 2 energy from the attacker
+						//Check if player has Shadow Double card, then remove 2 energy from the attacker
 						for (int j = 0; j < cards.size(); j++) {
 							if (cards[j]->getName() == "Shadow Double") {
 								cards[j]->useCard();
@@ -338,8 +338,16 @@ private:
 							}
 
 						}
+						//Check if player has Trash Thrower card, then remove 2 energy from the attacker
+						for (int j = 0; j < cards.size(); j++) {
+							if (cards[j]->getName() == "Trash Thrower"&&players[i]->getVictoryPoints() >= 1) {
+								cards[j]->useCard();
+								players[i]->removePoints(1);
+							}
 
-						//Check if attacked player has Tesla Antennae card, then remove 2 energy from the attacker
+						}
+
+						//Check if player has Tesla Antennae card, then remove 2 energy from the attacker
 						for (int j = 0; j < cards.size(); j++) {
 							//If player has the card and less health than opponent, deal 1 extra damage
 							if (cards[j]->getName() == "Tesla Antennae" && (player.getHealth() < players[i]->getHealth())) {
@@ -396,7 +404,7 @@ private:
 						int damageDealt = effect.size();
 						vector<EffectCard*> cards = player.getCards();
 
-						//Check if attacked player has Shadow Double card, then remove 2 energy from the attacker
+						//Check if  player has Shadow Double card, then remove 2 energy from the attacker
 						for (int j = 0; j < cards.size(); j++) {
 							if (cards[j]->getName() == "Shadow Double") {
 								cards[j]->useCard();
@@ -404,11 +412,18 @@ private:
 							}
 
 						}
+						//Check if player has Trash Thrower card, then remove 2 energy from the attacker
+						for (int j = 0; j < cards.size(); j++) {
+							if (cards[j]->getName() == "Trash Thrower"&&players[i]->getVictoryPoints() >= 1) {
+								cards[j]->useCard();
+								players[i]->removePoints(1);
+							}
 
-						//Check if attacked player has Tesla Antenna card, then remove 2 energy from the attacker
+						}
+						//Check if player has Tesla Antenna card, then remove 2 energy from the attacker
 						for (int j = 0; j < cards.size(); j++) {
 							//If player has the card and less health than opponent, deal 1 extra damage
-							if (cards[j]->getName() == "Tesla Antennae" &&(player.getHealth() < players[i]->getHealth())) {
+							if (cards[j]->getName() == "Tesla Antennae" && (player.getHealth() < players[i]->getHealth())) {
 								cards[j]->useCard();
 								damageDealt++;
 							}
@@ -464,14 +479,20 @@ private:
 		}
 		else if (effect[0] == "Heal") {
 			int addedHealth;
-			if ((player.getHealth() + effect.size()) > 10) {
-				addedHealth = 10 - player.getHealth();
+			if (player.getRegion().getName() == "Manhattan") {
+				cout << "Can't heal while in Manhattan!" << endl;
 			}
 			else {
-				addedHealth = effect.size();
+				if ((player.getHealth() + effect.size()) > 10) {
+					addedHealth = 10 - player.getHealth();
+				}
+				else {
+					addedHealth = effect.size();
+				}
+				player.addHealth(addedHealth);
+				cout << player.getName() << " just gained " << addedHealth << " health points." << endl;
 			}
-			player.addHealth(addedHealth);
-			cout << player.getName() << " just gained " << addedHealth << " health points." << endl;
+
 
 		}
 	}
