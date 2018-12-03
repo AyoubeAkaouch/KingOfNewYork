@@ -327,10 +327,21 @@ private:
 					//Attacking players not in manhattan AND that are not already dead and removed from the game (health points > 0)
 					if (players[i]->getRegion().getName() != "Manhattan" && players[i]->getHealth() > 0)
 					{
-						players[i]->removeHealth(effect.size());
+						int damageDealt = effect.size();
+						vector<EffectCard*> cards = player.getCards();
+
+						//Check if attacked player has Shadow Double card, then remove 2 energy from the attacker
+						for (int j = 0; j < cards.size(); j++) {
+							if (cards[j]->getName() == "Shadow Double") {
+								cards[j]->useCard();
+								damageDealt += effect.size();
+							}
+
+						}
+
+						players[i]->removeHealth(damageDealt);
 
 						//Check if attacked player has Drain card, then remove 2 energy from the attacker
-						vector<EffectCard*> cards = players[i]->getCards();
 						for (int j = 0; j < cards.size(); j++) {
 							if (cards[j]->getName() == "Drain") {
 								cards[j]->useCard();
@@ -345,13 +356,13 @@ private:
 									cout << players[i]->getName() << " stole 1 Energy from " << player.getName() << endl;
 								}
 								else {
-									player.removeEnergy(93);
+									player.removeEnergy(93); //Just to trigger the not enough funds message, passing a high value
 								}
 							}
 						}
 
 
-						cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
+						cout << players[i]->getName() << " just lost " << damageDealt << " health by being attacked." << endl;
 					}
 				}
 			}
@@ -362,9 +373,20 @@ private:
 					if (players[i]->getRegion().getName() == "Manhattan")
 					{
 						noOneInManhattan = false;
-						players[i]->removeHealth(effect.size());
+						int damageDealt = effect.size();
+						vector<EffectCard*> cards = player.getCards();
+
+						//Check if attacked player has Shadow Double card, then remove 2 energy from the attacker
+						for (int j = 0; j < cards.size(); j++) {
+							if (cards[j]->getName() == "Shadow Double") {
+								cards[j]->useCard();
+								damageDealt += effect.size();
+							}
+
+						}
+
+						players[i]->removeHealth(damageDealt);
 						//Check if attacked player has Drain card, then remove 2 energy from the attacker
-						vector<EffectCard*> cards = players[i]->getCards();
 						for (int j = 0; j < cards.size(); j++) {
 							if (cards[j]->getName() == "Drain") {
 								cards[j]->useCard();
@@ -383,7 +405,7 @@ private:
 								}
 							}
 						}
-						cout << players[i]->getName() << " just lost " << effect.size() << " health by being attacked." << endl;
+						cout << players[i]->getName() << " just lost " << damageDealt << " health by being attacked." << endl;
 						players[i]->move(*players[i], gameMap, true);
 					}
 				}

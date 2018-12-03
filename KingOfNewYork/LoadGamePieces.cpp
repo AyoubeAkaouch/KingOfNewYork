@@ -19,7 +19,6 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	effectPlaceholder["victory"] = 2;//Gives 2 victory points
 
 	
-
 	//Creating the tower titan card
 	EffectCard* card = new EffectCard(10,"keep", "Towering Titan" , "Add 2 ATTACK to your result.",effectPlaceholder);
 	card->registerOb(cardObserver);
@@ -44,7 +43,11 @@ void LoadGamePieces::LoadAllPieces(vector<Monster>& monsters, BuildingTilesDeck 
 	card = new EffectCard(4, "keep", "Drain", "Take 2 ENERGY_POINT from Monsters that attack you.", effectPlaceholder);
 	card->registerOb(cardObserver);
 	cardObjects.push_back(card);
-
+	
+	
+	card = new EffectCard(12, "keep", "Shadow Double", "Whenever you attack you deal double damage.", effectPlaceholder);
+	card->registerOb(cardObserver);
+	cardObjects.push_back(card);
 
 	eDeck.setDeck(cardObjects);
 	eDeck.shuffle(); //Be sure the returned deck is shuffled

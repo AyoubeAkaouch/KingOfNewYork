@@ -98,7 +98,7 @@ int main() {
 	//Display the playing order
 	cout << "Here is the order in which players are going to play in:" << endl;
 	for (int i = 0; i < players.size(); i++) {
-		cout << i << ") " << &players[(i + firstToPlay) % players.size()];
+		cout << i << ") " << *players[(i + firstToPlay) % players.size()];
 	}
 	cout << endl;
 
